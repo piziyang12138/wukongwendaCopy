@@ -20,7 +20,7 @@ public class CheckcodeServlet extends HttpServlet {
         String code = request.getParameter("code");
         String right_code = (String)request.getSession().getAttribute("vertifycode");
 
-        response.getWriter().print(code.equalsIgnoreCase(right_code) ? "验证码正确" : "验证码错误");
+        response.getWriter().print(code.equalsIgnoreCase(right_code) ? "successful" : "failed");
 
     }
 }
