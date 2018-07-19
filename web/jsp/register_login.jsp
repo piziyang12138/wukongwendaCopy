@@ -77,9 +77,9 @@
                     <div class="baseLogin fadeRegister">
                         <form action="${pageContext.request.contextPath}/register.do" method="POST" id="rform">
                             <div class="input-field"><input id="username" type="text" name="username" autocomplete="off"
-                                                            spellcheck="false" placeholder="用户名"><span class="check-response"></span></div>
+                                                            spellcheck="false" placeholder="用户名"><span class="check-response">${error}</span></div>
                             <div class="input-field"><input id="pwd" type="password" name="pwd" autocomplete="off"
-                                                            spellcheck="false" placeholder="密码"><span class="check-response"></span></div>
+                                                            spellcheck="false" placeholder="密码"><span class="check-response">${error}</span></div>
                             <div class="input-field verification"><input id="captcha1" type="text" name="captcha1"
                                                                          autocomplete="off" spellcheck="false"
                                                                          placeholder="验证码">

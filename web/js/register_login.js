@@ -10,9 +10,6 @@ for(var i = 0;i < args.length;i++){
 }
 
 window.onload = function () {
-
-
-
     //验证图片
     var v_img = document.getElementById("vertifycode-img");
     v_img.onclick = function () {
@@ -44,17 +41,20 @@ window.onload = function () {
         var u_input = document.getElementById("username");
         var p_input = document.getElementById("pwd");
         if (u_input.value === ''){
-            u_input.nextElementSibling.innerText = '用户名不能为空'
+            u_input.nextElementSibling.innerText = '用户名不能为空';
+            flag = false;
         }
         if (p_input.value === ''){
-            p_input.nextElementSibling.innerText = '用户名不能为空'
+            p_input.nextElementSibling.innerText = '密码不能为空';
+            flag = false;
         }
-        flag = u_input.value !== '';
-        flag = u_input.value !== '';
+
         if (!flag){
             return false;
+        }else{
+            form.submit();
         }
-        form.submit();
+
     };
 
     //用户名输入框
@@ -94,7 +94,7 @@ window.onload = function () {
     };
 
     //判断是否是登录
-    if (arg_map.model === '登录'){
+    if (arg_map.model === 'login'){
         register_btn.value = '登录';
         form.action = '/login.do';
         l_div.className = 'y-left item active';

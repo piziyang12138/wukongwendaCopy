@@ -66,7 +66,7 @@
                             </div>
                         </div>
                         <a href="javascript:;" data-node="ask" data-log="PopUp_CreateQuestion|From_" class="ask">提问</a>
-                        <div class="nav"><a href="https://www.wukong.com/" data-log="Visit_Index|From_Link" title="首页"
+                        <div class="nav logined"><a href="https://www.wukong.com/" data-log="Visit_Index|From_Link" title="首页"
                                             class="selected">首页</a> <a href="https://www.wukong.com/myquest/"
                                                                        data-log="Visit_QuestionInvited|From_"
                                                                        title="等我来答" class="">等我来答</a> <a
@@ -89,19 +89,20 @@
                                 </c:choose>
                             </div>
                             <div class="nav-account">
-                                <div data-node="user-account" class="nav-account-wrapper">
                                     <c:choose>
                                         <c:when test="${!empty user}">
-                                            <a href="${pageContext.request.contextPath}/jsp/user.jsp" target="_blank"
+                                        <div data-node="user-account" class="nav-account-wrapper dropdown">
+                                        <a href="${pageContext.request.contextPath}/jsp/user.jsp" target="_blank"
                                                data-log="Visit_Profile|From_" class="nav-account-user line"><img
                                                     src="${pageContext.request.contextPath}/upload/${user.picpath}" alt=""
                                                     class="nav-account-user-avatar"></a>
                                         </c:when>
                                         <c:otherwise>
-                                            <div class="loginBox"><a data-node="login" href="${pageContext.request.contextPath}/jsp/register_login.jsp?model=登录"
+                                            <div data-node="user-account" class="nav-account-wrapper">
+                                            <div class="loginBox"><a data-node="login" href="${pageContext.request.contextPath}/jsp/register_login.jsp?model=login"
                                                                      class="nav-account-user line login"><span>登录</span></a> <i
                                                     class="iconfont icon-Details_page_line"></i> <a data-node="register"
-                                                                                                    href="${pageContext.request.contextPath}/jsp/register_login.jsp?model=注册"
+                                                                                                    href="${pageContext.request.contextPath}/jsp/register_login.jsp?model=logout"
                                                                                                     class="nav-account-user line register"><span>注册</span></a>
                                             </div>
                                         </c:otherwise>
@@ -109,7 +110,7 @@
                                     <div class="dropdown-menu"><i class="triangle"></i>
                                         <div><a href="https://www.wukong.com/user/" target="_blank"
                                                 class="layer-item"><i class="iconfont icon-ask_write"></i>我的问答</a></div>
-                                        <div><a class="layer-item"><i
+                                        <div><a class="layer-item" href="${pageContext.request.contextPath}/logout.admin"><i
                                                 class="iconfont icon-ask_profile_exit"></i>退  出</a></div>
                                     </div>
                                 </div>

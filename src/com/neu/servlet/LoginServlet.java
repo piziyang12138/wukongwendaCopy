@@ -25,11 +25,16 @@ public class LoginServlet extends HttpServlet {
         user.setPwd(pwd);
 
         IUserDao userDao = new UserDao();
-        userDao.isUserExist(user);
+        int res = userDao.isUserExist(user);
 
-        request.getSession().setAttribute("user",user);
-
-        response.sendRedirect(request.getContextPath() + "/home.do");
+        if (res == 1){
+            request.getSession().setAttribute("user",user);
+            response.sendRedirect(request.getContextPath() + "/home.do");
+        }
+        else{
+            request.setAttribute("error","用户名或密码错误");
+            request.getRequestDispatcher(request.getContextPath() + "/jsp/register_login.jsp").forward(request,response);
+        }
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

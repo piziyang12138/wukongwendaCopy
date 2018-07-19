@@ -23,6 +23,9 @@ import java.util.UUID;
 public class UploadServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Part part = request.getPart("file");
+        if (part == null){
+            return;
+        }
         String name = part.getSubmittedFileName();
         UUID uuid = UUID.randomUUID();
 

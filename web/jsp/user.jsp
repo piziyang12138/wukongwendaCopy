@@ -84,7 +84,7 @@
                                     <div class="dropdown-menu"><i class="triangle"></i>
                                         <div><a href="https://www.wukong.com/user/" target="_blank"
                                                 class="layer-item"><i class="iconfont icon-ask_write"></i>我的问答</a></div>
-                                        <div><a class="layer-item"><i
+                                        <div><a class="layer-item"  href="${pageContext.request.contextPath}/logout.admin"><i
                                                 class="iconfont icon-ask_profile_exit"></i>退  出</a></div>
                                     </div>
                                 </div>

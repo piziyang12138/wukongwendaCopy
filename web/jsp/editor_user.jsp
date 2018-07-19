@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <!-- saved from url=(0049)https://www.wukong.com/editUser/?uid=101244253391 -->
 <html lang="en">
@@ -40,15 +41,6 @@
     }</style>
     <script>
         contextPath = '${pageContext.request.contextPath}';
-        function getUser() {
-
-            var user = {
-                username:'${user.username}',
-                picpath:'${user.picpath}',
-                introduction:'${user.introduction}'
-            };
-            return user;
-        }
     </script>
     <script src="${pageContext.request.contextPath}/js/editor_user.js"></script>
 </head>
@@ -62,7 +54,8 @@
                         <div class="suspension-part">
                             <div class="logo-box"><a href="https://www.wukong.com/" data-log="Visit_Index|From_logo"
                                                      title="悟空问答" class="logo-link"><img
-                                    src="${pageContext.request.contextPath}/img/logo_5df43ca.png" alt="悟空问答" class="logo"></a></div>
+                                    src="${pageContext.request.contextPath}/img/logo_5df43ca.png" alt="悟空问答"
+                                    class="logo"></a></div>
                             <div class="search-box">
                                 <div data-node="searchBox" data-log-from="SearchBox" class="widget-search-input">
                                     <form action="https://www.wukong.com/search/" method="get" data-node="searchForm"
@@ -80,7 +73,8 @@
                             </div>
                         </div>
                         <a href="javascript:;" data-node="ask" data-log="PopUp_CreateQuestion|From_" class="ask">提问</a>
-                        <div class="nav logined"><a href="${pageContext.request.contextPath}/home.do" data-log="Visit_Index|From_Link"
+                        <div class="nav logined"><a href="${pageContext.request.contextPath}/home.do"
+                                                    data-log="Visit_Index|From_Link"
                                                     title="首页" class="">首页</a> <a href="https://www.wukong.com/myquest/"
                                                                                   data-log="Visit_QuestionInvited|From_"
                                                                                   title="等我来答" class="">等我来答</a> <a
@@ -98,7 +92,7 @@
                                     <div class="dropdown-menu"><i class="triangle"></i>
                                         <div><a href="https://www.wukong.com/user/" target="_blank"
                                                 class="layer-item"><i class="iconfont icon-ask_write"></i>我的问答</a></div>
-                                        <div><a class="layer-item"><i
+                                        <div><a class="layer-item" id="${pageContext.request.contextPath}/logout.admin"><i
                                                 class="iconfont icon-ask_profile_exit"></i>退  出</a></div>
                                     </div>
                                 </div>
@@ -116,17 +110,26 @@
                     <div id="large-user-card" class="large-user-card">
                         <div id="widget-usercard-left" data-log-from="ProfileCard" class="w-usercard-left">
                             <div itemscope="itemscope" itemtype="http://schema.org/Person" class="userinfo clearfix"><a
-                                    target="_blank" href="https://www.wukong.com/user/?uid=101244253391">
-                                <meta itemprop="name" content="手机用户101244253391">
-                                <div class="avatar"><img src="${pageContext.request.contextPath}/upload/${user.picpath}" alt="" itemprop="image" class="header-img">
+                                    target="_blank" href="#">
+                                <meta itemprop="name" content="${user.username}">
+                                <div class="avatar"><img src="${pageContext.request.contextPath}/upload/${user.picpath}"
+                                                         alt="" itemprop="image" class="header-img">
                                 </div>
-                                <div class="user-desc"><h1 class="user-name"><span>手机用户10124425339</span> <span
-                                        class="last-name-letter">1<!----></span></h1>
+                                <div class="user-desc"><h1 class="user-name"><span>${user.username}</span> <span
+                                        class="last-name-letter"><!----></span></h1>
                                     <div itemprop="description" class="user-intro">
 
                                     </div>
                                     <div class="user-title">
-                                        我很懒什么都不留下
+                                        <c:choose>
+                                            <c:when test="${user.introduction == null}">
+                                                我很懒什么都不留下<input type="hidden" id="flag-span" value="0">
+                                            </c:when>
+                                            <c:otherwise>
+                                                ${user.introduction}
+                                            </c:otherwise>
+                                        </c:choose>
+
                                     </div>
                                     <div><a href="javascript:;"><!----></a> <!----> <!----></div>
                                 </div>
@@ -160,11 +163,12 @@
                     <div class="edit-card-wrapper">
                         <div class="title-wrapper"><span class="title">
                                 个人信息
-                            </span> <a href="https://www.wukong.com/user/?uid=101244253391" class="back-user"><span
+                            </span> <a href="${pageContext.request.contextPath}/jsp/user.jsp" class="back-user"><span
                                 class="back-text">返回个人主页</span> <i class="iconfont icon-forward"></i></a></div>
                         <div class="avatar-wrapper"><span class="labelCol">
                                 用户头像
-                            </span> <img src="${pageContext.request.contextPath}/upload/${user.picpath}" class="header-img">
+                            </span> <img src="${pageContext.request.contextPath}/upload/${user.picpath}"
+                                         class="header-img">
                             <div data-log="Click_Edit_Avantar|From_" class="layer">
                                 编辑
                                 <div class="upload-img"><input type="file" name="upfile" id="file"></div>
@@ -173,13 +177,23 @@
                         <div class="name-wrapper" id="editor-div"><span class="labelCol">
                                 用户名
                             </span> <span class="user-name">
-                                    ${user.username}
-                                </span> <span class="edit-name" id="editor-username"><i class="iconfont icon-pen"></i><span>编辑</span></span>
+                            ${user.username}
+                        </span> <span class="edit-name" id="editor-username"><i
+                                class="iconfont icon-pen"></i><span>编辑</span></span>
                         </div>
                         <div class="introduce-wrapper"><span class="labelCol">
-                                个人介绍
-                            </span> <span class="edit-introduce"><i
-                                class="iconfont icon-add_icon"></i> <span>添加一句话介绍自己</span></span></div>
+                                个人介绍</span>
+                            <c:choose>
+                                <c:when test="${user.introduction == null}">
+                                <span class="edit-introduce edit-introduce-span"><i class="iconfont icon-add_icon"></i> <span>添加一句话介绍自己</span></span>
+                                </c:when>
+                                <c:otherwise>
+                                    <div class="has-description" ><span class="introduce mr-20">
+                                        ${user.introduction}
+                                    </span> <span class="edit-introduce write-block edit-introduce-span"><i class="iconfont icon-pen"></i><span>编辑</span></span></div>
+                                </c:otherwise>
+                            </c:choose>
+                        </div>
                     </div>
                 </div>
             </div>

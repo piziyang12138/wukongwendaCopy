@@ -39,6 +39,7 @@ public class UserDao implements IUserDao {
 
     @Override
     public int isUserExist(User user) {
+        int res = 0;
         try {
             PreparedStatement ps = con.prepareStatement("select * FROM user WHERE username = ? AND pwd = ?");
             ps.setString(1,user.getUsername());
@@ -49,11 +50,12 @@ public class UserDao implements IUserDao {
                 user.setId(rs.getLong("id"));
                 user.setPicpath(rs.getString("picpath"));
                 user.setIntroduction(rs.getString("introduction"));
+                res = 1;
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return 0;
+        return res;
     }
 
     @Override
