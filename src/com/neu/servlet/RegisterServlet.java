@@ -1,5 +1,9 @@
 package com.neu.servlet;
 
+import com.neu.bean.User;
+import com.neu.dao.IUserDao;
+import com.neu.daoImp.UserDao;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,7 +20,16 @@ public class RegisterServlet extends HttpServlet {
         String username = request.getParameter("username");
         String pwd = request.getParameter("pwd");
 
+        User user = new User();
+        user.setUsername(username);
+        user.setPwd(pwd);
 
+        IUserDao userDao = new UserDao();
+        userDao.addUser(user);
+
+        request.getSession().setAttribute("user",user);
+
+        response.sendRedirect(request.getContextPath()+"/home.do");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
