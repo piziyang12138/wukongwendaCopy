@@ -40,7 +40,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/layout_5fcc025.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/login_40bd3f7.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/login_wenda_3ccaeb0.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/register.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/register_login.css">
     <link rel="shortcut icon"
           href="https://s3.pstatp.com/toutiao/resource/wenda/wenda_web/static/style/image/favicon_3690b36.ico"
           type="image/x-icon">
@@ -59,7 +59,7 @@
     <script>
         flag = false;
     </script>
-    <script src="${pageContext.request.contextPath}/js/register.js"></script>
+    <script src="${pageContext.request.contextPath}/js/register_login.js"></script>
 </head>
 <body style="min-width: 1220px; overflow-x: hidden;"><a href="https://sso.toutiao.com/articles_news_society/"
                                                         style="display:none;"></a>
@@ -68,8 +68,8 @@
             src="${pageContext.request.contextPath}/img/logo_new_2c7582f.png" alt=""></a>
         <div riot-tag="wendaLoginBox" class="wendaLoginBox">
             <div class="y-box login-header">
-                <div class="y-left item "><span>登录</span></div>
-                <div class="y-left item active"><span>注册</span></div><!--riot placeholder--> </div>
+                <div class="y-left item " id="login-label"><span>登录</span></div>
+                <div class="y-left item active" id="register-label"><span>注册</span></div><!--riot placeholder--> </div>
             <div class="login-type">
                 <div riot-tag="wendaFadeRegister" service="https://www.wukong.com/wenda/welcome/"
                      captcha="R0lGODdheAAeAIQAAP////b2//T0//Dw/9TU/83N/8zM/8nJ/8bG/729/7i4/6+v/6ys/6am/52d/4yM/4eH/3h4/2tr/1RU/05O/0pK/0lJ/0RE/zs7/y8v/yws/xER/wQE/wMD/wAA/wAAACwAAAAAeAAeAEAI/wABCBxIsKDBgwgTKlzIsKHDhxAjSpxIsaLFhx4AAPDgIQIADwAAeABA0gMAAB5SAgDgAYBLAB4AAPBAEwAADwA4ANjpAYBPDwA8CAXgAYAHDwCSKl3KtKnTp1CjSk3qAYBVAB48ANjKFYAHDwAAeABAtqwHDwAAeADA1kMCAB7iAvAAoK4HAHgxeADA1wOAv4ADCx5MuLDhw4gTK17MuLHjx4o9eADgwQMAAB48APAAAIAHAB0AiPYAoLQHAB4AAPDgAQAADx4AyPYAwAOA2xg8ANgNwAMADwCCCx9OvLjx48iTKx/uoblzABM8AJg+3QMAAB48UADAnbsHAOA9eP9YAMADgPPnPQBY7wGABw8APHgAAMADgPv48+vfz7+/f4AABA4kWNDgQYQJFS5k2NDhQ4gRJU6kWNHiRYwZNW7k2NHjx4EeAADwAMCkBwAAPADw0BKABwAAPAAA4MEDAAAeAOz0AMADAKAePAAg6gHAUQ8eACz14AGABwBRpU6lWtXqVaxZtXrQ4AEAAA8eAIwF4AHAWQ8A1Kr1AMCtWw8A5AoAAMCDAg8A9Or1AACAB8AAAnggDMADAMSJFS9m3NjxY8iRF3vwAACABwCZNXsA0NkDANChPQAg7QFABg8AVHsA0NoDAAAePAAA4AHAbQAePADg3dv3b+DBhQ8nXtz/w/HjBQAsZ87cw/PnAKRP91C9OgDsHrRv3+DBu3cA4cN7IO8BwHn06dWvZ9/e/Xv48eXPp1/f/n38+fXv59/fP0AAAgcSLGjwIMKEChcybOjwIcSIEidSrGjxIsaMDj1w7Ajgo4eQHgCQJOnh5EkAHlZ6AOASgIeYMmd6AGATgIecHgDw7OnzJ9CgQocSLQrAgwcAHgA4AOABgAcAADwAIADAAwAAHgBw9QAAgAcAYj0AoOABAFoPAAB48ADgrQcADAAA8AAAgAcAevfy7ev3L+DAggd7AADAA4DEHgAA8ADgsQcAADx4AOABgAcPADZ7AADAAwAPHgAA8ADgNAAP/wBWr/YA4LUHAB4A0K5t+zbu3Lp38+7tAQBwDwAAeAAAwIMHAAA8eADg4TkADx4AUAfgAQB2Dw8AeIDgAQB4AB48AADg4YIHAB4AePAAwAOA+PLn069v/z7+/PoBeGgAACAAAB4AFPQAAKEHAx4AAPAAoAIAiQA8eABw0QMCDwA8APDo0QMAkR48ADDpwQMADx4AtHT5EmZMmTNp1rT50oMHAAAkeADw86cHAEM9ADB61AMAAB6YegAAwIMHAFM9eAAAwAMAAB48APDgAYAHAGPJljV7Fm1atWvZAvDw1gMAAB48ALB71wMAvR4A9PXrAUBgDwAAeDAMwMMADwA8AHdw7AEAAA8eAFQG4AFAZs2bOXf2/Bl0aNEeSJMGcBp1ag8AAHgA8Bo2AA8AAHgAcBuABwC7PQDw4AEAAA8eABT34OEAAA8AmDd3/hx6dOnTqVe3fh07AA/buQPwDsCCB/EeAJQ3fx59evXr2bd3/x5+fPnz6QMICAA7"
@@ -78,7 +78,7 @@
                         <form action="${pageContext.request.contextPath}/register.do" method="POST" id="rform">
                             <div class="input-field"><input id="username" type="text" name="username" autocomplete="off"
                                                             spellcheck="false" placeholder="用户名"><span class="check-response"></span></div>
-                            <div class="input-field"><input id="pwd" type="text" name="pwd" autocomplete="off"
+                            <div class="input-field"><input id="pwd" type="password" name="pwd" autocomplete="off"
                                                             spellcheck="false" placeholder="密码"><span class="check-response"></span></div>
                             <div class="input-field verification"><input id="captcha1" type="text" name="captcha1"
                                                                          autocomplete="off" spellcheck="false"

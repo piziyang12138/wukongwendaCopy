@@ -1,7 +1,18 @@
 /**
  * Created by ttc on 2018/7/18.
  */
+var arg_map = {};
+var url_args = decodeURI(window.location.search.substr(1));
+var args = url_args.split('&');
+for(var i = 0;i < args.length;i++){
+    var key_value = args[i].split('=');
+    arg_map[key_value[0]] = key_value[1];
+}
+
 window.onload = function () {
+
+
+
     //验证图片
     var v_img = document.getElementById("vertifycode-img");
     v_img.onclick = function () {
@@ -23,6 +34,10 @@ window.onload = function () {
         }
     }
 
+    //表单
+    var form = document.getElementById("rform");
+
+
     //注册按钮
     var register_btn = document.getElementById("submitbtn");
     register_btn.onclick = function () {
@@ -39,7 +54,6 @@ window.onload = function () {
         if (!flag){
             return false;
         }
-        var form = document.getElementById("rform");
         form.submit();
     };
 
@@ -60,4 +74,30 @@ window.onload = function () {
         }
     };
 
+    //登录标签
+    var l_div = document.getElementById("login-label");
+    l_div.onclick = function () {
+        register_btn.value = '登录';
+        form.action = '/login.do';
+        this.className = 'y-left item active';
+        this.nextElementSibling.className = 'y-left item';
+
+    };
+
+    //注册标签
+    var r_div = document.getElementById("register-label");
+    r_div.onclick = function () {
+        register_btn.value = '注册';
+        form.action = '/register.do';
+        this.className = 'y-left item active';
+        this.previousElementSibling.className = 'y-left item';
+    };
+
+    //判断是否是登录
+    if (arg_map.model === '登录'){
+        register_btn.value = '登录';
+        form.action = '/login.do';
+        l_div.className = 'y-left item active';
+        l_div.nextElementSibling.className = 'y-left item';
+    }
 };

@@ -7,4 +7,6 @@ import com.neu.bean.User;
  */
 public interface IUserDao {
     int addUser(User user);
+    int isUserExist(User user);
+    int updateUserById(User user);
 }

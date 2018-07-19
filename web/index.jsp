@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -46,7 +47,8 @@
                         <div class="suspension-part">
                             <div class="logo-box"><a href="https://www.wukong.com/" data-log="Visit_Index|From_logo"
                                                      title="悟空问答" class="logo-link"><img
-                                    src="${pageContext.request.contextPath}/img/logo_5df43ca.png" alt="悟空问答" class="logo"></a></div>
+                                    src="${pageContext.request.contextPath}/img/logo_5df43ca.png" alt="悟空问答"
+                                    class="logo"></a></div>
                             <div class="search-box">
                                 <div data-node="searchBox" data-log-from="SearchBox" class="widget-search-input">
                                     <form action="https://www.wukong.com/search/" method="get" data-node="searchForm"
@@ -69,15 +71,41 @@
                                                                        data-log="Visit_QuestionInvited|From_"
                                                                        title="等我来答" class="">等我来答</a> <a
                                 href="https://www.wukong.com/notebook/" target="_blank" data-log="Visit_NoteBook|From_">回答秘籍</a>
-                            <div class="new-msg-btn"><!----></div>
+                            <div class="new-msg-btn">
+                                <c:choose>
+                                    <c:when test="${!empty user}">
+                                        <span class="w-new-msg-btn">
+                                    <span>消息</span>
+                                    <div class="w-new-layer layer-wrapper">
+                                        <i class="triangle"></i>
+                                        <a class="notice"><span>通知</span></a>
+                                        <a class="invite"><span>邀请</span> <!----></a>
+                                        <a class="digg"><span>点赞</span> <!----></a>
+                                        <a class="comment"><span>评论</span> <!----></a>
+                                        <a class="follow"><span>关注</span> <!----></a>
+                                    </div>
+                                </span>
+                                    </c:when>
+                                </c:choose>
+                            </div>
                             <div class="nav-account">
                                 <div data-node="user-account" class="nav-account-wrapper">
-                                    <div class="loginBox"><a data-node="login" href="#"
-                                                             class="nav-account-user line login"><span>登录</span></a> <i
-                                            class="iconfont icon-Details_page_line"></i> <a data-node="register"
-                                                                                            href="${pageContext.request.contextPath}/jsp/register.jsp"
-                                                                                            class="nav-account-user line register"><span>注册</span></a>
-                                    </div>
+                                    <c:choose>
+                                        <c:when test="${!empty user}">
+                                            <a href="${pageContext.request.contextPath}/jsp/user.jsp" target="_blank"
+                                               data-log="Visit_Profile|From_" class="nav-account-user line"><img
+                                                    src="${pageContext.request.contextPath}/upload/${user.picpath}" alt=""
+                                                    class="nav-account-user-avatar"></a>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <div class="loginBox"><a data-node="login" href="${pageContext.request.contextPath}/jsp/register_login.jsp?model=登录"
+                                                                     class="nav-account-user line login"><span>登录</span></a> <i
+                                                    class="iconfont icon-Details_page_line"></i> <a data-node="register"
+                                                                                                    href="${pageContext.request.contextPath}/jsp/register_login.jsp?model=注册"
+                                                                                                    class="nav-account-user line register"><span>注册</span></a>
+                                            </div>
+                                        </c:otherwise>
+                                    </c:choose>
                                     <div class="dropdown-menu"><i class="triangle"></i>
                                         <div><a href="https://www.wukong.com/user/" target="_blank"
                                                 class="layer-item"><i class="iconfont icon-ask_write"></i>我的问答</a></div>

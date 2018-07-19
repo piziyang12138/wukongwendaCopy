@@ -36,4 +36,40 @@ public class UserDao implements IUserDao {
         }
         return res;
     }
+
+    @Override
+    public int isUserExist(User user) {
+        try {
+            PreparedStatement ps = con.prepareStatement("select * FROM user WHERE username = ? AND pwd = ?");
+            ps.setString(1,user.getUsername());
+            ps.setString(2,user.getPwd());
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()){
+                user.setId(rs.getLong("id"));
+                user.setPicpath(rs.getString("picpath"));
+                user.setIntroduction(rs.getString("introduction"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    @Override
+    public int updateUserById(User user) {
+        int res = 0;
+        try {
+            PreparedStatement ps = con.prepareStatement("update user SET username = ? ,pwd = ?,picpath = ?,introduction = ? WHERE id = ?");
+            ps.setString(1,user.getUsername());
+            ps.setString(2,user.getPwd());
+            ps.setString(3,user.getPicpath());
+            ps.setString(4,user.getIntroduction());
+            ps.setLong(5,user.getId());
+            res = ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return res;
+    }
 }
