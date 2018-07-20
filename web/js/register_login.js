@@ -27,7 +27,7 @@ window.onload = function () {
         req.onload = function () {
             var checked = document.getElementById("check-response");
             checked.innerText = req.responseText;
-            flag = req.responseText === '验证码正确';
+            flag = req.responseText === 'successful';
         }
     }
 
