@@ -36,6 +36,12 @@
         max-height: 0 !important;
         overflow: hidden !important;
     }</style>
+    <script src="${pageContext.request.contextPath}/layer/jquery-3.3.1.min.js"></script>
+    <script src="${pageContext.request.contextPath}/layer/layer.js"></script>
+    <script>
+        contextPath = '${pageContext.request.contextPath}';
+    </script>
+    <script src="${pageContext.request.contextPath}/js/index.js"></script>
 </head>
 <body data-log-from="Index">
 <div id="wrapper" data-log-from="">
@@ -65,7 +71,7 @@
                                     </form> <!----></div>
                             </div>
                         </div>
-                        <a href="javascript:;" data-node="ask" data-log="PopUp_CreateQuestion|From_" class="ask">提问</a>
+                        <a href="javascript:;" data-node="ask" data-log="PopUp_CreateQuestion|From_" class="ask" id="ask-question">提问</a>
                         <div class="nav logined"><a href="https://www.wukong.com/" data-log="Visit_Index|From_Link" title="首页"
                                             class="selected">首页</a> <a href="https://www.wukong.com/myquest/"
                                                                        data-log="Visit_QuestionInvited|From_"
@@ -387,575 +393,49 @@
         <div id="main-index-question-list" data-log-from="Feed" class="index-question-list">
             <div class="w-feed">
                 <div class="w-feed-container"><!---->
-                    <div data-log-from="Feed" class="question-v3"><!---->
-                        <div class="question-title"><h2><a href="https://www.wukong.com/question/6487864718257029390/"
-                                                           target="_blank" data-log="Visit_Question|From_Link">你见过最侮辱观众智商的广告是什么？</a>
-                        </h2>
-                            <div class="question-info"><span class="question-answer-num">1752回答</span><span
-                                    class="question-follow-num">1862人收藏</span></div>
-                        </div> <!---->
-                        <div class="question-answers">
-                            <div class="answer-item-v3 has-pic">
-                                <div class="answer-item-pic"><a href="javascript:"><img
-                                        src="./悟空问答首页_files/8b6d0001167ee98125bc"></a></div> <!---->
-                                <div class="answer-info">
-                                    <div class="answer-info-user"><a target="_blank"
-                                                                     href="https://www.wukong.com/user/?uid=70707073272"
-                                                                     data-log="Visit_Profile|From_ProfilePic"
-                                                                     class="answer-info-user-avatar"><img alt=""
-                                                                                                          src="./悟空问答首页_files/3c7300052107ddee70af">
-                                        <span class="answer-info-user-name">打虎拍蝇
+
+
+                    <c:forEach items="${articles}" var="article">
+                        <div data-log-from="Feed" class="question-v3"><!---->
+                            <div class="question-title"><h2><a href="${pageContext.request.contextPath}/to_article.do?aid=${article.aid}"
+                                                               target="_blank" data-log="Visit_Question|From_Link">${article.title}</a>
+                            </h2>
+                                <div class="question-info"><span class="question-answer-num">1752回答</span><span
+                                        class="question-follow-num">1862人收藏</span></div>
+                            </div> <!---->
+                            <div class="question-answers">
+                                <div class="answer-item-v3 has-pic">
+                                    <div class="answer-item-pic"><a href="javascript:"><img
+                                            src="./悟空问答首页_files/8b6d0001167ee98125bc"></a></div> <!---->
+                                    <div class="answer-info">
+                                        <div class="answer-info-user"><a target="_blank"
+                                                                         href="https://www.wukong.com/user/?uid=70707073272"
+                                                                         data-log="Visit_Profile|From_ProfilePic"
+                                                                         class="answer-info-user-avatar"><img alt=""
+                                                                                                              src="./悟空问答首页_files/3c7300052107ddee70af">
+                                            <span class="answer-info-user-name">打虎拍蝇
                     <i class="iconfont icon-all_newv" style="font-size: 12px; color: rgb(255, 196, 28);"></i></span></a>
-                                        <span class="answer-info-user-title">法律行业从业者</span></div>
-                                </div>
-                                <div class="answer-item-content"><p><a
-                                        href="https://www.wukong.com/answer/6562797525240119560/"
-                                        data-log="PopUp_AnswerContent|From_">那些年，我们一起看过的广告，侮辱观众智商的广告不少，有人一笑了之，有人却上当受骗，下面我们就一起来掰一掰：1、美的变频空调，想开就开，一晚低至一度电。如果真的这么好，估计没人用暖气...<span
-                                        class="answer-item-whole">全文</span></a></p></div>
-                                <div class="answer-oper"><a href="javascript:" data-log="Like|From_" class="w-like">
-                                    <!----> <i class="iconfont icon-digg_clicked"></i> <span class="like-num">920</span>
-                                    <span>赞</span></a> <a href="javascript:" data-log="Downvote|From_" class="w-unlike"><i
-                                        class="iconfont icon-ask_stamp"></i> <span class="unlike-count"></span>
-                                    <span>踩</span></a> <a href="javascript:" class="w-answer-nointerest-btn"><i
-                                        class="iconfont icon-ask_close"></i></a> <a href="javascript:"
-                                                                                    data-log="Visit_Comment|From_"
-                                                                                    class="answer-oper-comments"><i
-                                        class="iconfont icon-ask_comment"></i> <span class="comment-count">0</span>
-                                    <span>评论</span></a> <a href="javascript:" class="w-shareBtn"><i
-                                        class="iconfont icon-share-home"></i> <span>分享</span></a></div>
-                            </div>
-                        </div> <!----></div> <!----> <!----> <!----><!----> <!----> <!----> <!----> <!----><!---->
-                    <div data-log-from="Feed" class="question-v3"><!---->
-                        <div class="question-title"><h2><a href="https://www.wukong.com/question/6437356227516170497/"
-                                                           target="_blank" data-log="Visit_Question|From_Link">在农村被“洋辣子”蛰后，该怎么办？</a>
-                        </h2>
-                            <div class="question-info"><span class="question-answer-num">2668回答</span><span
-                                    class="question-follow-num">2273人收藏</span></div>
-                        </div> <!---->
-                        <div class="question-answers">
-                            <div class="answer-item-v3 has-pic">
-                                <div class="answer-item-pic"><a href="javascript:"><img
-                                        src="./悟空问答首页_files/811a000086a45357e753"></a></div> <!---->
-                                <div class="answer-info">
-                                    <div class="answer-info-user"><a target="_blank"
-                                                                     href="https://www.wukong.com/user/?uid=6387380571"
-                                                                     data-log="Visit_Profile|From_ProfilePic"
-                                                                     class="answer-info-user-avatar"><img alt=""
-                                                                                                          src="./悟空问答首页_files/6cb000897e15cb3ab59">
-                                        <span class="answer-info-user-name">鲜农场
-                    <i class="iconfont icon-all_newv" style="font-size: 12px; color: rgb(255, 196, 28);"></i></span></a>
-                                        <span class="answer-info-user-title">上海劲牛信息技术有限公司新媒体运营</span></div>
-                                </div>
-                                <div class="answer-item-content"><p><a
-                                        href="https://www.wukong.com/answer/6550979208032551181/"
-                                        data-log="PopUp_AnswerContent|From_">“洋辣子”几乎是我童年的一个阴影。小时候在树下完耍，一个小东西掉在了额头上，我就顺手一拍，顿时感到额头、眼睛火辣辣的疼，原来是一个“洋辣子”，汁水浸到了眼睛，在医院挂了一个星期的水...<span
-                                        class="answer-item-whole">全文</span></a></p></div>
-                                <div class="answer-oper"><a href="javascript:" data-log="Like|From_" class="w-like">
-                                    <!----> <i class="iconfont icon-digg_clicked"></i> <span class="like-num">408</span>
-                                    <span>赞</span></a> <a href="javascript:" data-log="Downvote|From_" class="w-unlike"><i
-                                        class="iconfont icon-ask_stamp"></i> <span class="unlike-count"></span>
-                                    <span>踩</span></a> <a href="javascript:" class="w-answer-nointerest-btn"><i
-                                        class="iconfont icon-ask_close"></i></a> <a href="javascript:"
-                                                                                    data-log="Visit_Comment|From_"
-                                                                                    class="answer-oper-comments"><i
-                                        class="iconfont icon-ask_comment"></i> <span class="comment-count">400</span>
-                                    <span>评论</span></a> <a href="javascript:" class="w-shareBtn"><i
-                                        class="iconfont icon-share-home"></i> <span>分享</span></a></div>
-                            </div>
-                        </div> <!----></div> <!----> <!----> <!----><!---->
-                    <div data-log-from="Feed" class="question-v3"><!---->
-                        <div class="question-title"><h2><a href="https://www.wukong.com/question/6429065235629342977/"
-                                                           target="_blank" data-log="Visit_Question|From_Link">第一次见网友，你印象最深的经历是什么？</a>
-                        </h2>
-                            <div class="question-info"><span class="question-answer-num">588回答</span><span
-                                    class="question-follow-num">722人收藏</span></div>
-                        </div> <!---->
-                        <div class="question-answers">
-                            <div class="answer-item-v3"><!----> <!---->
-                                <div class="answer-info">
-                                    <div class="answer-info-user"><a target="_blank"
-                                                                     href="https://www.wukong.com/user/?uid=4328532087"
-                                                                     data-log="Visit_Profile|From_ProfilePic"
-                                                                     class="answer-info-user-avatar"><img alt=""
-                                                                                                          src="./悟空问答首页_files/1dcd0024d36abdb7280b">
-                                        <span class="answer-info-user-name">Jakychenbasketball
-                                            <!----></span></a> <!----></div>
-                                </div>
-                                <div class="answer-item-content"><p><a
-                                        href="https://www.wukong.com/answer/6436622097312645378/"
-                                        data-log="PopUp_AnswerContent|From_">第一次跟网友见面是玩剑网3的时候，跟我游戏里的妹子徒弟在上海面基。我坐汽车到上海虹桥站，她过来接的我，由于我第一次到上海，上海虹桥站又特别大，我们两人足足打电话找了15分钟才碰面，见面第一感觉是真不容易，徒弟个子矮矮的，但是打扮的...<span
-                                        class="answer-item-whole">全文</span></a></p></div>
-                                <div class="answer-oper"><a href="javascript:" data-log="Like|From_" class="w-like">
-                                    <!----> <i class="iconfont icon-digg_clicked"></i> <span class="like-num">741</span>
-                                    <span>赞</span></a> <a href="javascript:" data-log="Downvote|From_" class="w-unlike"><i
-                                        class="iconfont icon-ask_stamp"></i> <span class="unlike-count"></span>
-                                    <span>踩</span></a> <a href="javascript:" class="w-answer-nointerest-btn"><i
-                                        class="iconfont icon-ask_close"></i></a> <a href="javascript:"
-                                                                                    data-log="Visit_Comment|From_"
-                                                                                    class="answer-oper-comments"><i
-                                        class="iconfont icon-ask_comment"></i> <span class="comment-count">142</span>
-                                    <span>评论</span></a> <a href="javascript:" class="w-shareBtn"><i
-                                        class="iconfont icon-share-home"></i> <span>分享</span></a></div>
-                            </div>
-                        </div> <!----></div> <!----> <!----> <!----><!---->
-                    <div data-log-from="Feed" class="question-v3"><!---->
-                        <div class="question-title"><h2><a href="https://www.wukong.com/question/6527970266964820227/"
-                                                           target="_blank" data-log="Visit_Question|From_Link">在殡仪馆看火化过程是什么样的感觉？</a>
-                        </h2>
-                            <div class="question-info"><span class="question-answer-num">415回答</span><span
-                                    class="question-follow-num">908人收藏</span></div>
-                        </div> <!---->
-                        <div class="question-answers">
-                            <div class="answer-item-v3"><!----> <!---->
-                                <div class="answer-info">
-                                    <div class="answer-info-user"><a target="_blank"
-                                                                     href="https://www.wukong.com/user/?uid=21242188646"
-                                                                     data-log="Visit_Profile|From_ProfilePic"
-                                                                     class="answer-info-user-avatar"><img alt=""
-                                                                                                          src="./悟空问答首页_files/5684000517a3e5e14c38">
-                                        <span class="answer-info-user-name">妇产科女司机
-                    <i class="iconfont icon-all_newv" style="font-size: 12px; color: rgb(255, 196, 28);"></i></span></a>
-                                        <span class="answer-info-user-title">妇产科主治医师</span></div>
-                                </div>
-                                <div class="answer-item-content"><p><a
-                                        href="https://www.wukong.com/answer/6564239759898575111/"
-                                        data-log="PopUp_AnswerContent|From_">我老公曾经在民政上工作，我跟着他去殡仪馆看过火化。说实话，医生见生死不少，但是看火化真的是第一回。巨大的炉子，人被机器送进去，按按钮刷的一下点着了火，就那么短短的时间里，一个人就变成了灰烬。中途有时候还需要翻转一下，这样才能火化更...<span
-                                        class="answer-item-whole">全文</span></a></p></div>
-                                <div class="answer-oper"><a href="javascript:" data-log="Like|From_" class="w-like">
-                                    <!----> <i class="iconfont icon-digg_clicked"></i> <span class="like-num">670</span>
-                                    <span>赞</span></a> <a href="javascript:" data-log="Downvote|From_" class="w-unlike"><i
-                                        class="iconfont icon-ask_stamp"></i> <span class="unlike-count"></span>
-                                    <span>踩</span></a> <a href="javascript:" class="w-answer-nointerest-btn"><i
-                                        class="iconfont icon-ask_close"></i></a> <a href="javascript:"
-                                                                                    data-log="Visit_Comment|From_"
-                                                                                    class="answer-oper-comments"><i
-                                        class="iconfont icon-ask_comment"></i> <span class="comment-count">66</span>
-                                    <span>评论</span></a> <a href="javascript:" class="w-shareBtn"><i
-                                        class="iconfont icon-share-home"></i> <span>分享</span></a></div>
-                            </div>
-                        </div> <!----></div> <!----> <!----> <!----><!---->
-                    <div data-log-from="Feed" class="question-v3"><!---->
-                        <div class="question-title"><h2><a href="https://www.wukong.com/question/6578712095255167245/"
-                                                           target="_blank" data-log="Visit_Question|From_Link">刘伯温临死前说：“刘家再出人才，要等到100年以后”，最终应验了吗？</a>
-                        </h2>
-                            <div class="question-info"><span class="question-answer-num">24回答</span><span
-                                    class="question-follow-num">27人收藏</span></div>
-                        </div> <!---->
-                        <div class="question-answers">
-                            <div class="answer-item-v3 has-pic">
-                                <div class="answer-item-pic"><a href="javascript:"><img
-                                        src="./悟空问答首页_files/9b8c000095a6bf6c1b6b"></a></div> <!---->
-                                <div class="answer-info">
-                                    <div class="answer-info-user"><a target="_blank"
-                                                                     href="https://www.wukong.com/user/?uid=50758206843"
-                                                                     data-log="Visit_Profile|From_ProfilePic"
-                                                                     class="answer-info-user-avatar"><img alt=""
-                                                                                                          src="./悟空问答首页_files/1dcf002a6f7b1c048b51">
-                                        <span class="answer-info-user-name">秉烛读春秋
-                    <i class="iconfont icon-all_newv" style="font-size: 12px; color: rgb(255, 196, 28);"></i></span></a>
-                                        <span class="answer-info-user-title">历史问答达人</span></div>
-                                </div>
-                                <div class="answer-item-content"><p><a
-                                        href="https://www.wukong.com/answer/6578801524497973507/"
-                                        data-log="PopUp_AnswerContent|From_">谢邀，刘伯温是和诸葛亮一样的牛人，有道是：“三分天下诸葛亮，一统江山刘伯温”，刘伯温不仅多谋善断，而且和诸葛亮一样，前知500年，后知500载。所以，他的预测最终都'应验了。刘伯温...<span
-                                        class="answer-item-whole">全文</span></a></p></div>
-                                <div class="answer-oper"><a href="javascript:" data-log="Like|From_" class="w-like">
-                                    <!----> <i class="iconfont icon-digg_clicked"></i> <span class="like-num">374</span>
-                                    <span>赞</span></a> <a href="javascript:" data-log="Downvote|From_" class="w-unlike"><i
-                                        class="iconfont icon-ask_stamp"></i> <span class="unlike-count"></span>
-                                    <span>踩</span></a> <a href="javascript:" class="w-answer-nointerest-btn"><i
-                                        class="iconfont icon-ask_close"></i></a> <a href="javascript:"
-                                                                                    data-log="Visit_Comment|From_"
-                                                                                    class="answer-oper-comments"><i
-                                        class="iconfont icon-ask_comment"></i> <span class="comment-count">20</span>
-                                    <span>评论</span></a> <a href="javascript:" class="w-shareBtn"><i
-                                        class="iconfont icon-share-home"></i> <span>分享</span></a></div>
-                            </div>
-                        </div> <!----></div> <!----> <!----> <!----><!---->
-                    <div data-log-from="Feed" class="question-v3"><!---->
-                        <div class="question-title"><h2><a href="https://www.wukong.com/question/6464687869280649486/"
-                                                           target="_blank" data-log="Visit_Question|From_Link">慈禧26岁守寡，她是怎样度过深宫生活的？</a>
-                        </h2>
-                            <div class="question-info"><span class="question-answer-num">126回答</span><span
-                                    class="question-follow-num">617人收藏</span></div>
-                        </div> <!---->
-                        <div class="question-answers">
-                            <div class="answer-item-v3 has-pic">
-                                <div class="answer-item-pic"><a href="javascript:"><img
-                                        src="./悟空问答首页_files/811e0000b576b02e094c"></a></div> <!---->
-                                <div class="answer-info">
-                                    <div class="answer-info-user"><a target="_blank"
-                                                                     href="https://www.wukong.com/user/?uid=53300395452"
-                                                                     data-log="Visit_Profile|From_ProfilePic"
-                                                                     class="answer-info-user-avatar"><img alt=""
-                                                                                                          src="./悟空问答首页_files/47120001f2e0eadb2021">
-                                        <span class="answer-info-user-name">密探零零发
-                                            <!----></span></a> <span class="answer-info-user-title">历史问答达人</span></div>
-                                </div>
-                                <div class="answer-item-content"><p><a
-                                        href="https://www.wukong.com/answer/6553108765770514696/"
-                                        data-log="PopUp_AnswerContent|From_">慈禧26岁守寡后，她成为大清帝国的老大，生活极尽奢华，但夜深人静的时候，她依然只是一个女人，会寂寞空虚冷，特别是有一样东西每天都要用，这个东西到底隐藏着什么秘密呢？慈禧26岁守寡，...<span
-                                        class="answer-item-whole">全文</span></a></p></div>
-                                <div class="answer-oper"><a href="javascript:" data-log="Like|From_" class="w-like">
-                                    <!----> <i class="iconfont icon-digg_clicked"></i> <span
-                                        class="like-num">1155</span> <span>赞</span></a> <a href="javascript:"
-                                                                                           data-log="Downvote|From_"
-                                                                                           class="w-unlike"><i
-                                        class="iconfont icon-ask_stamp"></i> <span class="unlike-count"></span>
-                                    <span>踩</span></a> <a href="javascript:" class="w-answer-nointerest-btn"><i
-                                        class="iconfont icon-ask_close"></i></a> <a href="javascript:"
-                                                                                    data-log="Visit_Comment|From_"
-                                                                                    class="answer-oper-comments"><i
-                                        class="iconfont icon-ask_comment"></i> <span class="comment-count">119</span>
-                                    <span>评论</span></a> <a href="javascript:" class="w-shareBtn"><i
-                                        class="iconfont icon-share-home"></i> <span>分享</span></a></div>
-                            </div>
-                        </div> <!----></div> <!----> <!----> <!----><!---->
-                    <div data-log-from="Feed" class="question-v3"><!---->
-                        <div class="question-title"><h2><a href="https://www.wukong.com/question/6559843530691313923/"
-                                                           target="_blank" data-log="Visit_Question|From_Link">商朝令人谈之色变的“滴水刑”，到底是怎样的一种刑罚？</a>
-                        </h2>
-                            <div class="question-info"><span class="question-answer-num">111回答</span><span
-                                    class="question-follow-num">357人收藏</span></div>
-                        </div> <!---->
-                        <div class="question-answers">
-                            <div class="answer-item-v3 has-pic">
-                                <div class="answer-item-pic"><a href="javascript:"><img
-                                        src="./悟空问答首页_files/83b800057996b03f6a4d"></a></div> <!---->
-                                <div class="answer-info">
-                                    <div class="answer-info-user"><a target="_blank"
-                                                                     href="https://www.wukong.com/user/?uid=59944076706"
-                                                                     data-log="Visit_Profile|From_ProfilePic"
-                                                                     class="answer-info-user-avatar"><img alt=""
-                                                                                                          src="./悟空问答首页_files/4b01000060b32b52f217">
-                                        <span class="answer-info-user-name">史之策
-                                            <!----></span></a> <span class="answer-info-user-title">历史问答达人</span></div>
-                                </div>
-                                <div class="answer-item-content"><p><a
-                                        href="https://www.wukong.com/answer/6560987052546982158/"
-                                        data-log="PopUp_AnswerContent|From_">滴水刑—漫长的时间，无谓的挣扎，绝望的死去。
-                                    在了解滴水刑的过程中，身上不禁起鸡皮疙瘩，伴随着一丝丝皮肤腐烂带来的恶心，深深感到可怕。 滴水刑是由商纣王所发明的，源于一个奴仆的不小...<span
+                                            <span class="answer-info-user-title">法律行业从业者</span></div>
+                                    </div>
+                                    <div class="answer-item-content"><p><a
+                                            href="https://www.wukong.com/answer/6562797525240119560/"
+                                            data-log="PopUp_AnswerContent|From_">那些年，我们一起看过的广告，侮辱观众智商的广告不少，有人一笑了之，有人却上当受骗，下面我们就一起来掰一掰：1、美的变频空调，想开就开，一晚低至一度电。如果真的这么好，估计没人用暖气...<span
                                             class="answer-item-whole">全文</span></a></p></div>
-                                <div class="answer-oper"><a href="javascript:" data-log="Like|From_" class="w-like">
-                                    <!----> <i class="iconfont icon-digg_clicked"></i> <span class="like-num">328</span>
-                                    <span>赞</span></a> <a href="javascript:" data-log="Downvote|From_" class="w-unlike"><i
-                                        class="iconfont icon-ask_stamp"></i> <span class="unlike-count"></span>
-                                    <span>踩</span></a> <a href="javascript:" class="w-answer-nointerest-btn"><i
-                                        class="iconfont icon-ask_close"></i></a> <a href="javascript:"
-                                                                                    data-log="Visit_Comment|From_"
-                                                                                    class="answer-oper-comments"><i
-                                        class="iconfont icon-ask_comment"></i> <span class="comment-count">77</span>
-                                    <span>评论</span></a> <a href="javascript:" class="w-shareBtn"><i
-                                        class="iconfont icon-share-home"></i> <span>分享</span></a></div>
-                            </div>
-                        </div> <!----></div> <!----> <!----> <!----><!---->
-                    <div data-log-from="Feed" class="question-v3"><!---->
-                        <div class="question-title"><h2><a href="https://www.wukong.com/question/6497443475984744717/"
-                                                           target="_blank" data-log="Visit_Question|From_Link">山西前首富被女明星甩，负债千亿，如今流浪成老赖谁的过？</a>
-                        </h2>
-                            <div class="question-info"><span class="question-answer-num">748回答</span><span
-                                    class="question-follow-num">4147人收藏</span></div>
-                        </div> <!---->
-                        <div class="question-answers">
-                            <div class="answer-item-v3 has-pic">
-                                <div class="answer-item-pic"><a href="javascript:"><img
-                                        src="./悟空问答首页_files/4a3300057c1ac4602ce4"></a></div> <!---->
-                                <div class="answer-info">
-                                    <div class="answer-info-user"><a target="_blank"
-                                                                     href="https://www.wukong.com/user/?uid=73316332473"
-                                                                     data-log="Visit_Profile|From_ProfilePic"
-                                                                     class="answer-info-user-avatar"><img alt=""
-                                                                                                          src="./悟空问答首页_files/403c0000f2945062715d">
-                                        <span class="answer-info-user-name">深度娱
-                                            <!----></span></a> <!----></div>
+                                    <div class="answer-oper"><a href="javascript:" data-log="Like|From_" class="w-like">
+                                        <!----> <i class="iconfont icon-digg_clicked"></i> <span class="like-num">920</span>
+                                        <span>赞</span></a> <a href="javascript:" data-log="Downvote|From_" class="w-unlike"><i
+                                            class="iconfont icon-ask_stamp"></i> <span class="unlike-count"></span>
+                                        <span>踩</span></a> <a href="javascript:" class="w-answer-nointerest-btn"><i
+                                            class="iconfont icon-ask_close"></i></a> <a href="javascript:"
+                                                                                        data-log="Visit_Comment|From_"
+                                                                                        class="answer-oper-comments"><i
+                                            class="iconfont icon-ask_comment"></i> <span class="comment-count">0</span>
+                                        <span>评论</span></a> <a href="javascript:" class="w-shareBtn"><i
+                                            class="iconfont icon-share-home"></i> <span>分享</span></a></div>
                                 </div>
-                                <div class="answer-item-content"><p><a
-                                        href="https://www.wukong.com/answer/6497523036617441549/"
-                                        data-log="PopUp_AnswerContent|From_">娱乐圈总是流传着一句话"演的好不如嫁得好"，毕竟不是谁都可以像范冰冰一样说出这句话：我没有想嫁入豪门，我就是豪门。说到豪门新贵，山西首富李兆会在国内绝对是数一数二的，本来好好的在国...<span
-                                        class="answer-item-whole">全文</span></a></p></div>
-                                <div class="answer-oper"><a href="javascript:" data-log="Like|From_" class="w-like">
-                                    <!----> <i class="iconfont icon-digg_clicked"></i> <span
-                                        class="like-num">2921</span> <span>赞</span></a> <a href="javascript:"
-                                                                                           data-log="Downvote|From_"
-                                                                                           class="w-unlike"><i
-                                        class="iconfont icon-ask_stamp"></i> <span class="unlike-count"></span>
-                                    <span>踩</span></a> <a href="javascript:" class="w-answer-nointerest-btn"><i
-                                        class="iconfont icon-ask_close"></i></a> <a href="javascript:"
-                                                                                    data-log="Visit_Comment|From_"
-                                                                                    class="answer-oper-comments"><i
-                                        class="iconfont icon-ask_comment"></i> <span class="comment-count">433</span>
-                                    <span>评论</span></a> <a href="javascript:" class="w-shareBtn"><i
-                                        class="iconfont icon-share-home"></i> <span>分享</span></a></div>
-                            </div>
-                        </div> <!----></div> <!----> <!----> <!----><!---->
-                    <div data-log-from="Feed" class="question-v3"><!---->
-                        <div class="question-title"><h2><a href="https://www.wukong.com/question/6524093618645369092/"
-                                                           target="_blank" data-log="Visit_Question|From_Link">汶川地震中那些死难者存在银行里的钱，最后怎么处理了？</a>
-                        </h2>
-                            <div class="question-info"><span class="question-answer-num">1537回答</span><span
-                                    class="question-follow-num">4876人收藏</span></div>
-                        </div> <!---->
-                        <div class="question-answers">
-                            <div class="answer-item-v3 has-pic">
-                                <div class="answer-item-pic"><a href="javascript:"><img
-                                        src="./悟空问答首页_files/666e0005e7c3d48526f4"></a></div> <!---->
-                                <div class="answer-info">
-                                    <div class="answer-info-user"><a target="_blank"
-                                                                     href="https://www.wukong.com/user/?uid=5762131938"
-                                                                     data-log="Visit_Profile|From_ProfilePic"
-                                                                     class="answer-info-user-avatar"><img alt=""
-                                                                                                          src="./悟空问答首页_files/382b0018b579bbeda912">
-                                        <span class="answer-info-user-name">飞鱼无
-                                            <!----></span></a> <!----></div>
-                                </div>
-                                <div class="answer-item-content"><p><a
-                                        href="https://www.wukong.com/answer/6527930098400624904/"
-                                        data-log="PopUp_AnswerContent|From_">这个问题问的真好，原则上他的继承人去公证了以后拿着公证书可以去银行领取。但前提是你要找的到啊。为什么会找不到呢？我们来看这样一个案例。2007年，侯耀文遗产案轰动全国。我们都知道，...<span
-                                        class="answer-item-whole">全文</span></a></p></div>
-                                <div class="answer-oper"><a href="javascript:" data-log="Like|From_" class="w-like">
-                                    <!----> <i class="iconfont icon-digg_clicked"></i> <span
-                                        class="like-num">2573</span> <span>赞</span></a> <a href="javascript:"
-                                                                                           data-log="Downvote|From_"
-                                                                                           class="w-unlike"><i
-                                        class="iconfont icon-ask_stamp"></i> <span class="unlike-count"></span>
-                                    <span>踩</span></a> <a href="javascript:" class="w-answer-nointerest-btn"><i
-                                        class="iconfont icon-ask_close"></i></a> <a href="javascript:"
-                                                                                    data-log="Visit_Comment|From_"
-                                                                                    class="answer-oper-comments"><i
-                                        class="iconfont icon-ask_comment"></i> <span class="comment-count">179</span>
-                                    <span>评论</span></a> <a href="javascript:" class="w-shareBtn"><i
-                                        class="iconfont icon-share-home"></i> <span>分享</span></a></div>
-                            </div>
-                        </div> <!----></div> <!----> <!----> <!----><!---->
-                    <div data-log-from="Feed" class="question-v3"><!---->
-                        <div class="question-title"><h2><a href="https://www.wukong.com/question/6526000818053710087/"
-                                                           target="_blank" data-log="Visit_Question|From_Link">赵匡胤死后，赵光义如何对待年仅24岁的皇后嫂子的？</a>
-                        </h2>
-                            <div class="question-info"><span class="question-answer-num">103回答</span><span
-                                    class="question-follow-num">1027人收藏</span></div>
-                        </div> <!---->
-                        <div class="question-answers">
-                            <div class="answer-item-v3 has-pic">
-                                <div class="answer-item-pic"><a href="javascript:"><img
-                                        src="./悟空问答首页_files/7e5a0007343146200442"></a></div> <!---->
-                                <div class="answer-info">
-                                    <div class="answer-info-user"><a target="_blank"
-                                                                     href="https://www.wukong.com/user/?uid=72666531898"
-                                                                     data-log="Visit_Profile|From_ProfilePic"
-                                                                     class="answer-info-user-avatar"><img alt=""
-                                                                                                          src="./悟空问答首页_files/401f0002c2ea32b37f53">
-                                        <span class="answer-info-user-name">狄飞惊
-                                            <!----></span></a> <span
-                                            class="answer-info-user-title">网络作家 代表作《说不尽的宋朝》</span></div>
-                                </div>
-                                <div class="answer-item-content"><p><a
-                                        href="https://www.wukong.com/answer/6551204410138034446/"
-                                        data-log="PopUp_AnswerContent|From_">赵光义是什么角色？强幸小周后，调戏花蕊夫人，面对赵匡胤遗留的年轻美貌皇后，他干出来的事比耍流氓更狠，俩人到底有什么恩怨情仇？赵匡胤死时，儿子有两个，次子赵德昭和四子赵德芳，赵德昭2...<span
-                                        class="answer-item-whole">全文</span></a></p></div>
-                                <div class="answer-oper"><a href="javascript:" data-log="Like|From_" class="w-like">
-                                    <!----> <i class="iconfont icon-digg_clicked"></i> <span class="like-num">965</span>
-                                    <span>赞</span></a> <a href="javascript:" data-log="Downvote|From_" class="w-unlike"><i
-                                        class="iconfont icon-ask_stamp"></i> <span class="unlike-count"></span>
-                                    <span>踩</span></a> <a href="javascript:" class="w-answer-nointerest-btn"><i
-                                        class="iconfont icon-ask_close"></i></a> <a href="javascript:"
-                                                                                    data-log="Visit_Comment|From_"
-                                                                                    class="answer-oper-comments"><i
-                                        class="iconfont icon-ask_comment"></i> <span class="comment-count">37</span>
-                                    <span>评论</span></a> <a href="javascript:" class="w-shareBtn"><i
-                                        class="iconfont icon-share-home"></i> <span>分享</span></a></div>
-                            </div>
-                        </div> <!----></div> <!----> <!----> <!----><!---->
-                    <div data-log-from="Feed" class="question-v3"><!---->
-                        <div class="question-title"><h2><a href="https://www.wukong.com/question/6431453711704260865/"
-                                                           target="_blank" data-log="Visit_Question|From_Link">王杰究竟是被谁毒哑嗓子的？</a>
-                        </h2>
-                            <div class="question-info"><span class="question-answer-num">618回答</span><span
-                                    class="question-follow-num">1329人收藏</span></div>
-                        </div> <!---->
-                        <div class="question-answers">
-                            <div class="answer-item-v3 has-pic">
-                                <div class="answer-item-pic"><a href="javascript:"><img
-                                        src="./悟空问答首页_files/5fee0009d7091917c1cc"></a></div> <!---->
-                                <div class="answer-info">
-                                    <div class="answer-info-user"><a target="_blank"
-                                                                     href="https://www.wukong.com/user/?uid=22848095280"
-                                                                     data-log="Visit_Profile|From_ProfilePic"
-                                                                     class="answer-info-user-avatar"><img alt=""
-                                                                                                          src="./悟空问答首页_files/5ac7000a290fa5ba5752">
-                                        <span class="answer-info-user-name">飞机SHOW
-                                            <!----></span></a> <!----></div>
-                                </div>
-                                <div class="answer-item-content"><p><a
-                                        href="https://www.wukong.com/answer/6523715228381741326/"
-                                        data-log="PopUp_AnswerContent|From_">王杰到底有没有被人下毒这件事在我个人看来应该不是无中生有。要了解这件事情首先要知道当年的港台娱乐圈有多黑暗，这里的黑幕多了去了，以前由于信息闭塞，人们无从知晓，后来由于网络的发达，...<span
-                                        class="answer-item-whole">全文</span></a></p></div>
-                                <div class="answer-oper"><a href="javascript:" data-log="Like|From_" class="w-like">
-                                    <!----> <i class="iconfont icon-digg_clicked"></i> <span class="like-num">772</span>
-                                    <span>赞</span></a> <a href="javascript:" data-log="Downvote|From_" class="w-unlike"><i
-                                        class="iconfont icon-ask_stamp"></i> <span class="unlike-count"></span>
-                                    <span>踩</span></a> <a href="javascript:" class="w-answer-nointerest-btn"><i
-                                        class="iconfont icon-ask_close"></i></a> <a href="javascript:"
-                                                                                    data-log="Visit_Comment|From_"
-                                                                                    class="answer-oper-comments"><i
-                                        class="iconfont icon-ask_comment"></i> <span class="comment-count">70</span>
-                                    <span>评论</span></a> <a href="javascript:" class="w-shareBtn"><i
-                                        class="iconfont icon-share-home"></i> <span>分享</span></a></div>
-                            </div>
-                        </div> <!----></div> <!----> <!----> <!----><!---->
-                    <div data-log-from="Feed" class="question-v3"><!---->
-                        <div class="question-title"><h2><a href="https://www.wukong.com/question/6530573341244260615/"
-                                                           target="_blank" data-log="Visit_Question|From_Link">小沈阳如今变成这样，作为师父的赵本山为何不拉一把？</a>
-                        </h2>
-                            <div class="question-info"><span class="question-answer-num">262回答</span><span
-                                    class="question-follow-num">815人收藏</span></div>
-                        </div> <!---->
-                        <div class="question-answers">
-                            <div class="answer-item-v3 has-pic">
-                                <div class="answer-item-pic"><a href="javascript:"><img
-                                        src="./悟空问答首页_files/83b80005c6827c61bee1"></a></div> <!---->
-                                <div class="answer-info">
-                                    <div class="answer-info-user"><a target="_blank"
-                                                                     href="https://www.wukong.com/user/?uid=2856275571"
-                                                                     data-log="Visit_Profile|From_ProfilePic"
-                                                                     class="answer-info-user-avatar"><img alt=""
-                                                                                                          src="./悟空问答首页_files/289d0009326f480b4db4">
-                                        <span class="answer-info-user-name">炭烧的菠萝
-                                            <!----></span></a> <span class="answer-info-user-title">娱乐问答达人</span></div>
-                                </div>
-                                <div class="answer-item-content"><p><a
-                                        href="https://www.wukong.com/answer/6561274609465819399/"
-                                        data-log="PopUp_AnswerContent|From_">因为小沈阳如今变成这样，全是由他师傅赵本山一手造成的，当年小沈阳因为顶替了宋小宝，和师傅赵本山在春晚演了小品《不差钱》一炮而红，全国人民都认识了他，然后借助模仿和表演的功力，开了多...<span
-                                        class="answer-item-whole">全文</span></a></p></div>
-                                <div class="answer-oper"><a href="javascript:" data-log="Like|From_" class="w-like">
-                                    <!----> <i class="iconfont icon-digg_clicked"></i> <span
-                                        class="like-num">1021</span> <span>赞</span></a> <a href="javascript:"
-                                                                                           data-log="Downvote|From_"
-                                                                                           class="w-unlike"><i
-                                        class="iconfont icon-ask_stamp"></i> <span class="unlike-count"></span>
-                                    <span>踩</span></a> <a href="javascript:" class="w-answer-nointerest-btn"><i
-                                        class="iconfont icon-ask_close"></i></a> <a href="javascript:"
-                                                                                    data-log="Visit_Comment|From_"
-                                                                                    class="answer-oper-comments"><i
-                                        class="iconfont icon-ask_comment"></i> <span class="comment-count">191</span>
-                                    <span>评论</span></a> <a href="javascript:" class="w-shareBtn"><i
-                                        class="iconfont icon-share-home"></i> <span>分享</span></a></div>
-                            </div>
-                        </div> <!----></div> <!----> <!----> <!----><!---->
-                    <div data-log-from="Feed" class="question-v3"><!---->
-                        <div class="question-title"><h2><a href="https://www.wukong.com/question/6523023845249515784/"
-                                                           target="_blank" data-log="Visit_Question|From_Link">狗和猫真的能看见人看不见的东西吗？</a>
-                        </h2>
-                            <div class="question-info"><span class="question-answer-num">193回答</span><span
-                                    class="question-follow-num">277人收藏</span></div>
-                        </div> <!---->
-                        <div class="question-answers">
-                            <div class="answer-item-v3 has-pic">
-                                <div class="answer-item-pic"><a href="javascript:"><img
-                                        src="./悟空问答首页_files/666b000185b9c11eccf6"></a></div> <!---->
-                                <div class="answer-info">
-                                    <div class="answer-info-user"><a target="_blank"
-                                                                     href="https://www.wukong.com/user/?uid=5868592966"
-                                                                     data-log="Visit_Profile|From_ProfilePic"
-                                                                     class="answer-info-user-avatar"><img alt=""
-                                                                                                          src="./悟空问答首页_files/83470001739c0c29f079">
-                                        <span class="answer-info-user-name">隐居仙境
-                                            <!----></span></a> <!----></div>
-                                </div>
-                                <div class="answer-item-content"><p><a
-                                        href="https://www.wukong.com/answer/6523064192843383047/"
-                                        data-log="PopUp_AnswerContent|From_">不知道猫能不能看见人看不见的东西，但我可以明确告诉你，狗狗是一定能的，在农村，大家都知道一句俗话说狗叫快叫咬人，慢叫咬神，不慌不忙叫咬阴人(农村人说的鬼)。农村，一般农户都喜欢养一...<span
-                                        class="answer-item-whole">全文</span></a></p></div>
-                                <div class="answer-oper"><a href="javascript:" data-log="Like|From_" class="w-like">
-                                    <!----> <i class="iconfont icon-digg_clicked"></i> <span
-                                        class="like-num">1341</span> <span>赞</span></a> <a href="javascript:"
-                                                                                           data-log="Downvote|From_"
-                                                                                           class="w-unlike"><i
-                                        class="iconfont icon-ask_stamp"></i> <span class="unlike-count"></span>
-                                    <span>踩</span></a> <a href="javascript:" class="w-answer-nointerest-btn"><i
-                                        class="iconfont icon-ask_close"></i></a> <a href="javascript:"
-                                                                                    data-log="Visit_Comment|From_"
-                                                                                    class="answer-oper-comments"><i
-                                        class="iconfont icon-ask_comment"></i> <span class="comment-count">209</span>
-                                    <span>评论</span></a> <a href="javascript:" class="w-shareBtn"><i
-                                        class="iconfont icon-share-home"></i> <span>分享</span></a></div>
-                            </div>
-                        </div> <!----></div> <!----> <!----> <!----><!---->
-                    <div data-log-from="Feed" class="question-v3"><!---->
-                        <div class="question-title"><h2><a href="https://www.wukong.com/question/6418136300427149570/"
-                                                           target="_blank" data-log="Visit_Question|From_Link">当年成龙参加梅艳芳的葬礼，因迟到向华强就当众让成龙下跪的传闻是真的吗？</a>
-                        </h2>
-                            <div class="question-info"><span class="question-answer-num">191回答</span><span
-                                    class="question-follow-num">721人收藏</span></div>
-                        </div> <!---->
-                        <div class="question-answers">
-                            <div class="answer-item-v3 has-pic">
-                                <div class="answer-item-pic"><a href="javascript:"><img
-                                        src="./悟空问答首页_files/83b70000cf9747298b72"></a></div> <!---->
-                                <div class="answer-info">
-                                    <div class="answer-info-user"><a target="_blank"
-                                                                     href="https://www.wukong.com/user/?uid=2856275571"
-                                                                     data-log="Visit_Profile|From_ProfilePic"
-                                                                     class="answer-info-user-avatar"><img alt=""
-                                                                                                          src="./悟空问答首页_files/289d0009326f480b4db4">
-                                        <span class="answer-info-user-name">炭烧的菠萝
-                                            <!----></span></a> <span class="answer-info-user-title">娱乐问答达人</span></div>
-                                </div>
-                                <div class="answer-item-content"><p><a
-                                        href="https://www.wukong.com/answer/6555622936030478599/"
-                                        data-log="PopUp_AnswerContent|From_">成龙曾经在接受采访时说过一句话，娱乐圈真是太乱了，尤其是像我们那个年代，发生了好多不能拿出来说的事情，旁人根本没办法理解，但是我把它写成书了，交给律师保管，在100年以后出版。成龙...<span
-                                        class="answer-item-whole">全文</span></a></p></div>
-                                <div class="answer-oper"><a href="javascript:" data-log="Like|From_" class="w-like">
-                                    <!----> <i class="iconfont icon-digg_clicked"></i> <span class="like-num">388</span>
-                                    <span>赞</span></a> <a href="javascript:" data-log="Downvote|From_" class="w-unlike"><i
-                                        class="iconfont icon-ask_stamp"></i> <span class="unlike-count"></span>
-                                    <span>踩</span></a> <a href="javascript:" class="w-answer-nointerest-btn"><i
-                                        class="iconfont icon-ask_close"></i></a> <a href="javascript:"
-                                                                                    data-log="Visit_Comment|From_"
-                                                                                    class="answer-oper-comments"><i
-                                        class="iconfont icon-ask_comment"></i> <span class="comment-count">41</span>
-                                    <span>评论</span></a> <a href="javascript:" class="w-shareBtn"><i
-                                        class="iconfont icon-share-home"></i> <span>分享</span></a></div>
-                            </div>
-                        </div> <!----></div> <!----> <!----> <!----><!---->
-                    <div data-log-from="Feed" class="question-v3"><!---->
-                        <div class="question-title"><h2><a href="https://www.wukong.com/question/6389329659728756994/"
-                                                           target="_blank" data-log="Visit_Question|From_Link">大龄剩女会有什么样的结局？</a>
-                        </h2>
-                            <div class="question-info"><span class="question-answer-num">1058回答</span><span
-                                    class="question-follow-num">1782人收藏</span></div>
-                        </div> <!---->
-                        <div class="question-answers">
-                            <div class="answer-item-v3 has-pic">
-                                <div class="answer-item-pic"><a href="javascript:"><img
-                                        src="./悟空问答首页_files/811d0006e3e2b56814db"></a></div> <!---->
-                                <div class="answer-info">
-                                    <div class="answer-info-user"><a target="_blank"
-                                                                     href="https://www.wukong.com/user/?uid=5795410242"
-                                                                     data-log="Visit_Profile|From_ProfilePic"
-                                                                     class="answer-info-user-avatar"><img alt=""
-                                                                                                          src="./悟空问答首页_files/986b0000edecda6f8eec">
-                                        <span class="answer-info-user-name">聚焦山东热点
-                                            <!----></span></a> <!----></div>
-                                </div>
-                                <div class="answer-item-content"><p><a
-                                        href="https://www.wukong.com/answer/6556737747195789575/"
-                                        data-log="PopUp_AnswerContent|From_">我是45岁的剩女，至今未婚，也没对象。我内心非常后悔，没早点结婚，没早点嫁人。我同意那个人的看法，只是醒悟的太晚，30岁前的要求有点不切实际，那时候不乏追求者，也谈过多个对象，都是...<span
-                                        class="answer-item-whole">全文</span></a></p></div>
-                                <div class="answer-oper"><a href="javascript:" data-log="Like|From_" class="w-like">
-                                    <!----> <i class="iconfont icon-digg_clicked"></i> <span
-                                        class="like-num">1411</span> <span>赞</span></a> <a href="javascript:"
-                                                                                           data-log="Downvote|From_"
-                                                                                           class="w-unlike"><i
-                                        class="iconfont icon-ask_stamp"></i> <span class="unlike-count"></span>
-                                    <span>踩</span></a> <a href="javascript:" class="w-answer-nointerest-btn"><i
-                                        class="iconfont icon-ask_close"></i></a> <a href="javascript:"
-                                                                                    data-log="Visit_Comment|From_"
-                                                                                    class="answer-oper-comments"><i
-                                        class="iconfont icon-ask_comment"></i> <span class="comment-count">687</span>
-                                    <span>评论</span></a> <a href="javascript:" class="w-shareBtn"><i
-                                        class="iconfont icon-share-home"></i> <span>分享</span></a></div>
-                            </div>
-                        </div> <!----></div> <!----> <!----> <!----></div>
+                            </div> <!----></div>
+                    </c:forEach>
+                </div>
                 <div class="w-feed-loadmore"><span class="w-feed-loadmore-w">滚动加载更多</span></div>
             </div>
         </div>

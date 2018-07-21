@@ -5,3 +5,21 @@ create table user (
   picpath VARCHAR(255) not null DEFAULT 'default.jpg',
   introduction VARCHAR(255) not null DEFAULT ''
 )
+
+create table article (
+  aid int not null PRIMARY key auto_increment,
+  title varchar(200) not null DEFAULT '',
+  userid int not null DEFAULT -1,
+  content LONGTEXT,
+  createtime TIMESTAMP not null default CURRENT_TIMESTAMP,
+  picpath VARCHAR(50)
+)
+
+create table commentinfo (
+  cid int not null PRIMARY key auto_increment,
+  userid int not null DEFAULT -1,
+  content LONGTEXT,
+  createtime TIMESTAMP not null default CURRENT_TIMESTAMP,
+  picpath VARCHAR(50),
+  articleid int not null DEFAULT -1
+)
