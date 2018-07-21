@@ -33,7 +33,7 @@ public class ArticleServlet extends HttpServlet {
 
         IArticleDao articleDao = new ArticleDao();
         articleDao.addArticle(article);
-
+        response.getWriter().print("successful");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

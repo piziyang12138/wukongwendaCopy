@@ -15,8 +15,14 @@ public class Filter02_Checklogin implements Filter {
     }
 
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws ServletException, IOException {
-        if (((HttpServletRequest)req).getSession().getAttribute("user") == null){
-            ((HttpServletResponse)resp).sendRedirect(((HttpServletRequest) req).getContextPath() + "/jsp/register_login.jsp?model=login");
+        HttpServletRequest request = (HttpServletRequest)req;
+        HttpServletResponse response = (HttpServletResponse)resp;
+        if (request.getSession().getAttribute("user") == null){
+            if (request.getHeader("request-with").equals("ajax")){
+                response.setHeader("redirect","/jsp/register_login.jsp?model=login");
+            }else {
+                response.sendRedirect(request.getContextPath() + "/jsp/register_login.jsp?model=login");
+            }
         }else{
             chain.doFilter(req, resp);
         }

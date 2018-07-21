@@ -12,7 +12,7 @@ create table article (
   userid int not null DEFAULT -1,
   content LONGTEXT,
   createtime TIMESTAMP not null default CURRENT_TIMESTAMP,
-  picpath VARCHAR(50)
+  picpath VARCHAR(200)
 )
 
 create table commentinfo (
@@ -20,6 +20,6 @@ create table commentinfo (
   userid int not null DEFAULT -1,
   content LONGTEXT,
   createtime TIMESTAMP not null default CURRENT_TIMESTAMP,
-  picpath VARCHAR(50),
+  chtml LONGTEXT,
   articleid int not null DEFAULT -1
 )

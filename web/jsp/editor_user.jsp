@@ -42,7 +42,7 @@
     <script>
         contextPath = '${pageContext.request.contextPath}';
     </script>
-    <script src="${pageContext.request.contextPath}/js/editor_user.js"></script>
+    <script src="${pageContext.request.contextPath}/js/editor_user.js" charset="UTF-8"></script>
 </head>
 <body class="page-edit-static" data-log-from="Edit">
 <div id="wrapper">
@@ -122,7 +122,7 @@
                                     </div>
                                     <div class="user-title">
                                         <c:choose>
-                                            <c:when test="${user.introduction == null}">
+                                            <c:when test="${user.introduction == ''}">
                                                 我很懒什么都不留下<input type="hidden" id="flag-span" value="0">
                                             </c:when>
                                             <c:otherwise>

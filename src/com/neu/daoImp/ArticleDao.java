@@ -45,7 +45,7 @@ public class ArticleDao implements IArticleDao{
     public List<Article> queryArticleByPage(int pageindex, int pagesize) {
         List<Article> arr = new ArrayList<>();
         try {
-            PreparedStatement ps = con.prepareStatement("select * from article LIMIT ?,?");
+            PreparedStatement ps = con.prepareStatement("select * from article order by aid desc LIMIT ?,? ");
             ps.setInt(1,(pageindex-1)*pagesize);
             ps.setInt(2,pagesize);
 

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Created by ttc on 2018/7/20.
  */
 window.onload = function () {
@@ -24,6 +24,27 @@ window.onload = function () {
         let form = document.getElementById('markdown-form');
         form.submit();
     }
+
+    //图片点击事件
+    const preview_img = document.getElementById("preview-img");
+    preview_img.onclick = function () {
+        let index = layer.open({
+            title:false,
+            area:['600px'],
+            content:`<img src="${this.src}" width="500px" height="500px">`,
+            shade:0.8,
+            shadeClose:true,
+            btn:[],
+            scrollbar:false
+        });
+        layer.style(index,{
+            "background": '#333333',
+            // "opacity": 0.5,
+        });
+    }
+
+
+
 };
 var blob = null;
 var testEditor;

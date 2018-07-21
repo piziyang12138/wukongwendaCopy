@@ -1,7 +1,6 @@
 package com.neu.daoImp;
 
-import com.neu.bean.Article;
-import com.neu.bean.CommentAndUser;
+import com.neu.bean.CommentInformation;
 import com.neu.bean.Commentinfo;
 import com.neu.dao.ICommentInfoDao;
 import com.neu.utils.JDBCUtils;
@@ -43,8 +42,8 @@ public class CommentInfoDao implements ICommentInfoDao {
     }
 
     @Override
-    public List<CommentAndUser> queryCommentByAid(int aid, int pageindex, int pagesize) {
-        List<CommentAndUser> arr = new ArrayList<>();
+    public List<CommentInformation> queryCommentByAid(int aid, int pageindex, int pagesize) {
+        List<CommentInformation> arr = new ArrayList<>();
         try {
             PreparedStatement ps = con.prepareStatement("SELECT commentinfo.*,`user`.picpath,`user`.username FROM commentinfo\n" +
                     "JOIN `user` ON commentinfo.userid = `user`.id \n" +
@@ -55,7 +54,7 @@ public class CommentInfoDao implements ICommentInfoDao {
 
             ResultSet rs = ps.executeQuery();
             while (rs.next()){
-                CommentAndUser commentinfo = new CommentAndUser();
+                CommentInformation commentinfo = new CommentInformation();
                 commentinfo.setCid(rs.getLong("cid"));
                 commentinfo.setChtml(rs.getString("chtml"));
                 commentinfo.setArticleid(rs.getLong("articleid"));
@@ -64,6 +63,31 @@ public class CommentInfoDao implements ICommentInfoDao {
                 commentinfo.setCreatetime(rs.getTimestamp("createtime"));
                 commentinfo.setUsername(rs.getString("username"));
                 commentinfo.setPicpath(rs.getString("picpath"));
+                arr.add(commentinfo);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return arr;
+    }
+
+    @Override
+    public List<CommentInformation> queryCommentInfoById(int id) {
+        List<CommentInformation> arr = new ArrayList<>();
+        try {
+            PreparedStatement ps = con.prepareStatement("select article.title,commentinfo.content ,(select count(*) from article WHERE articleid = 4) as count FROM commentinfo \n" +
+                    "join article on commentinfo.articleid = article.aid\n" +
+                    "where commentinfo.userid = ?");
+            ps.setInt(1,id);
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()){
+                CommentInformation commentinfo = new CommentInformation();
+                commentinfo.setContent(rs.getString("content"));
+                commentinfo.setArescount(rs.getInt("count"));
+                commentinfo.setAtitle(rs.getString("title"));
                 arr.add(commentinfo);
             }
 

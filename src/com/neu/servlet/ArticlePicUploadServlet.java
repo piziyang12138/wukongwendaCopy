@@ -14,7 +14,7 @@ import java.util.UUID;
 /**
  * Created by ttc on 2018/7/20.
  */
-@WebServlet(name = "ArticlePicUploadServlet",urlPatterns = "/article_pic_upload.do")
+@WebServlet(name = "ArticlePicUploadServlet",urlPatterns = "/article_pic_upload.admin")
 @MultipartConfig
 public class ArticlePicUploadServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

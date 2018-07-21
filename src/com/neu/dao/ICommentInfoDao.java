@@ -1,6 +1,6 @@
 package com.neu.dao;
 
-import com.neu.bean.CommentAndUser;
+import com.neu.bean.CommentInformation;
 import com.neu.bean.Commentinfo;
 
 import java.util.List;
@@ -10,5 +10,6 @@ import java.util.List;
  */
 public interface ICommentInfoDao {
     int addComment(Commentinfo commentinfo);
-    List<CommentAndUser> queryCommentByAid(int aid, int pageindex, int pagesize);
+    List<CommentInformation> queryCommentByAid(int aid, int pageindex, int pagesize);
+    List<CommentInformation> queryCommentInfoById(int id);
 }

@@ -1,6 +1,5 @@
 package com.neu.servlet;
 
-import com.neu.bean.CommentAndUser;
 import com.neu.bean.Commentinfo;
 import com.neu.bean.User;
 import com.neu.dao.ICommentInfoDao;
@@ -12,7 +11,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 
 /**
  * Created by ttc on 2018/7/20.
@@ -35,10 +33,14 @@ public class CommentServlet extends HttpServlet {
         ICommentInfoDao commentInfoDao = new CommentInfoDao();
         commentInfoDao.addComment(commentinfo);
 
-        List<CommentAndUser> list = commentInfoDao.queryCommentByAid(Integer.parseInt(aid),1,10);
-        request.setAttribute("comments",list);
-        request.setAttribute("count",list.size());
-        request.getRequestDispatcher(request.getContextPath() + "/jsp/article.jsp").forward(request,response);
+//        IArticleDao articleDao = new ArticleDao();
+//        Article article = articleDao.queryArticleByAid(Integer.parseInt(aid));
+//
+//        List<CommentInformation> list = commentInfoDao.queryCommentByAid(Integer.parseInt(aid),1,10);
+//        request.setAttribute("comments",list);
+//        request.setAttribute("count",list.size());
+//        request.setAttribute("article",article);
+        response.sendRedirect(request.getContextPath() + "/to_article.do?aid="+aid);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

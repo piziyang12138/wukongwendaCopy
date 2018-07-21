@@ -44,7 +44,8 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/common_1b698e6.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/widget_6bdd57b.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/index_4c95c68.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/question_single_static_f271b8e.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/question_single_static_f271b8e.css"
+          charset="GBK">
     <link href="${pageContext.request.contextPath}/editor-md-master/css/editormd.css" rel="stylesheet">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/editor-md-master/examples/css/style.css">
     <style>#BAIDU_DSPUI_FLOWBAR, .adsbygoogle, .ad, div[class^="ad-widsget"], div[id^="div-gpt-ad-"], a[href*="cpro.baidu.com"], a[href*="@"][href*=".exe"], a[href*="/?/"][href*=".exe"], .adpushwin {
@@ -53,20 +54,25 @@
         max-height: 0 !important;
         overflow: hidden !important;
     }
-        .answer-user-name{
-            text-align: left;
-        }
-        .answer-user-tag{
-            text-align: left;
-        }
+
+    .answer-user-name, .answer-user-tag, .user-name, .question-name, .question-text, .user-title, .question-bottom {
+        text-align: left;
+    }
+    .answer-wrapper-inline .write-content-submit:hover{
+        background-color: #265a88;
+    }
+
 
     </style>
     <script>
         contextPath = '${pageContext.request.contextPath}';
     </script>
-    <script src="${pageContext.request.contextPath}/editor-md-master/jquery.min.js"></script>
+    <script src="${pageContext.request.contextPath}/layer/jquery-3.3.1.min.js"></script>
     <script src="${pageContext.request.contextPath}/editor-md-master/editormd.js"></script>
-    <script src="${pageContext.request.contextPath}/js/article.js"></script>
+    <script src="${pageContext.request.contextPath}/layer/layer.js"></script>
+    <script src="${pageContext.request.contextPath}/js/article.js" charset="UTF-8" type="text/javascript"></script>
+    <script>
+    </script>
 </head>
 <body data-log-from="Question" spellcheck="false">
 <div id="wrapper" class="static">
@@ -78,7 +84,7 @@
                         <div class="suspension-part">
                             <div class="logo-box"><a href="https://www.wukong.com/" data-log="Visit_Index|From_logo"
                                                      title="悟空问答" class="logo-link"><img
-                                    src="./悟空问答-文章界面_files/logo_5df43ca.png" alt="悟空问答" class="logo"></a></div>
+                                    src="${pageContext.request.contextPath}/img/logo_5df43ca.png" alt="悟空问答" class="logo"></a></div>
                             <div class="search-box">
                                 <div data-node="searchBox" data-log-from="SearchBox" class="widget-search-input">
                                     <form action="https://www.wukong.com/search/" method="get" data-node="searchForm"
@@ -110,11 +116,11 @@
                                 <div data-node="user-account" class="nav-account-wrapper dropdown"><a
                                         href="https://www.wukong.com/user/" target="_blank"
                                         data-log="Visit_Profile|From_" class="nav-account-user line"><img
-                                        src="./悟空问答-文章界面_files/3033762272" alt="" class="nav-account-user-avatar"></a>
+                                        src="${pageContext.request.contextPath}/upload/${user.picpath}" alt="" class="nav-account-user-avatar"></a>
                                     <div class="dropdown-menu"><i class="triangle"></i>
                                         <div><a href="https://www.wukong.com/user/" target="_blank"
                                                 class="layer-item"><i class="iconfont icon-ask_write"></i>我的问答</a></div>
-                                        <div><a class="layer-item"><i
+                                        <div><a class="layer-item" href="${pageContext.request.contextPath}/logout.admin"><i
                                                 class="iconfont icon-ask_profile_exit"></i>退  出</a></div>
                                     </div>
                                 </div>
@@ -134,12 +140,13 @@
                     <div>
                         <div id="user-card" class="user-card">
                             <div id="widget-usercard" data-log-from="ProfileCard" class="w-usercard"><a target="_blank"
-                                                                                                        href="https://www.wukong.com/user/?uid=101244253391"
+                                                                                                        href="${pageContext.request.contextPath}/jsp/user.jsp"
                                                                                                         data-log="Visit_Profile|From_"
                                                                                                         class="userinfo clearfix">
-                                <div class="avatar"><img src="./悟空问答-文章界面_files/3033762272" alt=""></div>
+                                <div class="avatar"><img src="${pageContext.request.contextPath}/upload/${user.picpath}"
+                                                         alt=""></div>
                                 <div class="user-desc"><h2 class="user-name">
-                                    皮子阳
+                                    ${user.username}
                                     <!----></h2>
                                     <div class="user-intro">
 
@@ -151,7 +158,7 @@
                                 <div class="user-data clearfix">
                                     <div class="user-data-single user-data-answer"><a
                                             href="https://www.wukong.com/user/?type=0" target="_blank"><h3>
-                                        0
+                                        ${user.rescount}
                                     </h3> <span>回答</span></a></div>
                                     <a href="https://www.wukong.com/user/?type=0" target="_blank"
                                        class="user-data-single user-data-digg"><h3>
@@ -305,10 +312,12 @@
                         ${article.content}
                     </div>
                     <div class="question-img-preview">
-                        <div class="image-box"><img data-node="preview" src="${pageContext.request.contextPath}/upload/${article.picpath}"
+                        <div class="image-box"><img data-node="preview"
+                                                    src="${pageContext.request.contextPath}/upload/${article.picpath}"
                                                     data-src="//p3.pstatp.com/list/190x124/5044000373ed2c530102"
                                                     data-width="168" data-height="114" class=""
-                                                    style="width: 174px; height: 114px; margin-left: -3px; margin-top: 0px;">
+                                                    style="width: 174px; height: 114px; margin-left: -3px; margin-top: 0px;"
+                                                    id="preview-img">
                         </div>
                     </div>
                     <div class="question-bottom"><a data-node="answer" href="javascript:;"
@@ -352,9 +361,12 @@
                                 <div class="write">
                                     <div class="write-content">
                                         <div class="hold-position" style="display: none;"></div>
-                                        <form method="post" action="${pageContext.request.contextPath}/comment.admin" id="markdown-form">
-                                            <div id="test-editormd" class="editormd editormd-vertical" style="width: 90%; height: 740px;">
-                                                <textarea class="editormd-markdown-textarea" placeholder="Enjoy Markdown! coding now..."></textarea>
+                                        <form method="post" action="${pageContext.request.contextPath}/comment.admin"
+                                              id="markdown-form">
+                                            <div id="test-editormd" class="editormd editormd-vertical"
+                                                 style="width: 90%; height: 740px;">
+                                                <textarea class="editormd-markdown-textarea"
+                                                          placeholder="Enjoy Markdown! coding now..."></textarea>
                                             </div>
                                             <input type="hidden" value="${article.aid}" name="aid">
                                         </form>
@@ -409,10 +421,12 @@
                                          itemtype="http://schema.org/Answer" itemprop="suggestedAnswer"
                                          class="answer-item sticky-item req_1">
                                         <meta itemprop="upvoteCount" content="21">
-                                        <meta itemprop="url" content="https://www.wukong.com/answer/6558898480486547715/">
+                                        <meta itemprop="url"
+                                              content="https://www.wukong.com/answer/6558898480486547715/">
                                         <meta itemprop="commentCount" content="18">
                                         <meta itemprop="dateCreated" content="${comment.createtime}">
-                                        <a href="https://www.wukong.com/answer/6558898480486547715/" class="seo-link"></a>
+                                        <a href="https://www.wukong.com/answer/6558898480486547715/"
+                                           class="seo-link"></a>
                                         <div class="fake-cover"></div>
                                         <div data-log-from="!Question" itemscope="itemscope"
                                              itemtype="http://schema.org/Person" itemprop="author" class="answer-user">
@@ -421,7 +435,8 @@
                                             <meta itemprop="description" content="中国工商银行广西分行营业部大堂经理">
                                             <a href="https://www.wukong.com/user/?uid=52713245090" target="_blank"
                                                data-log="Visit_Profile|From_ProfilePic" class="answer-user-avatar"><img
-                                                    src="${pageContext.request.contextPath}/upload/${comment.picpath}" alt=""
+                                                    src="${pageContext.request.contextPath}/upload/${comment.picpath}"
+                                                    alt=""
                                                     itemprop="image"></a> <a
                                                 href="https://www.wukong.com/user/?uid=52713245090" target="_blank"
                                                 data-log="Visit_Profile|From_ProfilePic" class="answer-user-name">
@@ -435,18 +450,20 @@
         关注
     </span></a></div>
                                         <div class="answer-text h_1200 fold">
-                                            ${comment.chtml}
+                                                ${comment.chtml}
 
-                                            <a href="javascript:;" class="j-expand-showfull expand-bottom" style="display: none">展开全部</a>
+                                            <a href="javascript:;" class="j-expand-showfull expand-bottom"
+                                               style="display: none">展开全部</a>
 
                                             <!---->
                                             <div class="answer-tool">
                                                 <div class="comment-tool"><a href="javascript:" data-log="Like|From_"
                                                                              class="w-like answer-like-count"><!----> <i
                                                         class="iconfont icon-digg_clicked"></i> <span
-                                                        class="like-num">21</span> <span>赞</span></a> <a href="javascript:"
-                                                                                                         data-log="Downvote|From_"
-                                                                                                         class="w-unlike answer-dislike-count"><i
+                                                        class="like-num">21</span> <span>赞</span></a> <a
+                                                        href="javascript:"
+                                                        data-log="Downvote|From_"
+                                                        class="w-unlike answer-dislike-count"><i
                                                         class="iconfont icon-ask_stamp"></i> <span
                                                         class="unlike-count"></span> <span>踩</span></a> <a
                                                         data-node="show-comment" href="javascript:;"
@@ -468,17 +485,21 @@
                                                                      class="share-link weixin"><i
                                                                         class="iconfont icon-wechat_share"></i></div>
                                                                 <div data-node="weibo" data-url="" data-desc=""
-                                                                     data-log="Share_Weibo|From_" class="share-link weibo">
+                                                                     data-log="Share_Weibo|From_"
+                                                                     class="share-link weibo">
                                                                     <i class="iconfont icon-weibo_share"></i></div>
                                                                 <div data-node="qzone" data-url="" data-desc=""
-                                                                     data-log="Share_Qzone|From_" class="share-link qq"><i
-                                                                        class="iconfont icon-qzone_share"></i></div>
+                                                                     data-log="Share_Qzone|From_" class="share-link qq">
+                                                                    <i
+                                                                            class="iconfont icon-qzone_share"></i></div>
                                                             </div>
                                                             <div class="share-group-arrow"><i></i></div>
                                                         </div>
                                                     </div>
-                                                    <div class="inform"><i class="iconfont icon-CombinedShape"></i> <span
-                                                            data-log="PopUp_Inform|From_informAnswer">举报</span></div>
+                                                    <div class="inform"><i class="iconfont icon-CombinedShape"></i>
+                                                        <span
+                                                                data-log="PopUp_Inform|From_informAnswer">举报</span>
+                                                    </div>
                                                 </div> <!----> <!----></div>
                                         </div>
                                         <div class="comment-container hide"></div>
@@ -489,7 +510,7 @@
                             </div>
                         </div>
                         <div data-node="open-fold-answer" data-log="Visit_CollapseAnswer|From_"
-                             class="folder-answer-toggle"><span>645个回答被折叠</span></div>
+                             class="folder-answer-toggle"><span><%-- 645个回答被折叠 --%></span></div>
                         <div class="answer-normal" style="display: none;">
                             <div class="answer-items-normal"></div>
                             <div class="answer-normal-bottom"><a href="javascript:;" data-node="answer-normal-loadmore"

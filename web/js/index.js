@@ -1,7 +1,16 @@
-/**
+﻿/**
  * Created by ttc on 2018/7/20.
  */
 let index;
+if (document.location.search.substr(1) === 'refresh'){
+    layer.msg('发布成功',
+        {
+            offset: '100px',
+            shade: 0,
+            time: 2000,
+            icon: 1
+        });
+}
 window.onload = function () {
     $('#ask-question').on('click', function () {
         index = layer.open({
@@ -123,12 +132,20 @@ function upload(e) {
     var formdata = new FormData();
     var req = new XMLHttpRequest();
     formdata.append('file', e.files[0]);
-    req.open("post", contextPath + "/article_pic_upload.do", true);
+    req.open("post", contextPath + "/article_pic_upload.admin", true);
+    req.setRequestHeader("request-with",'ajax');
     req.send(formdata);
     req.onload = function () {
+        if (req.getResponseHeader('redirect') !== null){
+            window.location.href = contextPath + req.getResponseHeader('redirect');
+        }
         var p_img = document.getElementById("img-preview");
+        // console.log(req.responseText);
         let path = contextPath + '/upload/' + req.responseText;
         p_img.innerHTML = `<div class="img-preview-item"><img src="${path}" alt="" class="as-height"> <div class="img-del" onclick="imgdel(this)"><i class="iconfont icon-ask_close"></i></div> <!----></div>`
+
+        //将input中的值设为空，避免选同一张图片的时候不触发onchange方法
+        e.value = '';
     }
 }
 
@@ -151,15 +168,16 @@ function submit(e) {
     let req = new XMLHttpRequest();
     req.open("post", contextPath + "/article_add.admin", true);
     req.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+    req.setRequestHeader("request-with",'ajax');
     req.send("title="+title + "&content="+content+"&img_path="+img_path);
     req.onload = function () {
-        layer.msg('发布成功',
-            {
-                offset:'100px',
-                shade : 0,
-                time:2000,
-                icon: 1
-            });
+        if (req.getResponseHeader('redirect') !== null){
+            window.location.href = contextPath + req.getResponseHeader('redirect');
+        }
+        if (req.responseText === 'successful') {
+            window.location.href = contextPath + '/home.do?refresh';
+        }
+
     };
 
     layer.close(index);

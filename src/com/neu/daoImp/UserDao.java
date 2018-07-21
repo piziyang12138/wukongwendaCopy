@@ -1,6 +1,7 @@
 package com.neu.daoImp;
 
 import com.neu.bean.User;
+import com.neu.bean.UserInfo;
 import com.neu.dao.IUserDao;
 import com.neu.utils.JDBCUtils;
 
@@ -38,10 +39,10 @@ public class UserDao implements IUserDao {
     }
 
     @Override
-    public int isUserExist(User user) {
+    public int isUserExist(UserInfo user) {
         int res = 0;
         try {
-            PreparedStatement ps = con.prepareStatement("select * FROM user WHERE username = ? AND pwd = ?");
+            PreparedStatement ps = con.prepareStatement("select user.* ,count(*) as count FROM user join commentinfo on user.id = commentinfo.userid\nwhere username=? and pwd = ? GROUP BY id");
             ps.setString(1,user.getUsername());
             ps.setString(2,user.getPwd());
             ResultSet rs = ps.executeQuery();
@@ -50,6 +51,7 @@ public class UserDao implements IUserDao {
                 user.setId(rs.getLong("id"));
                 user.setPicpath(rs.getString("picpath"));
                 user.setIntroduction(rs.getString("introduction"));
+                user.setRescount(rs.getInt("count"));
                 res = 1;
             }
         } catch (SQLException e) {

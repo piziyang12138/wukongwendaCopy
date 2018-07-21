@@ -59,7 +59,7 @@
     <script>
         flag = false;
     </script>
-    <script src="${pageContext.request.contextPath}/js/register_login.js"></script>
+    <script src="${pageContext.request.contextPath}/js/register_login.js" charset="gb2312" type="text/javascript"></script>
 </head>
 <body style="min-width: 1220px; overflow-x: hidden;"><a href="https://sso.toutiao.com/articles_news_society/"
                                                         style="display:none;"></a>

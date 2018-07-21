@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <!-- saved from url=(0028)https://www.wukong.com/user/ -->
 <html lang="en">
@@ -38,6 +39,10 @@
         max-height: 0 !important;
         overflow: hidden !important;
     }</style>
+    <script src="${pageContext.request.contextPath}/js/user.js" charset="UTF-8"></script>
+    <script>
+
+    </script>
 </head>
 <body class="page-user-static" data-log-from="User">
 <div id="wrapper" class="">
@@ -47,9 +52,11 @@
                 <div data-node="midbarInner" class="midbar-inner">
                     <div class="inner clearfix">
                         <div class="suspension-part">
-                            <div class="logo-box"><a href="${pageContext.request.contextPath}/home.do" data-log="Visit_Index|From_logo"
+                            <div class="logo-box"><a href="${pageContext.request.contextPath}/home.do"
+                                                     data-log="Visit_Index|From_logo"
                                                      title="悟空问答" class="logo-link"><img
-                                    src="${pageContext.request.contextPath}/img/logo_5df43ca.png" alt="悟空问答" class="logo"></a></div>
+                                    src="${pageContext.request.contextPath}/img/logo_5df43ca.png" alt="悟空问答"
+                                    class="logo"></a></div>
                             <div class="search-box">
                                 <div data-node="searchBox" data-log-from="SearchBox" class="widget-search-input">
                                     <form action="https://www.wukong.com/search/" method="get" data-node="searchForm"
@@ -67,7 +74,8 @@
                             </div>
                         </div>
                         <a href="javascript:;" data-node="ask" data-log="PopUp_CreateQuestion|From_" class="ask">提问</a>
-                        <div class="nav logined"><a href="${pageContext.request.contextPath}/home.do" data-log="Visit_Index|From_Link"
+                        <div class="nav logined"><a href="${pageContext.request.contextPath}/home.do"
+                                                    data-log="Visit_Index|From_Link"
                                                     title="首页" class="">首页</a> <a href="https://www.wukong.com/myquest/"
                                                                                   data-log="Visit_QuestionInvited|From_"
                                                                                   title="等我来答" class="">等我来答</a>
@@ -80,11 +88,13 @@
                                 <div data-node="user-account" class="nav-account-wrapper dropdown"><a
                                         href="https://www.wukong.com/user/" target="_blank"
                                         data-log="Visit_Profile|From_" class="nav-account-user line"><img
-                                        src="${pageContext.request.contextPath}/upload/${user.picpath}" alt="" class="nav-account-user-avatar"></a>
+                                        src="${pageContext.request.contextPath}/upload/${user.picpath}" alt=""
+                                        class="nav-account-user-avatar"></a>
                                     <div class="dropdown-menu"><i class="triangle"></i>
                                         <div><a href="https://www.wukong.com/user/" target="_blank"
                                                 class="layer-item"><i class="iconfont icon-ask_write"></i>我的问答</a></div>
-                                        <div><a class="layer-item"  href="${pageContext.request.contextPath}/logout.admin"><i
+                                        <div><a class="layer-item"
+                                                href="${pageContext.request.contextPath}/logout.admin"><i
                                                 class="iconfont icon-ask_profile_exit"></i>退  出</a></div>
                                     </div>
                                 </div>
@@ -113,16 +123,24 @@
                         <div id="widget-usercard-left" data-log-from="ProfileCard" class="w-usercard-left">
                             <div itemscope="itemscope" itemtype="http://schema.org/Person" class="userinfo clearfix"><a
                                     target="_blank" href="https://www.wukong.com/user/?uid=101244253391">
-                                <meta itemprop="name" content="手机用户101244253391">
-                                <div class="avatar"><img src="${pageContext.request.contextPath}/upload/${user.picpath}" alt="" itemprop="image">
+                                <meta itemprop="name" content="${user.username}">
+                                <div class="avatar"><img src="${pageContext.request.contextPath}/upload/${user.picpath}"
+                                                         alt="" itemprop="image">
                                 </div>
-                                <div class="user-desc"><h1 class="user-name"><span>手机用户10124425339</span> <span
+                                <div class="user-desc"><h1 class="user-name"><span>${user.username}</span> <span
                                         class="last-name-letter">1<!----></span></h1>
                                     <div itemprop="description" class="user-intro">
 
                                     </div>
                                     <div class="user-title">
-                                        我很懒什么都不留下
+                                        <c:choose>
+                                            <c:when test="${user.introduction == ''}">
+                                                我很懒什么都不留下<input type="hidden" id="flag-span" value="0">
+                                            </c:when>
+                                            <c:otherwise>
+                                                ${user.introduction}
+                                            </c:otherwise>
+                                        </c:choose>
                                     </div>
                                     <div><a href="javascript:;"><!----></a> <!---->
                                         <div class="edit-section"><a
@@ -177,12 +195,13 @@
                 <div class="main-list">
                     <div class="nav-wrapper-placeholder">
                         <div class="nav-wrapper">
-                            <div class="nav"><a data-node="data-type" data-type="2"
-                                                href="https://www.wukong.com/user/?uid=101244253391&amp;type=2"
-                                                data-log="Visit_ActivTab|From_" class="current">动态</a> <a
+                            <div class="nav" id="nav"><a data-node="data-type" data-type="2"
+                                                         href="javascript:"
+                                                         data-log="Visit_ActivTab|From_" class="current">动态</a> <a
                                     data-node="data-type" data-type="0"
-                                    href="https://www.wukong.com/user/?uid=101244253391&amp;type=0"
-                                    data-log="Visit_AnswerTab|From_" class="">回答 <span class="ans_count">0</span></a>
+                                    href="javascript:"
+                                    data-log="Visit_AnswerTab|From_" class="">回答 <span
+                                    class="ans_count">${user.rescount}</span></a>
                                 <!----> <a data-node="data-type" data-type="1" href="javascript:;"
                                            data-log="Visit_FollowTab|From_" class="">收藏 <span
                                         class="follow_count">0</span></a> <a data-node="data-type" data-type="3"
@@ -198,7 +217,71 @@
                             <div class="w-feed-loadmore"><span class="w-feed-loadmore-w">没有更多动态</span></div>
                         </div>
                         <div data-log-from="Answer" class="w-feed w-feed-profile-answer" style="display: none;">
-                            <div class="w-feed-container"></div>
+                            <div class="w-feed-container">
+
+
+                                <c:forEach items="${comments}" var="comment">
+                                    <div data-log-from="Feed" class="question-v3"><!---->
+                                        <div class="question-title"><h2><a href="javascript:"
+                                                                           target="_blank"
+                                                                           data-log="Visit_Question|From_Link">${comment.title}</a>
+                                        </h2>
+                                            <div class="question-info"><span class="question-answer-num">${comment.rescount}</span><span
+                                                    class="question-follow-num">381人收藏</span></div>
+                                        </div> <!---->
+                                        <div class="question-answers">
+                                            <div class="answer-item-v3"><!----> <!---->
+                                                <div class="answer-info">
+                                                    <div class="answer-info-user"><a target="_blank"
+                                                                                     href="/user/?uid=101244253391"
+                                                                                     data-log="Visit_Profile|From_ProfilePic"
+                                                                                     class="answer-info-user-avatar"><img
+                                                            alt="" src="http://p1.pstatp.com/thumb/3795/3033762272"> <span
+                                                            class="answer-info-user-name">${}
+                                                        <!----></span></a> <!----></div>
+                                                </div>
+                                                <div class="answer-item-content"><p><a href="/answer/6580617165374750983/"
+                                                                                       data-log="PopUp_AnswerContent|From_"></a>
+                                                </p></div>
+                                                <div class="answer-oper-my">
+                                                    <div class="w-answer-setting"><span class="set">设置<i
+                                                            class="iconfont icon-ask_arrow_down"></i></span>
+                                                        <div class="layer"><a href="javascript:"
+                                                                              data-log="DeleteAnswer|From_Setting"
+                                                                              class="delete">删除回答</a> <a href="javascript:"
+                                                                                                         data-log="Toggle_CommentControl|From_Setting"
+                                                                                                         class="forbid-comment">禁止评论</a>
+                                                            <a href="javascript:"
+                                                               data-log="Toggle_CommentControl|From_Setting"
+                                                               class="permit-comment">允许评论</a></div>
+                                                    </div>
+                                                    <a href="javascript:" class="edit">编辑</a> <span
+                                                        class="read-count">0阅读</span> <span class="like-count">0赞</span>
+                                                    <span class="comment-count">0评论</span> <a href="javascript:"
+                                                                                              class="w-shareBtn"><span>分享</span>
+                                                    <div data-node="widget-share-group" class="widget-share-group">
+                                                        <div class="share-group-content clearfix">
+                                                            <div class="qr"></div>
+                                                            <div data-node="weixin" data-url="" data-desc=""
+                                                                 data-log="Share_Weixin|From_" class="share-link weixin"><i
+                                                                    class="iconfont icon-wechat_share"></i></div>
+                                                            <div data-node="weibo" data-url="" data-desc=""
+                                                                 data-log="Share_Weibo|From_" class="share-link weibo"><i
+                                                                    class="iconfont icon-weibo_share"></i></div>
+                                                            <div data-node="qzone" data-url="" data-desc=""
+                                                                 data-log="Share_Qzone|From_" class="share-link qq"><i
+                                                                    class="iconfont icon-qzone_share"></i></div>
+                                                        </div>
+                                                        <div class="share-group-arrow"><i></i></div>
+                                                    </div>
+                                                </a></div>
+                                            </div>
+                                        </div> <!----></div>
+                                </c:forEach>
+
+
+
+                            </div>
                             <div class="w-feed-loadmore"><span class="w-feed-loadmore-w">没有更多回答</span></div>
                         </div>
                         <div data-log-from="Question" class="w-feed w-feed-profile-question" style="display: none;">

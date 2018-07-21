@@ -3,9 +3,27 @@ package com.neu.bean;
 /**
  * Created by ttc on 2018/7/20.
  */
-public class CommentAndUser extends Commentinfo{
+public class CommentInformation extends Commentinfo{
     private String username;
     private String picpath;
+    private String atitle;
+    private int arescount;
+
+    public String getAtitle() {
+        return atitle;
+    }
+
+    public void setAtitle(String atitle) {
+        this.atitle = atitle;
+    }
+
+    public int getArescount() {
+        return arescount;
+    }
+
+    public void setArescount(int arescount) {
+        this.arescount = arescount;
+    }
 
     public String getUsername() {
         return username;
