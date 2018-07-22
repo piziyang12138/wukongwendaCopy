@@ -98,7 +98,7 @@
                                     <c:choose>
                                         <c:when test="${!empty user}">
                                         <div data-node="user-account" class="nav-account-wrapper dropdown">
-                                        <a href="${pageContext.request.contextPath}/toUser.admin?id=${user.id}" target="_blank"
+                                        <a href="${pageContext.request.contextPath}/toUser.do?id=${user.id}" target="_blank"
                                                data-log="Visit_Profile|From_" class="nav-account-user line"><img
                                                     src="${pageContext.request.contextPath}/upload/${user.picpath}" alt=""
                                                     class="nav-account-user-avatar"></a>

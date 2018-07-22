@@ -1,6 +1,7 @@
 package com.neu.servlet;
 
 import com.neu.bean.Article;
+import com.neu.bean.ArticleInfo;
 import com.neu.dao.IArticleDao;
 import com.neu.daoImp.ArticleDao;
 
@@ -23,7 +24,7 @@ public class HomeServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         IArticleDao articleDao = new ArticleDao();
-        List<Article> articles = articleDao.queryArticleByPage(1,20);
+        List<ArticleInfo> articles = articleDao.queryArticleByPage(1,20);
         request.setAttribute("articles",articles);
         request.getRequestDispatcher(request.getContextPath() + "/index.jsp").forward(request,response);
     }

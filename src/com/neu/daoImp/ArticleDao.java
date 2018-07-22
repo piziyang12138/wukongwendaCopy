@@ -1,6 +1,7 @@
 package com.neu.daoImp;
 
 import com.neu.bean.Article;
+import com.neu.bean.ArticleInfo;
 import com.neu.dao.IArticleDao;
 import com.neu.utils.JDBCUtils;
 
@@ -42,8 +43,8 @@ public class ArticleDao implements IArticleDao{
     }
 
     @Override
-    public List<Article> queryArticleByPage(int pageindex, int pagesize) {
-        List<Article> arr = new ArrayList<>();
+    public List<ArticleInfo> queryArticleByPage(int pageindex, int pagesize) {
+        List<ArticleInfo> arr = new ArrayList<>();
         try {
             PreparedStatement ps = con.prepareStatement("select * from article order by aid desc LIMIT ?,? ");
             ps.setInt(1,(pageindex-1)*pagesize);
@@ -51,7 +52,7 @@ public class ArticleDao implements IArticleDao{
 
             ResultSet rs = ps.executeQuery();
             while (rs.next()){
-                Article article = new Article();
+                ArticleInfo article = new ArticleInfo();
                 article.setAid(rs.getLong("aid"));
                 article.setUserid(rs.getLong("userid"));
                 article.setPicpath(rs.getString("picpath"));

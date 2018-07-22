@@ -1,6 +1,7 @@
 package com.neu.dao;
 
 import com.neu.bean.Article;
+import com.neu.bean.ArticleInfo;
 
 import java.util.List;
 
@@ -9,6 +10,6 @@ import java.util.List;
  */
 public interface IArticleDao {
     int addArticle(Article article);
-    List<Article> queryArticleByPage(int pageindex,int pagesize);
+    List<ArticleInfo> queryArticleByPage(int pageindex, int pagesize);
     Article queryArticleByAid(int aid);
 }

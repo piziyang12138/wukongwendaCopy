@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(name = "ToUserServlet",urlPatterns = "/toUser.admin")
+@WebServlet(name = "ToUserServlet",urlPatterns = "/toUser.do")
 public class ToUserServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 

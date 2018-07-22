@@ -18,7 +18,7 @@ public class Filter02_Checklogin implements Filter {
         HttpServletRequest request = (HttpServletRequest)req;
         HttpServletResponse response = (HttpServletResponse)resp;
         if (request.getSession().getAttribute("user") == null){
-            if (request.getHeader("request-with").equals("ajax")){
+            if ("ajax".equals(request.getHeader("request-with"))){
                 response.setHeader("redirect","/jsp/register_login.jsp?model=login");
             }else {
                 response.sendRedirect(request.getContextPath() + "/jsp/register_login.jsp?model=login");

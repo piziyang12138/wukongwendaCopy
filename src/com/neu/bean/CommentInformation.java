@@ -8,6 +8,15 @@ public class CommentInformation extends Commentinfo{
     private String picpath;
     private String atitle;
     private int arescount;
+    private int aid;
+
+    public int getAid() {
+        return aid;
+    }
+
+    public void setAid(int aid) {
+        this.aid = aid;
+    }
 
     public String getAtitle() {
         return atitle;

@@ -77,7 +77,7 @@ public class CommentInfoDao implements ICommentInfoDao {
     public List<CommentInformation> queryCommentInfoById(int id) {
         List<CommentInformation> arr = new ArrayList<>();
         try {
-            PreparedStatement ps = con.prepareStatement("select article.title,commentinfo.content ,(select count(*) from article WHERE articleid = 4) as count FROM commentinfo \n" +
+            PreparedStatement ps = con.prepareStatement("select article.aid,article.title,commentinfo.content ,(select count(*) from article WHERE articleid = 4) as count FROM commentinfo \n" +
                     "join article on commentinfo.articleid = article.aid\n" +
                     "where commentinfo.userid = ?");
             ps.setInt(1,id);
@@ -88,6 +88,7 @@ public class CommentInfoDao implements ICommentInfoDao {
                 commentinfo.setContent(rs.getString("content"));
                 commentinfo.setArescount(rs.getInt("count"));
                 commentinfo.setAtitle(rs.getString("title"));
+                commentinfo.setAid(rs.getInt("aid"));
                 arr.add(commentinfo);
             }
 

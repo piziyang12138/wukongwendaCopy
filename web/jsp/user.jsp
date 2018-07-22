@@ -41,7 +41,10 @@
     }</style>
     <script src="${pageContext.request.contextPath}/js/user.js" charset="UTF-8"></script>
     <script>
-
+        <c:forEach items="${comments}" var="comment">
+            console.log('${comment.atitle}');
+            console.log('${comment.arescount}');
+        </c:forEach>
     </script>
 </head>
 <body class="page-user-static" data-log-from="User">
@@ -222,26 +225,26 @@
 
                                 <c:forEach items="${comments}" var="comment">
                                     <div data-log-from="Feed" class="question-v3"><!---->
-                                        <div class="question-title"><h2><a href="javascript:"
+                                        <div class="question-title"><h2><a href="${pageContext.request.contextPath}/to_article.do?aid=${comment.aid}"
                                                                            target="_blank"
-                                                                           data-log="Visit_Question|From_Link">${comment.title}</a>
+                                                                           data-log="Visit_Question|From_Link">${comment.atitle}</a>
                                         </h2>
-                                            <div class="question-info"><span class="question-answer-num">${comment.rescount}</span><span
+                                            <div class="question-info"><span class="question-answer-num">${comment.arescount}回答</span><span
                                                     class="question-follow-num">381人收藏</span></div>
                                         </div> <!---->
                                         <div class="question-answers">
                                             <div class="answer-item-v3"><!----> <!---->
                                                 <div class="answer-info">
                                                     <div class="answer-info-user"><a target="_blank"
-                                                                                     href="/user/?uid=101244253391"
+                                                                                     href="${pageContext.request.contextPath}/toUser.do?id=${user.id}"
                                                                                      data-log="Visit_Profile|From_ProfilePic"
                                                                                      class="answer-info-user-avatar"><img
-                                                            alt="" src="http://p1.pstatp.com/thumb/3795/3033762272"> <span
-                                                            class="answer-info-user-name">${}
+                                                            alt="" src="${pageContext.request.contextPath}/upload/${user.picpath}"> <span
+                                                            class="answer-info-user-name">${user.username}
                                                         <!----></span></a> <!----></div>
                                                 </div>
                                                 <div class="answer-item-content"><p><a href="/answer/6580617165374750983/"
-                                                                                       data-log="PopUp_AnswerContent|From_"></a>
+                                                                                       data-log="PopUp_AnswerContent|From_">${comment.content}</a>
                                                 </p></div>
                                                 <div class="answer-oper-my">
                                                     <div class="w-answer-setting"><span class="set">设置<i
