@@ -40,6 +40,12 @@
     <script src="${pageContext.request.contextPath}/layer/layer.js"></script>
     <script>
         contextPath = '${pageContext.request.contextPath}';
+        <c:forEach items="${articles}" var="article">
+            console.log('${article.rescount}');
+            console.log('${article.comment_content}');
+            console.log('${article.comment_username}');
+            console.log('${article.upicpath}');
+        </c:forEach>
     </script>
     <script src="${pageContext.request.contextPath}/js/index.js" charset="UTF-8"></script>
 </head>
@@ -132,7 +138,42 @@
         <div id="pagelet-sidebar" class="right-part">
             <div id="placeholver_sidebar">
                 <div>
-                    <div id="user-card" class="user-card"><!----></div>
+                    <c:choose>
+                        <c:when test="${!empty user}">
+                            <div id="user-card" class="user-card">
+                                <div id="widget-usercard" data-log-from="ProfileCard" class="w-usercard"><a target="_blank"
+                                                                                                            href="${pageContext.request.contextPath}/jsp/user.jsp"
+                                                                                                            data-log="Visit_Profile|From_"
+                                                                                                            class="userinfo clearfix">
+                                    <div class="avatar"><img src="${pageContext.request.contextPath}/upload/${user.picpath}"
+                                                             alt=""></div>
+                                    <div class="user-desc"><h2 class="user-name">
+                                            ${user.username}
+                                        <!----></h2>
+                                        <div class="user-intro">
+
+                                        </div>
+                                        <div class="user-title">
+                                            2131
+                                        </div> <!----></div>
+                                </a>
+                                    <div class="user-data clearfix">
+                                        <div class="user-data-single user-data-answer"><a
+                                                href="https://www.wukong.com/user/?type=0" target="_blank"><h3>
+                                                ${user.rescount}
+                                        </h3> <span>回答</span></a></div>
+                                        <a href="https://www.wukong.com/user/?type=0" target="_blank"
+                                           class="user-data-single user-data-digg"><h3>
+                                            0
+                                        </h3> <span>收到赞</span> <!----></a> <a
+                                            href="https://www.wukong.com/attention/?type=2" target="_blank"
+                                            data-log="Visit_FansTab|From_" class="user-data-single user-data-follow"><h3>
+                                            ${user.followedcount}
+                                    </h3> <span>粉丝</span> <!----></a></div>
+                                </div>
+                            </div>
+                        </c:when>
+                    </c:choose>
                     <div data-node="hot-board" data-log-from="!Campaign" class="hot-board">
                         <div class="unslider">
                             <div class="banner unslider-horizontal" style="overflow: hidden;">
@@ -400,39 +441,45 @@
                             <div class="question-title"><h2><a href="${pageContext.request.contextPath}/to_article.do?aid=${article.aid}"
                                                                target="_blank" data-log="Visit_Question|From_Link">${article.title}</a>
                             </h2>
-                                <div class="question-info"><span class="question-answer-num">1752回答</span><span
-                                        class="question-follow-num">1862人收藏</span></div>
+                                <div class="question-info"><span class="question-answer-num">${article.rescount}回答</span><span
+                                        class="question-follow-num">${article.collection_count}人收藏</span></div>
                             </div> <!---->
                             <div class="question-answers">
-                                <div class="answer-item-v3 has-pic">
-                                    <div class="answer-item-pic"><a href="javascript:"><img
-                                            src="./悟空问答首页_files/8b6d0001167ee98125bc"></a></div> <!---->
-                                    <div class="answer-info">
-                                        <div class="answer-info-user"><a target="_blank"
-                                                                         href="https://www.wukong.com/user/?uid=70707073272"
-                                                                         data-log="Visit_Profile|From_ProfilePic"
-                                                                         class="answer-info-user-avatar"><img alt=""
-                                                                                                              src="./悟空问答首页_files/3c7300052107ddee70af">
-                                            <span class="answer-info-user-name">打虎拍蝇
+                            <c:choose>
+                                <c:when test="${!empty article.comment_username}">
+                                    <div class="answer-item-v3 has-pic">
+                                            <div class="answer-item-pic"><a href="javascript:"><img
+                                                    src="<%--评论图片 先空着--%>"></a></div> <!---->
+                                            <div class="answer-info">
+                                                <div class="answer-info-user"><a target="_blank"
+                                                                                 href="${pageContext.request.contextPath}/toUser.do?id=${article.comment_userid}"
+                                                                                 data-log="Visit_Profile|From_ProfilePic"
+                                                                                 class="answer-info-user-avatar"><img alt=""
+                                                                                                                      src="${pageContext.request.contextPath}/upload/${article.upicpath}">
+                                                    <span class="answer-info-user-name">${article.comment_username}
                     <i class="iconfont icon-all_newv" style="font-size: 12px; color: rgb(255, 196, 28);"></i></span></a>
-                                            <span class="answer-info-user-title">法律行业从业者</span></div>
-                                    </div>
-                                    <div class="answer-item-content"><p><a
-                                            href="https://www.wukong.com/answer/6562797525240119560/"
-                                            data-log="PopUp_AnswerContent|From_">那些年，我们一起看过的广告，侮辱观众智商的广告不少，有人一笑了之，有人却上当受骗，下面我们就一起来掰一掰：1、美的变频空调，想开就开，一晚低至一度电。如果真的这么好，估计没人用暖气...<span
-                                            class="answer-item-whole">全文</span></a></p></div>
-                                    <div class="answer-oper"><a href="javascript:" data-log="Like|From_" class="w-like">
-                                        <!----> <i class="iconfont icon-digg_clicked"></i> <span class="like-num">920</span>
-                                        <span>赞</span></a> <a href="javascript:" data-log="Downvote|From_" class="w-unlike"><i
-                                            class="iconfont icon-ask_stamp"></i> <span class="unlike-count"></span>
-                                        <span>踩</span></a> <a href="javascript:" class="w-answer-nointerest-btn"><i
-                                            class="iconfont icon-ask_close"></i></a> <a href="javascript:"
-                                                                                        data-log="Visit_Comment|From_"
-                                                                                        class="answer-oper-comments"><i
-                                            class="iconfont icon-ask_comment"></i> <span class="comment-count">0</span>
-                                        <span>评论</span></a> <a href="javascript:" class="w-shareBtn"><i
-                                            class="iconfont icon-share-home"></i> <span>分享</span></a></div>
-                                </div>
+                                                    <span class="answer-info-user-title">法律行业从业者</span></div>
+                                            </div>
+                                            <div class="answer-item-content"><p><a
+                                                    href="https://www.wukong.com/answer/6562797525240119560/"
+                                                    data-log="PopUp_AnswerContent|From_">${article.comment_content}<span
+                                                    class="answer-item-whole">全文</span></a></p></div>
+                                            <div class="answer-oper">
+                                                <input type="hidden" value="${article.comment_id}">
+                                                <a href="javascript:" data-log="Like|From_" class="w-like">
+                                                <!----> <i class="iconfont icon-digg_clicked"></i> <span class="like-num">920</span>
+                                                <span>赞</span></a> <a href="javascript:" data-log="Downvote|From_" class="w-unlike"><i
+                                                    class="iconfont icon-ask_stamp"></i> <span class="unlike-count"></span>
+                                                <span>踩</span></a> <a href="javascript:" class="w-answer-nointerest-btn"><i
+                                                    class="iconfont icon-ask_close"></i></a> <a href="javascript:"
+                                                                                                data-log="Visit_Comment|From_"
+                                                                                                class="answer-oper-comments"><i
+                                                    class="iconfont icon-ask_comment"></i> <span class="comment-count">0</span>
+                                                <span>评论</span></a> <a href="javascript:" class="w-shareBtn"><i
+                                                    class="iconfont icon-share-home"></i> <span>分享</span></a></div>
+                                        </div>
+                                </c:when>
+                            </c:choose>
                             </div> <!----></div>
                     </c:forEach>
                 </div>

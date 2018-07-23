@@ -3,7 +3,9 @@ package com.neu.servlet;
 import com.neu.bean.CommentInformation;
 import com.neu.bean.UserInfo;
 import com.neu.dao.ICommentInfoDao;
+import com.neu.dao.IUserDao;
 import com.neu.daoImp.CommentInfoDao;
+import com.neu.daoImp.UserDao;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,8 +26,11 @@ public class ToUserServlet extends HttpServlet {
 
         ICommentInfoDao commentInfoDao = new CommentInfoDao();
         List<CommentInformation> list = commentInfoDao.queryCommentInfoById(Integer.parseInt(id));
+        IUserDao userDao = new UserDao();
+        UserInfo user = userDao.queryUserById(Integer.parseInt(id));
 
         request.setAttribute("comments",list);
+        request.setAttribute("userinfo",user);
         request.getRequestDispatcher(request.getContextPath() + "/jsp/user.jsp").forward(request,response);
     }
 }

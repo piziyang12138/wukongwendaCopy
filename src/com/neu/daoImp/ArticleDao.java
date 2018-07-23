@@ -46,7 +46,10 @@ public class ArticleDao implements IArticleDao{
     public List<ArticleInfo> queryArticleByPage(int pageindex, int pagesize) {
         List<ArticleInfo> arr = new ArrayList<>();
         try {
-            PreparedStatement ps = con.prepareStatement("select * from article order by aid desc LIMIT ?,? ");
+            PreparedStatement ps = con.prepareStatement("SELECT (select count(*) FROM collection where articleid = aid) as collection_count,article.*,commentinfo.chtml,(SELECT count(*) FROM commentinfo WHERE articleid = aid) AS count,`user`.username,`user`.picpath as upicpath,commentinfo.userid as comment_userid,commentinfo.cid   FROM article \n" +
+                    "LEFT JOIN commentinfo ON article.aid = commentinfo.articleid\n" +
+                    "LEFT JOIN user ON commentinfo.userid = user.id\n" +
+                    "GROUP BY aid order BY aid DESC LIMIT ?,? ");
             ps.setInt(1,(pageindex-1)*pagesize);
             ps.setInt(2,pagesize);
 
@@ -59,6 +62,13 @@ public class ArticleDao implements IArticleDao{
                 article.setContent(rs.getString("content"));
                 article.setTitle(rs.getString("title"));
                 article.setCreatetime(rs.getTimestamp("createtime"));
+                article.setComment_content(rs.getString("chtml"));
+                article.setRescount(rs.getInt("count"));
+                article.setComment_username(rs.getString("username"));
+                article.setUpicpath(rs.getString("upicpath"));
+                article.setCollection_count(rs.getInt("collection_count"));
+                article.setComment_userid(rs.getInt("comment_userid"));
+                article.setComment_id(rs.getInt("comment_id"));
                 arr.add(article);
             }
 
@@ -70,10 +80,10 @@ public class ArticleDao implements IArticleDao{
     }
 
     @Override
-    public Article queryArticleByAid(int aid) {
-        Article article = new Article();
+    public ArticleInfo queryArticleByAid(int aid) {
+        ArticleInfo article = new ArticleInfo();
         try {
-            PreparedStatement ps = con.prepareStatement("select * from article WHERE aid = ?");
+            PreparedStatement ps = con.prepareStatement("select article.*,(select count(*) FROM collection where articleid = aid) as count from article WHERE aid = ?");
             ps.setInt(1,aid);
 
             ResultSet rs = ps.executeQuery();
@@ -84,6 +94,7 @@ public class ArticleDao implements IArticleDao{
                 article.setContent(rs.getString("content"));
                 article.setTitle(rs.getString("title"));
                 article.setCreatetime(rs.getTimestamp("createtime"));
+                article.setCollection_count(rs.getInt("count"));
             }
 
         } catch (SQLException e) {

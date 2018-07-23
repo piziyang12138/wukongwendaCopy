@@ -126,43 +126,46 @@
                         <div id="widget-usercard-left" data-log-from="ProfileCard" class="w-usercard-left">
                             <div itemscope="itemscope" itemtype="http://schema.org/Person" class="userinfo clearfix"><a
                                     target="_blank" href="https://www.wukong.com/user/?uid=101244253391">
-                                <meta itemprop="name" content="${user.username}">
-                                <div class="avatar"><img src="${pageContext.request.contextPath}/upload/${user.picpath}"
+                                <meta itemprop="name" content="${userinfo.username}">
+                                <div class="avatar"><img src="${pageContext.request.contextPath}/upload/${userinfo.picpath}"
                                                          alt="" itemprop="image">
                                 </div>
-                                <div class="user-desc"><h1 class="user-name"><span>${user.username}</span> <span
-                                        class="last-name-letter">1<!----></span></h1>
+                                <div class="user-desc"><h1 class="user-name"><span>${userinfo.username}</span> <span
+                                        class="last-name-letter"><!----></span></h1>
                                     <div itemprop="description" class="user-intro">
 
                                     </div>
                                     <div class="user-title">
                                         <c:choose>
-                                            <c:when test="${user.introduction == ''}">
+                                            <c:when test="${userinfo.introduction == ''}">
                                                 我很懒什么都不留下<input type="hidden" id="flag-span" value="0">
                                             </c:when>
                                             <c:otherwise>
-                                                ${user.introduction}
+                                                ${userinfo.introduction}
                                             </c:otherwise>
                                         </c:choose>
                                     </div>
-                                    <div><a href="javascript:;"><!----></a> <!---->
-                                        <div class="edit-section"><a
-                                                href="${pageContext.request.contextPath}/jsp/editor_user.jsp"
-                                                class="edit-person-info"><span class="edit-text"><i
-                                                class="iconfont icon-pen edit-icon"></i>
+                                    <c:if test="${userinfo.id eq user.id}">
+                                        <div><a href="javascript:;"><!----></a> <!---->
+                                            <div class="edit-section"><a
+                                                    href="${pageContext.request.contextPath}/jsp/editor_user.jsp"
+                                                    class="edit-person-info"><span class="edit-text"><i
+                                                    class="iconfont icon-pen edit-icon"></i>
                             编辑个人信息
                         </span></a></div>
-                                    </div>
+                                        </div>
+                                    </c:if>
+
                                 </div>
                             </a></div>
                             <div class="user-data clearfix"><a
                                     href="https://www.wukong.com/attention/?uid=101244253391&amp;type=1"
                                     data-log="Visit_FollowerTab|From_" target="_blank" class="user-data-left"><h3>
-                                0
+                                ${userinfo.followcount}
                             </h3> <span>关注</span></a> <a
                                     href="https://www.wukong.com/attention/?uid=101244253391&amp;type=2"
                                     data-log="Visit_FansTab|From_" target="_blank" class="user-data-right"><h3>
-                                0
+                                ${userinfo.followedcount}
                             </h3> <span>粉丝</span> <!----></a>
                                 <div class="vertiacl-line"></div>
                             </div>
@@ -204,7 +207,7 @@
                                     data-node="data-type" data-type="0"
                                     href="javascript:"
                                     data-log="Visit_AnswerTab|From_" class="">回答 <span
-                                    class="ans_count">${user.rescount}</span></a>
+                                    class="ans_count">${userinfo.rescount}</span></a>
                                 <!----> <a data-node="data-type" data-type="1" href="javascript:;"
                                            data-log="Visit_FollowTab|From_" class="">收藏 <span
                                         class="follow_count">0</span></a> <a data-node="data-type" data-type="3"
@@ -236,11 +239,11 @@
                                             <div class="answer-item-v3"><!----> <!---->
                                                 <div class="answer-info">
                                                     <div class="answer-info-user"><a target="_blank"
-                                                                                     href="${pageContext.request.contextPath}/toUser.do?id=${user.id}"
+                                                                                     href="${pageContext.request.contextPath}/toUser.do?id=${userinfo.id}"
                                                                                      data-log="Visit_Profile|From_ProfilePic"
                                                                                      class="answer-info-user-avatar"><img
-                                                            alt="" src="${pageContext.request.contextPath}/upload/${user.picpath}"> <span
-                                                            class="answer-info-user-name">${user.username}
+                                                            alt="" src="${pageContext.request.contextPath}/upload/${userinfo.picpath}"> <span
+                                                            class="answer-info-user-name">${userinfo.username}
                                                         <!----></span></a> <!----></div>
                                                 </div>
                                                 <div class="answer-item-content"><p><a href="/answer/6580617165374750983/"

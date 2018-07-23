@@ -7,7 +7,8 @@ import com.neu.bean.UserInfo;
  * Created by ttc on 2018/7/18.
  */
 public interface IUserDao {
-    int addUser(User user);
+    int addUser(UserInfo user);
     int isUserExist(UserInfo user);
-    int updateUserById(User user);
+    int updateUserById(UserInfo user);
+    UserInfo queryUserById(int id);
 }

@@ -3,6 +3,7 @@ package com.neu.servlet;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.neu.bean.User;
+import com.neu.bean.UserInfo;
 import com.neu.dao.IUserDao;
 import com.neu.daoImp.UserDao;
 import com.neu.utils.JSONUtils;
@@ -26,7 +27,7 @@ public class EditorUserServlet extends HttpServlet {
         String username = request.getParameter("username");
         String introduction = request.getParameter("introduction");
 
-        User user = (User) request.getSession().getAttribute("user");
+        UserInfo user = (UserInfo) request.getSession().getAttribute("user");
 
         if (username != null) {
             user.setUsername(username);

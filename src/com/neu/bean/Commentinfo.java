@@ -7,6 +7,24 @@ public class Commentinfo {
   private java.sql.Timestamp createtime;
   private String chtml;
   private Long articleid;
+  private Long fabulous;
+  private Long tread;
+
+  public Long getFabulous() {
+    return fabulous;
+  }
+
+  public void setFabulous(Long fabulous) {
+    this.fabulous = fabulous;
+  }
+
+  public Long getTread() {
+    return tread;
+  }
+
+  public void setTread(Long tread) {
+    this.tread = tread;
+  }
 
   public String getChtml() {
     return chtml;

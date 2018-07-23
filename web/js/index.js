@@ -11,7 +11,31 @@ if (document.location.search.substr(1) === 'refresh'){
             icon: 1
         });
 }
+
+function fabulous(e) {
+    let req = new XMLHttpRequest();
+    req.open('post',contextPath+'/likeorunlike.admin',true);
+    req.setRequestHeader('request-with','ajax');
+    req.send('cid='+e.previousElementSibling.value);
+    req.onload = function () {
+        if (req.getResponseHeader('redirect') !== null){
+            window.location.href = contextPath + req.getResponseHeader('redirect');
+        }
+        if (req.responseText === 'successful'){
+
+        }
+    }
+}
 window.onload = function () {
+    //赞按钮
+    const likes = document.getElementsByClassName("w-like");
+    for (let i = 0;i<likes.length;i++){
+        likes[i].onclick = function () {
+            
+        }
+    }
+    
+    
     $('#ask-question').on('click', function () {
         index = layer.open({
             type: 1,

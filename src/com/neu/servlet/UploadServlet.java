@@ -1,6 +1,7 @@
 package com.neu.servlet;
 
 import com.neu.bean.User;
+import com.neu.bean.UserInfo;
 import com.neu.dao.IUserDao;
 import com.neu.daoImp.UserDao;
 
@@ -36,7 +37,7 @@ public class UploadServlet extends HttpServlet {
         }
         part.write(path+uuid+name);
         response.getWriter().print(uuid+name);
-        User user = (User)request.getSession().getAttribute("user");
+        UserInfo user = (UserInfo)request.getSession().getAttribute("user");
         user.setPicpath(uuid+name);
         request.getSession().setAttribute("user",user);
 

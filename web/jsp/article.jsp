@@ -58,7 +58,8 @@
     .answer-user-name, .answer-user-tag, .user-name, .question-name, .question-text, .user-title, .question-bottom {
         text-align: left;
     }
-    .answer-wrapper-inline .write-content-submit:hover{
+
+    .answer-wrapper-inline .write-content-submit:hover {
         background-color: #265a88;
     }
 
@@ -66,6 +67,7 @@
     </style>
     <script>
         contextPath = '${pageContext.request.contextPath}';
+
     </script>
     <script src="${pageContext.request.contextPath}/layer/jquery-3.3.1.min.js"></script>
     <script src="${pageContext.request.contextPath}/editor-md-master/editormd.js"></script>
@@ -84,7 +86,8 @@
                         <div class="suspension-part">
                             <div class="logo-box"><a href="https://www.wukong.com/" data-log="Visit_Index|From_logo"
                                                      title="悟空问答" class="logo-link"><img
-                                    src="${pageContext.request.contextPath}/img/logo_5df43ca.png" alt="悟空问答" class="logo"></a></div>
+                                    src="${pageContext.request.contextPath}/img/logo_5df43ca.png" alt="悟空问答"
+                                    class="logo"></a></div>
                             <div class="search-box">
                                 <div data-node="searchBox" data-log-from="SearchBox" class="widget-search-input">
                                     <form action="https://www.wukong.com/search/" method="get" data-node="searchForm"
@@ -113,21 +116,45 @@
                                     class="digg"><span>点赞</span> <!----></a> <a class="comment"><span>评论</span> <!----></a> <a
                                     class="follow"><span>关注</span> <!----></a></div> <!----></span></div>
                             <div class="nav-account">
-                                <div data-node="user-account" class="nav-account-wrapper dropdown"><a
-                                        href="https://www.wukong.com/user/" target="_blank"
-                                        data-log="Visit_Profile|From_" class="nav-account-user line"><img
-                                        src="${pageContext.request.contextPath}/upload/${user.picpath}" alt="" class="nav-account-user-avatar"></a>
-                                    <div class="dropdown-menu"><i class="triangle"></i>
-                                        <div><a href="https://www.wukong.com/user/" target="_blank"
-                                                class="layer-item"><i class="iconfont icon-ask_write"></i>我的问答</a></div>
-                                        <div><a class="layer-item" href="${pageContext.request.contextPath}/logout.admin"><i
-                                                class="iconfont icon-ask_profile_exit"></i>退  出</a></div>
+
+                                <c:choose>
+                                <c:when test="${!empty user}">
+                                <div data-node="user-account" class="nav-account-wrapper dropdown">
+                                    <a href="${pageContext.request.contextPath}/toUser.do?id=${user.id}" target="_blank"
+                                       data-log="Visit_Profile|From_" class="nav-account-user line"><img
+                                            src="${pageContext.request.contextPath}/upload/${user.picpath}" alt=""
+                                            class="nav-account-user-avatar"></a>
+                                    </c:when>
+                                    <c:otherwise>
+                                    <div data-node="user-account" class="nav-account-wrapper">
+                                        <div class="loginBox"><a data-node="login"
+                                                                 href="${pageContext.request.contextPath}/jsp/register_login.jsp?model=login"
+                                                                 class="nav-account-user line login"><span>登录</span></a>
+                                            <i
+                                                    class="iconfont icon-Details_page_line"></i> <a data-node="register"
+                                                                                                    href="${pageContext.request.contextPath}/jsp/register_login.jsp?model=logout"
+                                                                                                    class="nav-account-user line register"><span>注册</span></a>
+                                        </div>
+                                        </c:otherwise>
+                                        </c:choose>
+                                        <%--<div data-node="user-account" class="nav-account-wrapper dropdown"><a--%>
+                                        <%--href="https://www.wukong.com/user/" target="_blank"--%>
+                                        <%--data-log="Visit_Profile|From_" class="nav-account-user line"><img--%>
+                                        <%--src="${pageContext.request.contextPath}/upload/${user.picpath}" alt=""--%>
+                                        <%--class="nav-account-user-avatar"></a>--%>
+                                        <div class="dropdown-menu"><i class="triangle"></i>
+                                            <div><a href="https://www.wukong.com/user/" target="_blank"
+                                                    class="layer-item"><i class="iconfont icon-ask_write"></i>我的问答</a>
+                                            </div>
+                                            <div><a class="layer-item"
+                                                    href="${pageContext.request.contextPath}/logout.admin"><i
+                                                    class="iconfont icon-ask_profile_exit"></i>退  出</a></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
             </header>
         </div>
     </div>
@@ -138,38 +165,45 @@
             <div id="pagelet-sidebar" class="right-part">
                 <div id="placeholver_sidebar">
                     <div>
-                        <div id="user-card" class="user-card">
-                            <div id="widget-usercard" data-log-from="ProfileCard" class="w-usercard"><a target="_blank"
-                                                                                                        href="${pageContext.request.contextPath}/jsp/user.jsp"
-                                                                                                        data-log="Visit_Profile|From_"
-                                                                                                        class="userinfo clearfix">
-                                <div class="avatar"><img src="${pageContext.request.contextPath}/upload/${user.picpath}"
-                                                         alt=""></div>
-                                <div class="user-desc"><h2 class="user-name">
-                                    ${user.username}
-                                    <!----></h2>
-                                    <div class="user-intro">
+                        <c:choose>
+                            <c:when test="${!empty user}">
+                                <div id="user-card" class="user-card">
+                                    <div id="widget-usercard" data-log-from="ProfileCard" class="w-usercard"><a
+                                            target="_blank"
+                                            href="${pageContext.request.contextPath}/jsp/user.jsp"
+                                            data-log="Visit_Profile|From_"
+                                            class="userinfo clearfix">
+                                        <div class="avatar"><img
+                                                src="${pageContext.request.contextPath}/upload/${user.picpath}"
+                                                alt=""></div>
+                                        <div class="user-desc"><h2 class="user-name">
+                                                ${user.username}
+                                            <!----></h2>
+                                            <div class="user-intro">
 
+                                            </div>
+                                            <div class="user-title">
+                                                2131
+                                            </div> <!----></div>
+                                    </a>
+                                        <div class="user-data clearfix">
+                                            <div class="user-data-single user-data-answer"><a
+                                                    href="https://www.wukong.com/user/?type=0" target="_blank"><h3>
+                                                    ${user.rescount}
+                                            </h3> <span>回答</span></a></div>
+                                            <a href="https://www.wukong.com/user/?type=0" target="_blank"
+                                               class="user-data-single user-data-digg"><h3>
+                                                0
+                                            </h3> <span>收到赞</span> <!----></a> <a
+                                                href="https://www.wukong.com/attention/?type=2" target="_blank"
+                                                data-log="Visit_FansTab|From_"
+                                                class="user-data-single user-data-follow"><h3>
+                                            ${user.followedcount}
+                                        </h3> <span>粉丝</span> <!----></a></div>
                                     </div>
-                                    <div class="user-title">
-                                        2131
-                                    </div> <!----></div>
-                            </a>
-                                <div class="user-data clearfix">
-                                    <div class="user-data-single user-data-answer"><a
-                                            href="https://www.wukong.com/user/?type=0" target="_blank"><h3>
-                                        ${user.rescount}
-                                    </h3> <span>回答</span></a></div>
-                                    <a href="https://www.wukong.com/user/?type=0" target="_blank"
-                                       class="user-data-single user-data-digg"><h3>
-                                        0
-                                    </h3> <span>收到赞</span> <!----></a> <a
-                                        href="https://www.wukong.com/attention/?type=2" target="_blank"
-                                        data-log="Visit_FansTab|From_" class="user-data-single user-data-follow"><h3>
-                                    0
-                                </h3> <span>粉丝</span> <!----></a></div>
-                            </div>
-                        </div>
+                                </div>
+                            </c:when>
+                        </c:choose>
                         <div data-node="hot-board" data-log-from="!Campaign" class="hot-board">
                             <div class="unslider">
                                 <div class="banner unslider-horizontal" style="overflow: hidden;">
@@ -311,23 +345,37 @@
                     <div itemprop="description" class="question-text">
                         ${article.content}
                     </div>
-                    <div class="question-img-preview">
-                        <div class="image-box"><img data-node="preview"
-                                                    src="${pageContext.request.contextPath}/upload/${article.picpath}"
-                                                    data-src="//p3.pstatp.com/list/190x124/5044000373ed2c530102"
-                                                    data-width="168" data-height="114" class=""
-                                                    style="width: 174px; height: 114px; margin-left: -3px; margin-top: 0px;"
-                                                    id="preview-img">
-                        </div>
-                    </div>
+                    <c:choose>
+                        <c:when test="${!empty article.picpath}">
+                            <div class="question-img-preview">
+                                <div class="image-box">
+                                    <img data-node="preview"
+                                         src="${pageContext.request.contextPath}/upload/${article.picpath}"
+                                         data-src="//p3.pstatp.com/list/190x124/5044000373ed2c530102"
+                                         data-width="168" data-height="114" class=""
+                                         style="width: 174px; height: 114px; margin-left: -3px; margin-top: 0px;"
+                                         id="preview-img">
+                                </div>
+                            </div>
+                        </c:when>
+                    </c:choose>
                     <div class="question-bottom"><a data-node="answer" href="javascript:;"
                                                     data-log="PopUp_Answer|From_Description" popup_answer=""
                                                     class="action-btn answer-btn"><i
                             class="iconfont icon-ask_write"></i>回答
                     </a> <a data-node="followquestion" data-follow="0" href="javascript:;"
-                            data-log="Follow_Question|From_" class="action-btn"><i class="iconfont icon-collection"></i>
-                        <span class="text">收藏问题</span>
-                        (<span class="count">1015</span>)
+                            data-log="Follow_Question|From_" class="action-btn" id="collection-btn">
+                        <c:choose>
+                            <c:when test="${row > 0}">
+                                <i class="iconfont icon-collection collected"></i>
+                                <span class="text">已收藏</span>
+                            </c:when>
+                            <c:otherwise>
+                                <i class="iconfont icon-collection"></i>
+                                <span class="text">收藏问题</span>
+                            </c:otherwise>
+                        </c:choose>
+                        (<span class="count">${article.collection_count}</span>)
                     </a> <a data-node="invite-answer" data-log="Toggle_Invite|From_" href="javascript:;"
                             class="action-btn toggle-invite-answer"><i class="iconfont icon-ask_add_friend"></i><span>邀请回答</span></a>
                         <!---->
@@ -428,27 +476,6 @@
                                         <a href="https://www.wukong.com/answer/6558898480486547715/"
                                            class="seo-link"></a>
                                         <div class="fake-cover"></div>
-                                        <div data-log-from="!Question" itemscope="itemscope"
-                                             itemtype="http://schema.org/Person" itemprop="author" class="answer-user">
-                                            <meta itemprop="url" content="https://www.wukong.com/user/?uid=52713245090">
-                                            <meta itemprop="name" content="${comment.username}">
-                                            <meta itemprop="description" content="中国工商银行广西分行营业部大堂经理">
-                                            <a href="https://www.wukong.com/user/?uid=52713245090" target="_blank"
-                                               data-log="Visit_Profile|From_ProfilePic" class="answer-user-avatar"><img
-                                                    src="${pageContext.request.contextPath}/upload/${comment.picpath}"
-                                                    alt=""
-                                                    itemprop="image"></a> <a
-                                                href="https://www.wukong.com/user/?uid=52713245090" target="_blank"
-                                                data-log="Visit_Profile|From_ProfilePic" class="answer-user-name">
-                                                ${comment.username}
-                                            <!----> <span class="user-intro">中国工商银行广西分行营业部大堂经理</span></a> <a
-                                                href="https://www.wukong.com/answer/6558898480486547715/"
-                                                class="answer-user-tag">05-24 05:55</a> <a data-log="Follow_User|From_"
-                                                                                           class="w-follow-btn"><i
-                                                class="iconfont icon-details_add_icon"></i> <i
-                                                class="iconfont icon-details_attention_icon"></i> <span>
-        关注
-    </span></a></div>
                                         <div class="answer-text h_1200 fold">
                                                 ${comment.chtml}
 
@@ -503,6 +530,50 @@
                                                 </div> <!----> <!----></div>
                                         </div>
                                         <div class="comment-container hide"></div>
+                                        <div data-log-from="!Question" itemscope="itemscope"
+                                             itemtype="http://schema.org/Person" itemprop="author" class="answer-user">
+                                            <meta itemprop="url" content="https://www.wukong.com/user/?uid=52713245090">
+                                            <meta itemprop="name" content="${comment.username}">
+                                            <meta itemprop="description" content="中国工商银行广西分行营业部大堂经理">
+                                            <a href="https://www.wukong.com/user/?uid=52713245090" target="_blank"
+                                               data-log="Visit_Profile|From_ProfilePic" class="answer-user-avatar"><img
+                                                    src="${pageContext.request.contextPath}/upload/${comment.picpath}"
+                                                    alt=""
+                                                    itemprop="image"></a> <a
+                                                href="https://www.wukong.com/user/?uid=52713245090" target="_blank"
+                                                data-log="Visit_Profile|From_ProfilePic" class="answer-user-name">
+                                                ${comment.username}
+                                            <!----> <span class="user-intro">中国工商银行广西分行营业部大堂经理</span></a> <a
+                                                href="https://www.wukong.com/answer/6558898480486547715/"
+                                                class="answer-user-tag">${comment.createtime}</a>
+                                            <c:if test="${comment.userid ne user.id}">
+                                                <c:choose>
+                                                <c:when test="${comment.hasFollowed}">
+                                                    <a data-log="Follow_User|From_" class="w-follow-btn followed"
+                                                       id="follow-btn" onmouseover="mouseover(this)"
+                                                       onmouseout="mouseout(this)">
+                                                        <i class="iconfont icon-details_add_icon"></i>
+                                                        <i class="iconfont icon-details_attention_icon"></i>
+                                                        <span>
+                                                                已关注
+                                                            </span>
+                                                    </a>
+                                                </c:when>
+                                                <c:otherwise>
+                                            <a data-log="Follow_User|From_" class="w-follow-btn"
+                                               id="follow-btn">
+                                                <i class="iconfont icon-details_add_icon"></i>
+                                                <i class="iconfont icon-details_attention_icon"></i>
+                                                <span>
+                                                    关注
+                                                </span>
+                                            </a>
+                                            </c:otherwise>
+                                            </c:choose>
+                                            </c:if>
+
+                                            <input type="hidden" value="${comment.userid}">
+                                        </div>
                                     </div>
                                 </c:forEach>
 

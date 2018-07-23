@@ -11,5 +11,5 @@ import java.util.List;
 public interface IArticleDao {
     int addArticle(Article article);
     List<ArticleInfo> queryArticleByPage(int pageindex, int pagesize);
-    Article queryArticleByAid(int aid);
+    ArticleInfo queryArticleByAid(int aid);
 }

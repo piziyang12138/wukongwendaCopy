@@ -1,6 +1,7 @@
 package com.neu.servlet;
 
 import com.neu.bean.User;
+import com.neu.bean.UserInfo;
 import com.neu.dao.IUserDao;
 import com.neu.daoImp.UserDao;
 
@@ -20,7 +21,7 @@ public class RegisterServlet extends HttpServlet {
         String username = request.getParameter("username");
         String pwd = request.getParameter("pwd");
 
-        User user = new User();
+        UserInfo user = new UserInfo();
         user.setUsername(username);
         user.setPwd(pwd);
 

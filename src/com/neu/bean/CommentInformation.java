@@ -9,6 +9,15 @@ public class CommentInformation extends Commentinfo{
     private String atitle;
     private int arescount;
     private int aid;
+    private boolean hasFollowed;
+
+    public boolean isHasFollowed() {
+        return hasFollowed;
+    }
+
+    public void setHasFollowed(boolean hasFollowed) {
+        this.hasFollowed = hasFollowed;
+    }
 
     public int getAid() {
         return aid;
