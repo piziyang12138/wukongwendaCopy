@@ -30,7 +30,7 @@ public class RegisterServlet extends HttpServlet {
 
         request.getSession().setAttribute("user",user);
 
-        response.sendRedirect(request.getContextPath()+"/home.do");
+        response.sendRedirect("/home.do");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

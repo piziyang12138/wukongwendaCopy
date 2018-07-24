@@ -76,7 +76,7 @@ public class ToArticleServlet extends HttpServlet {
         request.setAttribute("count",list.size());
         request.setAttribute("row",row);
         request.getSession().setAttribute("user",user);
-        request.getRequestDispatcher(request.getContextPath() + "/jsp/article.jsp").forward(request,response);
+        request.getRequestDispatcher("/jsp/article.jsp").forward(request,response);
 
     }
 }

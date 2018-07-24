@@ -9,19 +9,22 @@ for(var i = 0;i < args.length;i++){
     arg_map[key_value[0]] = key_value[1];
 }
 
+
+
 window.onload = function () {
     //验证图片
+
     var v_img = document.getElementById("vertifycode-img");
     v_img.onclick = function () {
         var num = Math.random();
-        this.src = '/generatecode.do?' + num;
+        this.src =  contextPath + '/generatecode.do?' + num;
     };
 
     //验证码输入框
     var v_input = document.getElementById("captcha1");
     v_input.onblur = function () {
         var req = new XMLHttpRequest();
-        req.open("get",'/checkcode.do?code='+ this.value,true);
+        req.open("get",contextPath + '/checkcode.do?code='+ this.value,true);
         // req.setRequestHeader("Content-type","application/x-www-form-urlencode");
         req.send();
         req.onload = function () {
@@ -78,7 +81,7 @@ window.onload = function () {
     var l_div = document.getElementById("login-label");
     l_div.onclick = function () {
         register_btn.value = '登录';
-        form.action = '/login.do';
+        form.action = contextPath +  '/login.do';
         this.className = 'y-left item active';
         this.nextElementSibling.className = 'y-left item';
 
@@ -88,7 +91,7 @@ window.onload = function () {
     var r_div = document.getElementById("register-label");
     r_div.onclick = function () {
         register_btn.value = '注册';
-        form.action = '/register.do';
+        form.action =contextPath +  '/register.do';
         this.className = 'y-left item active';
         this.previousElementSibling.className = 'y-left item';
     };
@@ -96,7 +99,7 @@ window.onload = function () {
     //判断是否是登录
     if (arg_map.model === 'login'){
         register_btn.value = '登录';
-        form.action = '/login.do';
+        form.action = contextPath + '/login.do';
         l_div.className = 'y-left item active';
         l_div.nextElementSibling.className = 'y-left item';
     }

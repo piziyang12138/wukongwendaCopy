@@ -49,6 +49,6 @@ public class ToUserServlet extends HttpServlet {
         request.setAttribute("comments",list);
         request.setAttribute("userinfo",user);
         request.setAttribute("followed",followed);
-        request.getRequestDispatcher(request.getContextPath() + "/jsp/user.jsp").forward(request,response);
+        request.getRequestDispatcher("/jsp/user.jsp").forward(request,response);
     }
 }

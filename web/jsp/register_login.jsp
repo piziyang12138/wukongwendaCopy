@@ -58,6 +58,7 @@
     }</style>
     <script>
         flag = false;
+        contextPath = '${pageContext.request.contextPath}';
     </script>
     <script src="${pageContext.request.contextPath}/js/register_login.js" charset="gb2312" type="text/javascript"></script>
 </head>

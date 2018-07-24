@@ -49,6 +49,6 @@ public class HomeServlet extends HttpServlet {
             }
         }
         request.setAttribute("articles",articles);
-        request.getRequestDispatcher(request.getContextPath() + "/index.jsp").forward(request,response);
+        request.getRequestDispatcher("/index.jsp").forward(request,response);
     }
 }

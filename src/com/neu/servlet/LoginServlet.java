@@ -34,7 +34,7 @@ public class LoginServlet extends HttpServlet {
         }
         else{
             request.setAttribute("error","用户名或密码错误");
-            request.getRequestDispatcher(request.getContextPath() + "/jsp/register_login.jsp").forward(request,response);
+            request.getRequestDispatcher("/jsp/register_login.jsp").forward(request,response);
         }
     }
 

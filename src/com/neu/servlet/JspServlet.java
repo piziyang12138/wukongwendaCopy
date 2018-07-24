@@ -17,6 +17,6 @@ public class JspServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.sendRedirect(request.getContextPath() + "/home.do");
+        response.sendRedirect( "/home.do");
     }
 }
