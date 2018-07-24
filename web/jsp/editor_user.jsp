@@ -92,7 +92,7 @@
                                     <div class="dropdown-menu"><i class="triangle"></i>
                                         <div><a href="https://www.wukong.com/user/" target="_blank"
                                                 class="layer-item"><i class="iconfont icon-ask_write"></i>我的问答</a></div>
-                                        <div><a class="layer-item" id="${pageContext.request.contextPath}/logout.admin"><i
+                                        <div><a class="layer-item" href="${pageContext.request.contextPath}/logout.admin"><i
                                                 class="iconfont icon-ask_profile_exit"></i>退  出</a></div>
                                     </div>
                                 </div>
@@ -163,7 +163,7 @@
                     <div class="edit-card-wrapper">
                         <div class="title-wrapper"><span class="title">
                                 个人信息
-                            </span> <a href="${pageContext.request.contextPath}/jsp/user.jsp" class="back-user"><span
+                            </span> <a href="${pageContext.request.contextPath}/toUser.do?id=${user.id}" class="back-user"><span
                                 class="back-text">返回个人主页</span> <i class="iconfont icon-forward"></i></a></div>
                         <div class="avatar-wrapper"><span class="labelCol">
                                 用户头像
@@ -181,16 +181,18 @@
                         </span> <span class="edit-name" id="editor-username"><i
                                 class="iconfont icon-pen"></i><span>编辑</span></span>
                         </div>
-                        <div class="introduce-wrapper"><span class="labelCol">
+                        <div class="introduce-wrapper" id="introduce-wrapper"><span class="labelCol">
                                 个人介绍</span>
                             <c:choose>
-                                <c:when test="${user.introduction == null}">
+                                <c:when test="${user.introduction == ''}">
                                 <span class="edit-introduce edit-introduce-span"><i class="iconfont icon-add_icon"></i> <span>添加一句话介绍自己</span></span>
                                 </c:when>
                                 <c:otherwise>
-                                    <div class="has-description" ><span class="introduce mr-20">
+                                    <div class="has-description" ><span class="introduce mr-20" id="introduce">
                                         ${user.introduction}
-                                    </span> <span class="edit-introduce write-block edit-introduce-span"><i class="iconfont icon-pen"></i><span>编辑</span></span></div>
+                                    </span>
+                                        <span class="edit-introduce write-block edit-introduce-span"><i class="iconfont icon-pen"></i><span>编辑</span></span>
+                                    </div>
                                 </c:otherwise>
                             </c:choose>
                         </div>

@@ -115,20 +115,22 @@ function cancel_introduction(e) {
     var introduction = document.getElementsByClassName("user-title")[0].innerText;
     var flag = document.getElementById("flag-span").value;
     if (flag === '0'){
-        e.parentNode.parentNode.innerHTML = '<span class="labelCol">个人介绍</span> <span class="edit-introduce" onclick="edit_introduce()"><i class="iconfont icon-add_icon"></i> <span>添加一句话介绍自己</span></span>';
+        e.parentNode.parentNode.innerHTML = '<span class="labelCol">个人介绍</span> <span class="edit-introduce" onclick="editintroduce()"><i class="iconfont icon-add_icon"></i> <span>添加一句话介绍自己</span></span>';
     }else{
-        e.parentNode.parentNode.innerHTML = `<span class="labelCol">个人介绍</span><div class="has-description"><span class="introduce mr-20">${introduction}</span> <span class="edit-introduce write-block edit-introduce-span"><i class="iconfont icon-pen"></i><span>编辑</span></span></div>`;
+        e.parentNode.parentNode.innerHTML = `<span class="labelCol">个人介绍</span><div class="has-description"><span class="introduce mr-20">${introduction}</span> <span class="edit-introduce write-block edit-introduce-span" onclick="editintroduce()"><i class="iconfont icon-pen"></i><span>编辑</span></span></div>`;
     }
-    var edit_introduce = document.getElementsByClassName("edit-introduce-span");
-    edit_introduce[0].onclick = editintroduce;
 }
 
 
 
 function editintroduce() {
-    var introduction = this.previousElementSibling.innerText;
-    this.parentNode.parentNode.innerHTML = `<span class="labelCol">个人介绍</span> 
-    <textarea class="">${introduction}</textarea> 
+    var introduction = document.getElementById('introduce');
+    var introduce = '';
+    if (introduction !== null){
+        introduce = introduction.innerText;
+    }
+    document.getElementById("introduce-wrapper").innerHTML = `<span class="labelCol">个人介绍</span> 
+    <textarea class="">${introduce}</textarea> 
     <!----> 
     <div class="btn-wrapper"><a class="btn btn-save" onclick="store_introduction(this)">保存</a> 
     <a class="btn btn-cancel" onclick="cancel_introduction(this)">取消</a></div>`;

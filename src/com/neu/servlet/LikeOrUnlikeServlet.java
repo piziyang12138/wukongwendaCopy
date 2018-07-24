@@ -2,6 +2,8 @@ package com.neu.servlet;
 
 import com.neu.bean.Likeorunlike;
 import com.neu.bean.UserInfo;
+import com.neu.dao.ILikeDao;
+import com.neu.daoImp.LikeDao;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -25,7 +27,13 @@ public class LikeOrUnlikeServlet extends HttpServlet {
         likeorunlike.setIslike(Long.parseLong(islike));
         likeorunlike.setUserid(user.getId());
 
-
+        ILikeDao likeDao = new LikeDao();
+        if (likeDao.isLiked(likeorunlike) > 0){
+            likeDao.delLike(likeorunlike);
+        }else{
+            likeDao.addLike(likeorunlike);
+        }
+        response.getWriter().print("successful");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -11,6 +11,62 @@ function mouseout(e) {
     e.children[2].innerText = '已关注';
 }
 
+function like(e) {
+    let cid = e.previousElementSibling.value;
+    let req = new XMLHttpRequest();
+    req.open('post',contextPath + '/likeorunlike.admin',true);
+    req.setRequestHeader("request-with",'ajax');
+    req.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+    req.send('cid='+cid+'&islike=1');
+    req.onload = function () {
+        if (req.getResponseHeader('redirect') !== null){
+            window.location.href = contextPath + req.getResponseHeader('redirect');
+        }
+        if (req.responseText === 'successful') {
+            if (e.className.indexOf('active') !== -1){
+                e.className = 'w-like answer-like-count';
+                e.children[1].innerText = parseInt(e.children[1].innerText)-1;
+                e.nextElementSibling.onclick = function () {
+                    unlike(this,this.previousElementSibling);
+                };
+            }else{
+                e.className = 'w-like answer-like-count active';
+                e.children[1].innerText = parseInt(e.children[1].innerText)+1;
+                e.nextElementSibling.onclick = function () {};
+            }
+
+        }
+    }
+}
+
+function unlike(e) {
+    let cid = e.previousElementSibling.previousElementSibling.value;
+    let req = new XMLHttpRequest();
+    req.open('post',contextPath + '/likeorunlike.admin',true);
+    req.setRequestHeader("request-with",'ajax');
+    req.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+    req.send('cid='+cid+'&islike=0');
+    req.onload = function () {
+        if (req.getResponseHeader('redirect') !== null){
+            window.location.href = contextPath + req.getResponseHeader('redirect');
+        }
+        if (req.responseText === 'successful') {
+            if (e.className.indexOf('active') !== -1){
+                e.className = 'w-like answer-dislike-count';
+                e.children[1].innerText = parseInt(e.children[1].innerText)-1;
+                e.previousElementSibling.onclick = function () {
+                    like(this,this.nextElementSibling);
+                };
+            }else{
+                e.className = 'w-like answer-dislike-count active';
+                e.children[1].innerText = parseInt(e.children[1].innerText)+1;
+                e.previousElementSibling.onclick = function () {};
+            }
+
+        }
+    }
+}
+
 window.onload = function () {
     //关注按钮
     let follow_btn = document.getElementsByClassName('w-follow-btn');
@@ -88,9 +144,32 @@ window.onload = function () {
     });
 
     const submitbar = document.getElementById("submitbar");
-    submitbar.children[1].onclick = function () {
-        let form = document.getElementById('markdown-form');
-        form.submit();
+    submitbar.children[2].onclick = function () {
+        var content = document.getElementsByClassName('editormd-markdown-textarea')[0].innerText;
+        var html = document.getElementsByClassName('editormd-html-textarea')[0].innerText;
+        var aid = this.previousElementSibling.value;
+
+        var req = new XMLHttpRequest();
+        req.open('post',contextPath + '/comment.admin',true);
+        req.setRequestHeader('Content-type','application/x-www-form-urlencoded');
+        req.setRequestHeader("request-with",'ajax');
+        req.send("test-editormd-markdown-doc="+content + "&test-editormd-html-code="+html + '&aid='+aid);
+        req.onload = function () {
+            if (req.getResponseHeader('redirect') !== null){
+                window.location.href = contextPath + req.getResponseHeader('redirect');
+            }else{
+                var data = JSON.parse(req.responseText);
+                var html = template('div',data);
+                var div = document.createElement('div');
+                div.className = 'answer-item sticky-item req_1';
+                div.innerHTML = html;
+                var answers = document.getElementById('answer-items');
+                var first = answers.firstElementChild;
+                answers.insertBefore(div,first);
+
+
+            }
+        }
     };
 
     //图片点击事件

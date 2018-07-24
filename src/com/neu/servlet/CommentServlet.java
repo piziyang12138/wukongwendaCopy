@@ -1,9 +1,11 @@
 package com.neu.servlet;
 
+import com.alibaba.fastjson.JSON;
 import com.neu.bean.Commentinfo;
 import com.neu.bean.User;
 import com.neu.dao.ICommentInfoDao;
 import com.neu.daoImp.CommentInfoDao;
+import com.neu.utils.CommentWrap;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -33,14 +35,14 @@ public class CommentServlet extends HttpServlet {
         ICommentInfoDao commentInfoDao = new CommentInfoDao();
         commentInfoDao.addComment(commentinfo);
 
-//        IArticleDao articleDao = new ArticleDao();
-//        Article article = articleDao.queryArticleByAid(Integer.parseInt(aid));
-//
-//        List<CommentInformation> list = commentInfoDao.queryCommentByAid(Integer.parseInt(aid),1,10);
-//        request.setAttribute("comments",list);
-//        request.setAttribute("count",list.size());
-//        request.setAttribute("article",article);
-        response.sendRedirect(request.getContextPath() + "/to_article.do?aid="+aid);
+        CommentWrap commentWrap = new CommentWrap();
+        commentWrap.setContent(html);
+        commentWrap.setCreatetime(commentinfo.getCreatetime());
+        commentWrap.setPicpath(user.getPicpath());
+        commentWrap.setUsername(user.getUsername());
+        commentWrap.setUserid(user.getId().intValue());
+        response.getWriter().print(JSON.toJSONString(commentWrap));
+
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

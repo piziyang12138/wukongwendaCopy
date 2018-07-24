@@ -72,6 +72,7 @@
     <script src="${pageContext.request.contextPath}/layer/jquery-3.3.1.min.js"></script>
     <script src="${pageContext.request.contextPath}/editor-md-master/editormd.js"></script>
     <script src="${pageContext.request.contextPath}/layer/layer.js"></script>
+    <script src="${pageContext.request.contextPath}/arttemplate.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/article.js" charset="UTF-8" type="text/javascript"></script>
     <script>
     </script>
@@ -110,15 +111,22 @@
                                                                                   data-log="Visit_QuestionInvited|From_"
                                                                                   title="等我来答" class="">等我来答</a> <a
                                 href="https://www.wukong.com/notebook/" target="_blank" data-log="Visit_NoteBook|From_">回答秘籍</a>
-                            <div class="new-msg-btn"><span class="w-new-msg-btn"><span>消息</span><!----><!----> <div
-                                    class="w-new-layer layer-wrapper"><i class="triangle"></i> <a class="notice"><span>通知</span>
-                                <!----></a> <a class="invite"><span>邀请</span> <!----></a> <a
-                                    class="digg"><span>点赞</span> <!----></a> <a class="comment"><span>评论</span> <!----></a> <a
-                                    class="follow"><span>关注</span> <!----></a></div> <!----></span></div>
-                            <div class="nav-account">
-
                                 <c:choose>
                                 <c:when test="${!empty user}">
+                                    <div class="new-msg-btn">
+                                <span class="w-new-msg-btn">
+                                <span>消息</span><!----><!---->
+                                <div class="w-new-layer layer-wrapper">
+                                    <i class="triangle"></i>
+                                    <a class="notice"><span>通知</span></a>
+                                    <a class="invite"><span>邀请</span></a>
+                                    <a class="digg"><span>点赞</span></a>
+                                    <a class="comment"><span>评论</span></a>
+                                    <a class="follow"><span>关注</span></a>
+                                </div>
+                                </span>
+                                    </div>
+                            <div class="nav-account">
                                 <div data-node="user-account" class="nav-account-wrapper dropdown">
                                     <a href="${pageContext.request.contextPath}/toUser.do?id=${user.id}" target="_blank"
                                        data-log="Visit_Profile|From_" class="nav-account-user line"><img
@@ -346,7 +354,7 @@
                         ${article.content}
                     </div>
                     <c:choose>
-                        <c:when test="${!empty article.picpath}">
+                        <c:when test="${article.picpath ne 'undefined'}">
                             <div class="question-img-preview">
                                 <div class="image-box">
                                     <img data-node="preview"
@@ -409,22 +417,24 @@
                                 <div class="write">
                                     <div class="write-content">
                                         <div class="hold-position" style="display: none;"></div>
-                                        <form method="post" action="${pageContext.request.contextPath}/comment.admin"
-                                              id="markdown-form">
+                                        <form method="post" id="markdown-form">
                                             <div id="test-editormd" class="editormd editormd-vertical"
                                                  style="width: 90%; height: 740px;">
                                                 <textarea class="editormd-markdown-textarea"
                                                           placeholder="Enjoy Markdown! coding now..."></textarea>
                                             </div>
-                                            <input type="hidden" value="${article.aid}" name="aid">
+
                                         </form>
                                     </div>
                                 </div>
                             </div>
-                            <div class="submitbar" style="height: 50px;" id="submitbar"><span class="manuscript-tip">
+                            <div class="submitbar" style="height: 50px;" id="submitbar" "><span class="manuscript-tip">
 
-        </span> <a data-node="post-content" data-log="Click_Post_Answer|From_Question_Answer"
-                   class="btn btn-primary write-content-submit">发表答案</a></div>
+        </span>
+                            <input type="hidden" value="${article.aid}" name="aid">
+                            <a data-node="post-content" data-log="Click_Post_Answer|From_Question_Answer"
+                   class="btn btn-primary write-content-submit" >发表答案</a>
+                        </div>
                         </div>
                     </div>
                     <h3 class="answer-count-h"><span>${count}个回答</span></h3> <!----> <!----> <!---->
@@ -463,7 +473,7 @@
                                     </a></div>
                                 </div>
                             </div>
-                            <div class="answer-items">
+                            <div class="answer-items" id="answer-items">
                                 <c:forEach items="${comments}" var="comment">
                                     <div data-node="answer-item" data-ansid="6558898480486547715" itemscope="itemscope"
                                          itemtype="http://schema.org/Answer" itemprop="suggestedAnswer"
@@ -484,16 +494,41 @@
 
                                             <!---->
                                             <div class="answer-tool">
-                                                <div class="comment-tool"><a href="javascript:" data-log="Like|From_"
-                                                                             class="w-like answer-like-count"><!----> <i
-                                                        class="iconfont icon-digg_clicked"></i> <span
-                                                        class="like-num">21</span> <span>赞</span></a> <a
-                                                        href="javascript:"
-                                                        data-log="Downvote|From_"
-                                                        class="w-unlike answer-dislike-count"><i
-                                                        class="iconfont icon-ask_stamp"></i> <span
-                                                        class="unlike-count"></span> <span>踩</span></a> <a
-                                                        data-node="show-comment" href="javascript:;"
+                                                <div class="comment-tool">
+                                                    <input type="hidden" value="${comment.cid}">
+                                                    <c:choose>
+                                                        <c:when test="${comment.islike}">
+                                                            <a href="javascript:" data-log="Like|From_" class="w-like answer-like-count active" onclick="like(this)">
+                                                                <!----> <i class="iconfont icon-digg_clicked"></i> <span class="like-num">${comment.likecount}</span>
+                                                                <span>赞</span></a>
+                                                            <a href="javascript:" data-log="Downvote|From_" class="w-unlike answer-dislike-count" onclick="">
+                                                                <i class="iconfont icon-ask_stamp"></i>
+                                                                <span class="unlike-count">${comment.unlikecount}</span>
+                                                                <span>踩</span>
+                                                            </a>
+                                                        </c:when>
+                                                        <c:when test="${comment.isunlike}">
+                                                            <a href="javascript:" data-log="Like|From_" class="w-like answer-like-count" onclick="">
+                                                                <!----> <i class="iconfont icon-digg_clicked"></i> <span class="like-num">${comment.likecount}</span>
+                                                                <span>赞</span></a>
+                                                            <a href="javascript:" data-log="Downvote|From_" class="w-unlike answer-dislike-count active" onclick="unlike(this)">
+                                                                <i class="iconfont icon-ask_stamp"></i>
+                                                                <span class="unlike-count">${comment.unlikecount}</span>
+                                                                <span>踩</span>
+                                                            </a>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <a href="javascript:" data-log="Like|From_" class="w-like answer-like-count" onclick="like(this)">
+                                                                <!----> <i class="iconfont icon-digg_clicked"></i> <span class="like-num">${comment.likecount}</span>
+                                                                <span>赞</span></a>
+                                                            <a href="javascript:" data-log="Downvote|From_" class="w-unlike answer-dislike-count" onclick="unlike(this)">
+                                                                <i class="iconfont icon-ask_stamp"></i>
+                                                                <span class="unlike-count">${comment.unlikecount}</span>
+                                                                <span>踩</span>
+                                                            </a>
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                    <a data-node="show-comment" href="javascript:;"
                                                         data-ansid="6558898480486547715" data-answer-uid="52713245090"
                                                         data-is_ban_comment="0" data-log="Visit_Comment|From_"
                                                         class="show-comment"><i class="iconfont icon-ask_comment"></i>
@@ -532,19 +567,19 @@
                                         <div class="comment-container hide"></div>
                                         <div data-log-from="!Question" itemscope="itemscope"
                                              itemtype="http://schema.org/Person" itemprop="author" class="answer-user">
-                                            <meta itemprop="url" content="https://www.wukong.com/user/?uid=52713245090">
+                                            <meta itemprop="url" content="">
                                             <meta itemprop="name" content="${comment.username}">
                                             <meta itemprop="description" content="中国工商银行广西分行营业部大堂经理">
-                                            <a href="https://www.wukong.com/user/?uid=52713245090" target="_blank"
+                                            <a href="${pageContext.request.contextPath}/toUser.do?id=${comment.userid}" target="_blank"
                                                data-log="Visit_Profile|From_ProfilePic" class="answer-user-avatar"><img
                                                     src="${pageContext.request.contextPath}/upload/${comment.picpath}"
                                                     alt=""
                                                     itemprop="image"></a> <a
-                                                href="https://www.wukong.com/user/?uid=52713245090" target="_blank"
+                                                href="${pageContext.request.contextPath}/toUser.do?id=${comment.userid}" target="_blank"
                                                 data-log="Visit_Profile|From_ProfilePic" class="answer-user-name">
                                                 ${comment.username}
                                             <!----> <span class="user-intro">中国工商银行广西分行营业部大堂经理</span></a> <a
-                                                href="https://www.wukong.com/answer/6558898480486547715/"
+                                                href="javascript:"
                                                 class="answer-user-tag">${comment.createtime}</a>
                                             <c:if test="${comment.userid ne user.id}">
                                                 <c:choose>
@@ -617,6 +652,72 @@
 <div id="modal-layer"></div>
 <div id="modal-gallery-layer"></div>
 <div id="modal-outside-link-layer"></div>
-<!-- <script src="//s3a.pstatp.com/site/tt_mfsroot/js/umeditor/lang/zh-cn.js"></script>-->
+<script type="text/html" id="div">
+
+        <meta itemprop="upvoteCount" content="21">
+        <meta itemprop="url" content="https://www.wukong.com/answer/6558898480486547715/">
+        <meta itemprop="commentCount" content="18">
+        <meta itemprop="dateCreated" content="2018-07-20 16:13:41.0">
+        <a href="https://www.wukong.com/answer/6558898480486547715/" class="seo-link"></a>
+        <div class="fake-cover"></div>
+        <div class="answer-text h_1200 fold">
+            {{#content}}
+        <h2 id="h2-h3"><a name="h3" class="reference-link"></a><span class="header-link octicon octicon-link"></span></h2>
+
+        <a href="javascript:;" class="j-expand-showfull expand-bottom" style="display: none">展开全部</a>
+
+        <!---->
+        <div class="answer-tool">
+        <div class="comment-tool">
+        <input type="hidden" value="1">
+
+
+
+
+        <a href="javascript:" data-log="Like|From_" class="w-like answer-like-count" onclick="like(this)">
+        <!----> <i class="iconfont icon-digg_clicked"></i> <span class="like-num">0</span>
+        <span>赞</span></a>
+        <a href="javascript:" data-log="Downvote|From_" class="w-unlike answer-dislike-count" onclick="unlike(this)">
+        <i class="iconfont icon-ask_stamp"></i>
+        <span class="unlike-count">0</span>
+        <span>踩</span>
+        </a>
+
+
+        <a data-node="show-comment" href="javascript:;" data-ansid="6558898480486547715" data-answer-uid="52713245090" data-is_ban_comment="0" data-log="Visit_Comment|From_" class="show-comment"><i class="iconfont icon-ask_comment"></i>
+        0评论
+
+    </a>
+    <div data-node="share-group" data-ansid="6558898480486547715" class="share-group share-anchor"><i class="iconfont icon-share-home"></i> <span class="share">分享</span>
+        <div data-node="widget-share-group" class="widget-share-group">
+        <div class="share-group-content clearfix">
+        <div class="qr"></div>
+        <div data-node="weixin" data-url="" data-desc="" data-log="Share_Weixin|From_" class="share-link weixin"><i class="iconfont icon-wechat_share"></i></div>
+        <div data-node="weibo" data-url="" data-desc="" data-log="Share_Weibo|From_" class="share-link weibo">
+        <i class="iconfont icon-weibo_share"></i></div>
+        <div data-node="qzone" data-url="" data-desc="" data-log="Share_Qzone|From_" class="share-link qq">
+        <i class="iconfont icon-qzone_share"></i></div>
+        </div>
+        <div class="share-group-arrow"><i></i></div>
+        </div>
+        </div>
+        <div class="inform"><i class="iconfont icon-CombinedShape"></i>
+        <span data-log="PopUp_Inform|From_informAnswer">举报</span>
+        </div>
+        </div> <!----> <!----></div>
+        </div>
+        <div class="comment-container hide"></div>
+        <div data-log-from="!Question" itemscope="itemscope" itemtype="http://schema.org/Person" itemprop="author" class="answer-user">
+        <meta itemprop="url" content="">
+        <meta itemprop="name" content="zhangsanzhang">
+        <meta itemprop="description" content="中国工商银行广西分行营业部大堂经理">
+        <a href="${pageContext.request.contextPath}/toUser.do?id={{userid}}" target="_blank" data-log="Visit_Profile|From_ProfilePic" class="answer-user-avatar"><img src="${pageContext.request.contextPath}/upload/{{picpath}}" alt="" itemprop="image"></a> <a href="${pageContext.request.contextPath}/toUser.do?id={{userid}}" target="_blank" data-log="Visit_Profile|From_ProfilePic" class="answer-user-name">
+        {{username}}
+        <!----> <span class="user-intro">中国工商银行广西分行营业部大堂经理</span></a> <a href="javascript:" class="answer-user-tag">{{createtime}}</a>
+
+        </div>
+
+
+</script>
 </body>
 </html>

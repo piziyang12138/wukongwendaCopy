@@ -26,14 +26,74 @@ function fabulous(e) {
         }
     }
 }
-window.onload = function () {
-    //赞按钮
-    const likes = document.getElementsByClassName("w-like");
-    for (let i = 0;i<likes.length;i++){
-        likes[i].onclick = function () {
-            
+
+function like(e) {
+    let cid = e.previousElementSibling.value;
+    let req = new XMLHttpRequest();
+    req.open('post',contextPath + '/likeorunlike.admin',true);
+    req.setRequestHeader("request-with",'ajax');
+    req.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+    req.send('cid='+cid+'&islike=1');
+    req.onload = function () {
+        if (req.getResponseHeader('redirect') !== null){
+            window.location.href = contextPath + req.getResponseHeader('redirect');
+        }
+        if (req.responseText === 'successful') {
+            if (e.className.indexOf('active') !== -1){
+                e.className = 'w-like';
+                e.children[1].innerText = parseInt(e.children[1].innerText)-1;
+                e.nextElementSibling.onclick = function () {
+                    unlike(this,this.previousElementSibling);
+                };
+            }else{
+                e.className = 'w-like active';
+                e.children[1].innerText = parseInt(e.children[1].innerText)+1;
+                e.nextElementSibling.onclick = function () {};
+            }
+
         }
     }
+}
+
+function unlike(e) {
+    let cid = e.previousElementSibling.previousElementSibling.value;
+    let req = new XMLHttpRequest();
+    req.open('post',contextPath + '/likeorunlike.admin',true);
+    req.setRequestHeader("request-with",'ajax');
+    req.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+    req.send('cid='+cid+'&islike=0');
+    req.onload = function () {
+        if (req.getResponseHeader('redirect') !== null){
+            window.location.href = contextPath + req.getResponseHeader('redirect');
+        }
+        if (req.responseText === 'successful') {
+            if (e.className.indexOf('active') !== -1){
+                e.className = 'w-like';
+                e.children[1].innerText = parseInt(e.children[1].innerText)-1;
+                e.previousElementSibling.onclick = function () {
+                    like(this,this.nextElementSibling);
+                };
+            }else{
+                e.className = 'w-like active';
+                e.children[1].innerText = parseInt(e.children[1].innerText)+1;
+                e.previousElementSibling.onclick = function () {};
+            }
+
+        }
+    }
+}
+window.onload = function () {
+    // //赞按钮
+    // const likes = document.getElementsByClassName("w-like");
+    // const unlikes = document.getElementsByClassName('w-unlike');
+    // for (let i = 0;i<likes.length;i++){
+    //     likes[i].onclick = function () {
+    //         like(this,this.nextElementSibling);
+    //     };
+    //     unlikes[i].onclick = function () {
+    //         unlike(this,this.previousElementSibling);
+    //     };
+    // }
     
     
     $('#ask-question').on('click', function () {
@@ -197,10 +257,21 @@ function submit(e) {
     req.onload = function () {
         if (req.getResponseHeader('redirect') !== null){
             window.location.href = contextPath + req.getResponseHeader('redirect');
+        }else{
+            let data = JSON.parse(req.responseText);
+            var html = template('div',data);
+            var question_div = document.createElement("div");
+            question_div.className='question-v3';
+
+            question_div.innerHTML = html;
+
+            var container = document.getElementById('container');
+            var first_child = container.firstElementChild;
+            container.insertBefore(question_div,first_child);
+
         }
-        if (req.responseText === 'successful') {
-            window.location.href = contextPath + '/home.do?refresh';
-        }
+
+
 
     };
 

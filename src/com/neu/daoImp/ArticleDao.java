@@ -2,6 +2,8 @@ package com.neu.daoImp;
 
 import com.neu.bean.Article;
 import com.neu.bean.ArticleInfo;
+import com.neu.bean.CommentInformation;
+import com.neu.bean.Commentinfo;
 import com.neu.dao.IArticleDao;
 import com.neu.utils.JDBCUtils;
 
@@ -46,7 +48,11 @@ public class ArticleDao implements IArticleDao{
     public List<ArticleInfo> queryArticleByPage(int pageindex, int pagesize) {
         List<ArticleInfo> arr = new ArrayList<>();
         try {
-            PreparedStatement ps = con.prepareStatement("SELECT (select count(*) FROM collection where articleid = aid) as collection_count,article.*,commentinfo.chtml,(SELECT count(*) FROM commentinfo WHERE articleid = aid) AS count,`user`.username,`user`.picpath as upicpath,commentinfo.userid as comment_userid,commentinfo.cid   FROM article \n" +
+            PreparedStatement ps = con.prepareStatement("SELECT (select count(*) FROM collection where articleid = aid) as collection_count,article.*,commentinfo.chtml,(SELECT count(*) FROM commentinfo WHERE articleid = aid) AS count," +
+                    "`user`.username,`user`.picpath as upicpath,commentinfo.userid as comment_userid,commentinfo.cid," +
+                    "(select count(*) from likeorunlike where commentid = cid and islike=1) as likecount,\n" +
+                    "(select count(*) from likeorunlike where commentid = cid and islike=0) as unlikecount   " +
+                    "FROM article \n" +
                     "LEFT JOIN commentinfo ON article.aid = commentinfo.articleid\n" +
                     "LEFT JOIN user ON commentinfo.userid = user.id\n" +
                     "GROUP BY aid order BY aid DESC LIMIT ?,? ");
@@ -56,19 +62,23 @@ public class ArticleDao implements IArticleDao{
             ResultSet rs = ps.executeQuery();
             while (rs.next()){
                 ArticleInfo article = new ArticleInfo();
+                CommentInformation commentInformation = new CommentInformation();
                 article.setAid(rs.getLong("aid"));
                 article.setUserid(rs.getLong("userid"));
                 article.setPicpath(rs.getString("picpath"));
                 article.setContent(rs.getString("content"));
                 article.setTitle(rs.getString("title"));
                 article.setCreatetime(rs.getTimestamp("createtime"));
-                article.setComment_content(rs.getString("chtml"));
                 article.setRescount(rs.getInt("count"));
-                article.setComment_username(rs.getString("username"));
                 article.setUpicpath(rs.getString("upicpath"));
                 article.setCollection_count(rs.getInt("collection_count"));
-                article.setComment_userid(rs.getInt("comment_userid"));
-                article.setComment_id(rs.getInt("comment_id"));
+                commentInformation.setChtml(rs.getString("chtml"));
+                commentInformation.setUsername(rs.getString("username"));
+                commentInformation.setUserid(rs.getLong("comment_userid"));
+                commentInformation.setCid(rs.getLong("cid"));
+                commentInformation.setLikecount(rs.getInt("likecount"));
+                commentInformation.setUnlikecount(rs.getInt("unlikecount"));
+                article.setCommentinfo(commentInformation);
                 arr.add(article);
             }
 

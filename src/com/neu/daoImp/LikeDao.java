@@ -8,6 +8,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by ttc on 2018/7/23.
@@ -47,7 +49,7 @@ public class LikeDao implements ILikeDao {
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()){
-                likeorunlike.setLid(rs.getLong("fid"));
+                likeorunlike.setLid(rs.getLong("lid"));
                 res = 1;
             }
 
@@ -61,12 +63,44 @@ public class LikeDao implements ILikeDao {
     public int delLike(Likeorunlike likeorunlike) {
         int res = 0;
         try {
-            PreparedStatement ps = con.prepareStatement("DELETE FROM likeorunlike where fid = ?");
+            PreparedStatement ps = con.prepareStatement("DELETE FROM likeorunlike where lid = ?");
             ps.setLong(1, likeorunlike.getLid());
             res = ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return res;
+    }
+
+    @Override
+    public Set<Long> queryAllLikes(int id) {
+        Set<Long> set = new HashSet<>();
+        try {
+            PreparedStatement ps = con.prepareStatement("select * from likeorunlike where userid = ? AND islike = 1");
+            ps.setLong(1, id);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                set.add(rs.getLong("commentid"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return set;
+    }
+
+    @Override
+    public Set<Long> queryAllUnLikes(int id) {
+        Set<Long> set = new HashSet<>();
+        try {
+            PreparedStatement ps = con.prepareStatement("select * from likeorunlike where userid = ? AND islike = 0");
+            ps.setLong(1, id);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                set.add(rs.getLong("commentid"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return set;
     }
 }

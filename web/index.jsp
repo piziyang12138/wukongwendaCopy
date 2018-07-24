@@ -38,14 +38,10 @@
     }</style>
     <script src="${pageContext.request.contextPath}/layer/jquery-3.3.1.min.js"></script>
     <script src="${pageContext.request.contextPath}/layer/layer.js"></script>
+    <script src="${pageContext.request.contextPath}/arttemplate.min.js"></script>
     <script>
         contextPath = '${pageContext.request.contextPath}';
-        <c:forEach items="${articles}" var="article">
-            console.log('${article.rescount}');
-            console.log('${article.comment_content}');
-            console.log('${article.comment_username}');
-            console.log('${article.upicpath}');
-        </c:forEach>
+
     </script>
     <script src="${pageContext.request.contextPath}/js/index.js" charset="UTF-8"></script>
 </head>
@@ -433,7 +429,7 @@
         </div>
         <div id="main-index-question-list" data-log-from="Feed" class="index-question-list">
             <div class="w-feed">
-                <div class="w-feed-container"><!---->
+                <div class="w-feed-container" id="container"><!---->
 
 
                     <c:forEach items="${articles}" var="article">
@@ -446,32 +442,62 @@
                             </div> <!---->
                             <div class="question-answers">
                             <c:choose>
-                                <c:when test="${!empty article.comment_username}">
+                                <c:when test="${!empty article.commentinfo.username}">
                                     <div class="answer-item-v3 has-pic">
                                             <div class="answer-item-pic"><a href="javascript:"><img
                                                     src="<%--评论图片 先空着--%>"></a></div> <!---->
                                             <div class="answer-info">
                                                 <div class="answer-info-user"><a target="_blank"
-                                                                                 href="${pageContext.request.contextPath}/toUser.do?id=${article.comment_userid}"
+                                                                                 href="${pageContext.request.contextPath}/toUser.do?id=${article.commentinfo.userid}"
                                                                                  data-log="Visit_Profile|From_ProfilePic"
                                                                                  class="answer-info-user-avatar"><img alt=""
                                                                                                                       src="${pageContext.request.contextPath}/upload/${article.upicpath}">
-                                                    <span class="answer-info-user-name">${article.comment_username}
+                                                    <span class="answer-info-user-name">${article.commentinfo.username}
                     <i class="iconfont icon-all_newv" style="font-size: 12px; color: rgb(255, 196, 28);"></i></span></a>
                                                     <span class="answer-info-user-title">法律行业从业者</span></div>
                                             </div>
                                             <div class="answer-item-content"><p><a
-                                                    href="https://www.wukong.com/answer/6562797525240119560/"
-                                                    data-log="PopUp_AnswerContent|From_">${article.comment_content}<span
+                                                    href="#"
+                                                    data-log="PopUp_AnswerContent|From_">${article.commentinfo.chtml}<span
                                                     class="answer-item-whole">全文</span></a></p></div>
                                             <div class="answer-oper">
-                                                <input type="hidden" value="${article.comment_id}">
-                                                <a href="javascript:" data-log="Like|From_" class="w-like">
-                                                <!----> <i class="iconfont icon-digg_clicked"></i> <span class="like-num">920</span>
-                                                <span>赞</span></a> <a href="javascript:" data-log="Downvote|From_" class="w-unlike"><i
-                                                    class="iconfont icon-ask_stamp"></i> <span class="unlike-count"></span>
-                                                <span>踩</span></a> <a href="javascript:" class="w-answer-nointerest-btn"><i
-                                                    class="iconfont icon-ask_close"></i></a> <a href="javascript:"
+                                                <input type="hidden" value="${article.commentinfo.cid}">
+                                                <c:choose>
+                                                    <c:when test="${article.commentinfo.islike}">
+                                                        <a href="javascript:" data-log="Like|From_" class="w-like active" onclick="like(this)">
+                                                            <!----> <i class="iconfont icon-digg_clicked"></i> <span class="like-num">${article.commentinfo.likecount}</span>
+                                                            <span>赞</span></a>
+                                                        <a href="javascript:" data-log="Downvote|From_" class="w-unlike" onclick="">
+                                                            <i class="iconfont icon-ask_stamp"></i>
+                                                            <span class="unlike-count">${article.commentinfo.unlikecount}</span>
+                                                            <span>踩</span>
+                                                        </a>
+                                                    </c:when>
+                                                    <c:when test="${article.commentinfo.isunlike}">
+                                                        <a href="javascript:" data-log="Like|From_" class="w-like" onclick="">
+                                                            <!----> <i class="iconfont icon-digg_clicked"></i> <span class="like-num">${article.commentinfo.likecount}</span>
+                                                            <span>赞</span></a>
+                                                        <a href="javascript:" data-log="Downvote|From_" class="w-unlike active" onclick="unlike(this)">
+                                                            <i class="iconfont icon-ask_stamp"></i>
+                                                            <span class="unlike-count">${article.commentinfo.unlikecount}</span>
+                                                            <span>踩</span>
+                                                        </a>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <a href="javascript:" data-log="Like|From_" class="w-like" onclick="like(this)">
+                                                            <!----> <i class="iconfont icon-digg_clicked"></i> <span class="like-num">${article.commentinfo.likecount}</span>
+                                                            <span>赞</span></a>
+                                                        <a href="javascript:" data-log="Downvote|From_" class="w-unlike" onclick="unlike(this)">
+                                                            <i class="iconfont icon-ask_stamp"></i>
+                                                            <span class="unlike-count">${article.commentinfo.unlikecount}</span>
+                                                            <span>踩</span>
+                                                        </a>
+                                                    </c:otherwise>
+                                                </c:choose>
+
+
+                                                <a href="javascript:" class="w-answer-nointerest-btn">
+                                                <i class="iconfont icon-ask_close"></i></a> <a href="javascript:"
                                                                                                 data-log="Visit_Comment|From_"
                                                                                                 class="answer-oper-comments"><i
                                                     class="iconfont icon-ask_comment"></i> <span class="comment-count">0</span>
@@ -519,5 +545,18 @@
     </div>
     <div class="share-group-arrow"><i></i></div>
 </div>
+<script type="text/html" id="div">
+
+        <div class="question-title"><h2><a href="${pageContext.request.contextPath}/to_article.do?aid={{aid}}"
+                                           target="_blank" data-log="Visit_Question|From_Link">{{title}}</a>
+        </h2>
+            <div class="question-info"><span class="question-answer-num">0回答</span><span
+                    class="question-follow-num">0人收藏</span></div>
+        </div>
+        <div class="question-answers">
+        </div>
+
+</script>
 </body>
+
 </html>

@@ -35,6 +35,13 @@ public class CommentInfoDao implements ICommentInfoDao {
                 commentinfo.setCid(rs.getLong("lastid"));
             }
 
+            ps = con.prepareStatement("select createtime FROM commentinfo WHERE cid=?");
+            ps.setLong(1,commentinfo.getCid());
+            rs = ps.executeQuery();
+            if (rs.next()){
+                commentinfo.setCreatetime(rs.getTimestamp("createtime"));
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -45,8 +52,11 @@ public class CommentInfoDao implements ICommentInfoDao {
     public List<CommentInformation> queryCommentByAid(int aid, int pageindex, int pagesize) {
         List<CommentInformation> arr = new ArrayList<>();
         try {
-            PreparedStatement ps = con.prepareStatement("SELECT commentinfo.*,`user`.picpath,`user`.username FROM commentinfo\n" +
-                    "JOIN `user` ON commentinfo.userid = `user`.id \n" +
+            PreparedStatement ps = con.prepareStatement("SELECT commentinfo.*,`user`.picpath,`user`.username,likeorunlike.*,(SELECT count(*) FROM likeorunlike WHERE commentid = cid AND islike=1) AS likecount,\n" +
+                    "(SELECT count(*) FROM likeorunlike WHERE commentid = cid AND islike=0) AS unlikecount\n" +
+                    " FROM commentinfo\n" +
+                    "LEFT JOIN `user` ON commentinfo.userid = `user`.id\n" +
+                    "LEFT JOIN likeorunlike ON commentinfo.cid = likeorunlike.commentid\n" +
                     "WHERE articleid = ? LIMIT ?,?");
             ps.setInt(1,aid);
             ps.setInt(2,(pageindex-1)*pagesize);
@@ -63,6 +73,8 @@ public class CommentInfoDao implements ICommentInfoDao {
                 commentinfo.setCreatetime(rs.getTimestamp("createtime"));
                 commentinfo.setUsername(rs.getString("username"));
                 commentinfo.setPicpath(rs.getString("picpath"));
+                commentinfo.setLikecount(rs.getInt("likecount"));
+                commentinfo.setUnlikecount(rs.getInt("unlikecount"));
                 arr.add(commentinfo);
             }
 

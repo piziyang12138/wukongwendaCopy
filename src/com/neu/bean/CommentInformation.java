@@ -9,7 +9,43 @@ public class CommentInformation extends Commentinfo{
     private String atitle;
     private int arescount;
     private int aid;
-    private boolean hasFollowed;
+    private boolean hasFollowed = false;
+    private int likecount;
+    private int unlikecount;
+    private boolean islike;
+    private boolean isunlike;
+
+    public boolean isIslike() {
+        return islike;
+    }
+
+    public void setIslike(boolean islike) {
+        this.islike = islike;
+    }
+
+    public boolean isIsunlike() {
+        return isunlike;
+    }
+
+    public void setIsunlike(boolean isunlike) {
+        this.isunlike = isunlike;
+    }
+
+    public int getLikecount() {
+        return likecount;
+    }
+
+    public void setLikecount(int likecount) {
+        this.likecount = likecount;
+    }
+
+    public int getUnlikecount() {
+        return unlikecount;
+    }
+
+    public void setUnlikecount(int unlikecount) {
+        this.unlikecount = unlikecount;
+    }
 
     public boolean isHasFollowed() {
         return hasFollowed;

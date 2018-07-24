@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -39,21 +40,36 @@ public class ToArticleServlet extends HttpServlet {
             collectionInfo.setArticleid(Long.parseLong(aid));
             collectionInfo.setUserid(user.getId());
             row = collectionInfoDao.hasCollected(collectionInfo);
-        }
 
-        IUserDao userDao = new UserDao();
-        userDao.isUserExist(user);
+            IUserDao userDao = new UserDao();
+            userDao.isUserExist(user);
 
-        IFollowerDao followerDao = new FollowerDao();
-        Set<Long> set = followerDao.queryAllFollower(user.getId().intValue());
+            IFollowerDao followerDao = new FollowerDao();
+            Set<Long> set = followerDao.queryAllFollower(user.getId().intValue());
 
-        for (CommentInformation commentInformation:list) {
-            if (set.contains(commentInformation.getUserid())){
-                commentInformation.setHasFollowed(true);
-            }else {
-                commentInformation.setHasFollowed(false);
+            ILikeDao likeDao = new LikeDao();
+            Set<Long> like_set = new HashSet<>();
+            Set<Long> unlike_set = new HashSet<>();
+            like_set = likeDao.queryAllLikes(user.getId().intValue());
+            unlike_set = likeDao.queryAllUnLikes(user.getId().intValue());
+
+
+            for (CommentInformation commentInformation:list) {
+                if (set.contains(commentInformation.getUserid())){
+                    commentInformation.setHasFollowed(true);
+                }else {
+                    commentInformation.setHasFollowed(false);
+                }
+                if (like_set.contains(commentInformation.getCid())){
+                    commentInformation.setIslike(true);
+                }else if (unlike_set.contains(commentInformation.getCid())){
+                    commentInformation.setIsunlike(true);
+                }
             }
         }
+
+
+
 
         request.setAttribute("article",article);
         request.setAttribute("comments",list);

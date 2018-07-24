@@ -41,10 +41,7 @@
     }</style>
     <script src="${pageContext.request.contextPath}/js/user.js" charset="UTF-8"></script>
     <script>
-        <c:forEach items="${comments}" var="comment">
-            console.log('${comment.atitle}');
-            console.log('${comment.arescount}');
-        </c:forEach>
+        contextPath = '${pageContext.request.contextPath}';
     </script>
 </head>
 <body class="page-user-static" data-log-from="User">
@@ -127,8 +124,9 @@
                             <div itemscope="itemscope" itemtype="http://schema.org/Person" class="userinfo clearfix"><a
                                     target="_blank" href="https://www.wukong.com/user/?uid=101244253391">
                                 <meta itemprop="name" content="${userinfo.username}">
-                                <div class="avatar"><img src="${pageContext.request.contextPath}/upload/${userinfo.picpath}"
-                                                         alt="" itemprop="image">
+                                <div class="avatar"><img
+                                        src="${pageContext.request.contextPath}/upload/${userinfo.picpath}"
+                                        alt="" itemprop="image">
                                 </div>
                                 <div class="user-desc"><h1 class="user-name"><span>${userinfo.username}</span> <span
                                         class="last-name-letter"><!----></span></h1>
@@ -145,16 +143,47 @@
                                             </c:otherwise>
                                         </c:choose>
                                     </div>
-                                    <c:if test="${userinfo.id eq user.id}">
-                                        <div><a href="javascript:;"><!----></a> <!---->
-                                            <div class="edit-section"><a
-                                                    href="${pageContext.request.contextPath}/jsp/editor_user.jsp"
-                                                    class="edit-person-info"><span class="edit-text"><i
-                                                    class="iconfont icon-pen edit-icon"></i>
+                                    <c:choose>
+                                        <c:when test="${userinfo.id eq user.id}">
+                                            <div><a href="javascript:;"><!----></a> <!---->
+                                                <div class="edit-section"><a
+                                                        href="${pageContext.request.contextPath}/jsp/editor_user.jsp"
+                                                        class="edit-person-info"><span class="edit-text"><i
+                                                        class="iconfont icon-pen edit-icon"></i>
                             编辑个人信息
                         </span></a></div>
-                                        </div>
-                                    </c:if>
+                                            </div>
+                                        </c:when>
+                                        <c:otherwise>
+
+                                            <c:choose>
+                                                <c:when test="${followed}">
+                                                    <a data-log="Follow_User|From_" class="w-follow-btn followed"
+                                                       id="follow-btn" onmouseover="mouseover(this)"
+                                                       onmouseout="mouseout(this)">
+                                                        <i class="iconfont icon-details_add_icon"></i>
+                                                        <i class="iconfont icon-details_attention_icon"></i>
+                                                        <span>
+                                                                已关注
+                                                            </span>
+                                                    </a>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <a data-log="Follow_User|From_" class="w-follow-btn"
+                                                       id="follow-btn">
+                                                        <i class="iconfont icon-details_add_icon"></i>
+                                                        <i class="iconfont icon-details_attention_icon"></i>
+                                                        <span>
+                                                    关注
+                                                </span>
+                                                    </a>
+                                                </c:otherwise>
+                                            </c:choose>
+                                            <input type="hidden" value="${userinfo.id}">
+
+                                        </c:otherwise>
+                                    </c:choose>
+
 
                                 </div>
                             </a></div>
@@ -228,11 +257,13 @@
 
                                 <c:forEach items="${comments}" var="comment">
                                     <div data-log-from="Feed" class="question-v3"><!---->
-                                        <div class="question-title"><h2><a href="${pageContext.request.contextPath}/to_article.do?aid=${comment.aid}"
-                                                                           target="_blank"
-                                                                           data-log="Visit_Question|From_Link">${comment.atitle}</a>
+                                        <div class="question-title"><h2><a
+                                                href="${pageContext.request.contextPath}/to_article.do?aid=${comment.aid}"
+                                                target="_blank"
+                                                data-log="Visit_Question|From_Link">${comment.atitle}</a>
                                         </h2>
-                                            <div class="question-info"><span class="question-answer-num">${comment.arescount}回答</span><span
+                                            <div class="question-info"><span
+                                                    class="question-answer-num">${comment.arescount}回答</span><span
                                                     class="question-follow-num">381人收藏</span></div>
                                         </div> <!---->
                                         <div class="question-answers">
@@ -242,21 +273,25 @@
                                                                                      href="${pageContext.request.contextPath}/toUser.do?id=${userinfo.id}"
                                                                                      data-log="Visit_Profile|From_ProfilePic"
                                                                                      class="answer-info-user-avatar"><img
-                                                            alt="" src="${pageContext.request.contextPath}/upload/${userinfo.picpath}"> <span
-                                                            class="answer-info-user-name">${userinfo.username}
-                                                        <!----></span></a> <!----></div>
+                                                            alt=""
+                                                            src="${pageContext.request.contextPath}/upload/${userinfo.picpath}">
+                                                        <span
+                                                                class="answer-info-user-name">${userinfo.username}
+                                                            <!----></span></a> <!----></div>
                                                 </div>
-                                                <div class="answer-item-content"><p><a href="/answer/6580617165374750983/"
-                                                                                       data-log="PopUp_AnswerContent|From_">${comment.content}</a>
+                                                <div class="answer-item-content"><p><a
+                                                        href="/answer/6580617165374750983/"
+                                                        data-log="PopUp_AnswerContent|From_">${comment.content}</a>
                                                 </p></div>
                                                 <div class="answer-oper-my">
                                                     <div class="w-answer-setting"><span class="set">设置<i
                                                             class="iconfont icon-ask_arrow_down"></i></span>
                                                         <div class="layer"><a href="javascript:"
                                                                               data-log="DeleteAnswer|From_Setting"
-                                                                              class="delete">删除回答</a> <a href="javascript:"
-                                                                                                         data-log="Toggle_CommentControl|From_Setting"
-                                                                                                         class="forbid-comment">禁止评论</a>
+                                                                              class="delete">删除回答</a> <a
+                                                                href="javascript:"
+                                                                data-log="Toggle_CommentControl|From_Setting"
+                                                                class="forbid-comment">禁止评论</a>
                                                             <a href="javascript:"
                                                                data-log="Toggle_CommentControl|From_Setting"
                                                                class="permit-comment">允许评论</a></div>
@@ -269,11 +304,13 @@
                                                         <div class="share-group-content clearfix">
                                                             <div class="qr"></div>
                                                             <div data-node="weixin" data-url="" data-desc=""
-                                                                 data-log="Share_Weixin|From_" class="share-link weixin"><i
+                                                                 data-log="Share_Weixin|From_"
+                                                                 class="share-link weixin"><i
                                                                     class="iconfont icon-wechat_share"></i></div>
                                                             <div data-node="weibo" data-url="" data-desc=""
-                                                                 data-log="Share_Weibo|From_" class="share-link weibo"><i
-                                                                    class="iconfont icon-weibo_share"></i></div>
+                                                                 data-log="Share_Weibo|From_" class="share-link weibo">
+                                                                <i
+                                                                        class="iconfont icon-weibo_share"></i></div>
                                                             <div data-node="qzone" data-url="" data-desc=""
                                                                  data-log="Share_Qzone|From_" class="share-link qq"><i
                                                                     class="iconfont icon-qzone_share"></i></div>
@@ -284,7 +321,6 @@
                                             </div>
                                         </div> <!----></div>
                                 </c:forEach>
-
 
 
                             </div>
