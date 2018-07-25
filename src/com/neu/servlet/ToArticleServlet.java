@@ -42,7 +42,7 @@ public class ToArticleServlet extends HttpServlet {
             row = collectionInfoDao.hasCollected(collectionInfo);
 
             IUserDao userDao = new UserDao();
-            userDao.isUserExist(user);
+            user = userDao.queryUserById(user.getId().intValue());
 
             IFollowerDao followerDao = new FollowerDao();
             Set<Long> set = followerDao.queryAllFollower(user.getId().intValue());

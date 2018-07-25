@@ -113,4 +113,46 @@ public class ArticleDao implements IArticleDao{
 
         return article;
     }
+
+    @Override
+    public List<ArticleInfo> getMoreArticle(int aid) {
+        List<ArticleInfo> arr = new ArrayList<>();
+        try {
+            PreparedStatement ps = con.prepareStatement("SELECT (SELECT count(*) FROM collection WHERE articleid = aid) AS collection_count,article.*,commentinfo.chtml,(SELECT count(*) FROM commentinfo WHERE articleid = aid) AS count,\n" +
+                    "`user`.username,`user`.picpath AS upicpath,commentinfo.userid AS comment_userid,commentinfo.cid ,\n" +
+                    "(SELECT count(*) FROM likeorunlike WHERE commentid = cid AND islike=1) AS likecount,\n" +
+                    "(SELECT count(*) FROM likeorunlike WHERE commentid = cid AND islike=0) AS unlikecount \n" +
+                    "FROM article \n" +
+                    "LEFT JOIN commentinfo ON article.aid = commentinfo.articleid\n" +
+                    "LEFT JOIN user ON commentinfo.userid = user.id\n" +
+                    "WHERE aid < ?\n" +
+                    "GROUP BY aid ORDER BY aid DESC LIMIT 0,2");
+            ps.setInt(1,aid);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()){
+                ArticleInfo article = new ArticleInfo();
+                CommentInformation commentInformation = new CommentInformation();
+                article.setAid(rs.getLong("aid"));
+                article.setUserid(rs.getLong("userid"));
+                article.setPicpath(rs.getString("picpath"));
+                article.setContent(rs.getString("content"));
+                article.setTitle(rs.getString("title"));
+                article.setCreatetime(rs.getTimestamp("createtime"));
+                article.setRescount(rs.getInt("count"));
+                article.setUpicpath(rs.getString("upicpath"));
+                article.setCollection_count(rs.getInt("collection_count"));
+                commentInformation.setChtml(rs.getString("chtml"));
+                commentInformation.setUsername(rs.getString("username"));
+                commentInformation.setUserid(rs.getLong("comment_userid"));
+                commentInformation.setCid(rs.getLong("cid"));
+                commentInformation.setLikecount(rs.getInt("likecount"));
+                commentInformation.setUnlikecount(rs.getInt("unlikecount"));
+                article.setCommentinfo(commentInformation);
+                arr.add(article);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return arr;
+    }
 }

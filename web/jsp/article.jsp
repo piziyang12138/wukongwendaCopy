@@ -111,9 +111,10 @@
                                                                                   data-log="Visit_QuestionInvited|From_"
                                                                                   title="等我来答" class="">等我来答</a> <a
                                 href="https://www.wukong.com/notebook/" target="_blank" data-log="Visit_NoteBook|From_">回答秘籍</a>
-                                <c:choose>
+                            <div class="new-msg-btn">
+                            <c:choose>
                                 <c:when test="${!empty user}">
-                                    <div class="new-msg-btn">
+
                                 <span class="w-new-msg-btn">
                                 <span>消息</span><!----><!---->
                                 <div class="w-new-layer layer-wrapper">
@@ -125,7 +126,7 @@
                                     <a class="follow"><span>关注</span></a>
                                 </div>
                                 </span>
-                                    </div>
+                            </div>
                             <div class="nav-account">
                                 <div data-node="user-account" class="nav-account-wrapper dropdown">
                                     <a href="${pageContext.request.contextPath}/toUser.do?id=${user.id}" target="_blank"
@@ -134,14 +135,15 @@
                                             class="nav-account-user-avatar"></a>
                                     </c:when>
                                     <c:otherwise>
+                                </div>
+                                <div class="nav-account">
                                     <div data-node="user-account" class="nav-account-wrapper">
                                         <div class="loginBox"><a data-node="login"
                                                                  href="${pageContext.request.contextPath}/jsp/register_login.jsp?model=login"
                                                                  class="nav-account-user line login"><span>登录</span></a>
-                                            <i
-                                                    class="iconfont icon-Details_page_line"></i> <a data-node="register"
-                                                                                                    href="${pageContext.request.contextPath}/jsp/register_login.jsp?model=logout"
-                                                                                                    class="nav-account-user line register"><span>注册</span></a>
+                                            <i class="iconfont icon-Details_page_line"></i>
+                                            <a data-node="register" href="${pageContext.request.contextPath}/jsp/register_login.jsp?model=logout"
+                                               class="nav-account-user line register"><span>注册</span></a>
                                         </div>
                                         </c:otherwise>
                                         </c:choose>
@@ -428,7 +430,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="submitbar" style="height: 50px;" id="submitbar" "><span class="manuscript-tip">
+                            <div class="submitbar" style="height: 50px;" id="submitbar"><span class="manuscript-tip">
 
         </span>
                             <input type="hidden" value="${article.aid}" name="aid">

@@ -12,4 +12,5 @@ public interface IArticleDao {
     int addArticle(Article article);
     List<ArticleInfo> queryArticleByPage(int pageindex, int pagesize);
     ArticleInfo queryArticleByAid(int aid);
+    List<ArticleInfo> getMoreArticle(int aid);
 }

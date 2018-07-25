@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -138,7 +139,7 @@
                         <c:when test="${!empty user}">
                             <div id="user-card" class="user-card">
                                 <div id="widget-usercard" data-log-from="ProfileCard" class="w-usercard"><a target="_blank"
-                                                                                                            href="${pageContext.request.contextPath}/jsp/user.jsp"
+                                                                                                            href="${pageContext.request.contextPath}/toUser.do?id=${user.id}"
                                                                                                             data-log="Visit_Profile|From_"
                                                                                                             class="userinfo clearfix">
                                     <div class="avatar"><img src="${pageContext.request.contextPath}/upload/${user.picpath}"
@@ -434,6 +435,7 @@
 
                     <c:forEach items="${articles}" var="article">
                         <div data-log-from="Feed" class="question-v3"><!---->
+                            <input type="hidden" value="${article.aid}">
                             <div class="question-title"><h2><a href="${pageContext.request.contextPath}/to_article.do?aid=${article.aid}"
                                                                target="_blank" data-log="Visit_Question|From_Link">${article.title}</a>
                             </h2>
@@ -545,18 +547,47 @@
     </div>
     <div class="share-group-arrow"><i></i></div>
 </div>
-<script type="text/html" id="div">
-
-        <div class="question-title"><h2><a href="${pageContext.request.contextPath}/to_article.do?aid={{aid}}"
-                                           target="_blank" data-log="Visit_Question|From_Link">{{title}}</a>
+<%@include file="/jsp/arttemplatescript.jsp"%>
+<script type="text/html" id="content-warp">
+        {{each list as article}}
+        <input type="hidden" value="{{article.aid}}">
+        <div class="question-title"><h2><a href="${pageContext.request.contextPath}/to_article.do?aid={{article.aid}}" target="_blank"
+data-log="Visit_Question|From_Link">{{article.title}}</a>
         </h2>
-            <div class="question-info"><span class="question-answer-num">0回答</span><span
-                    class="question-follow-num">0人收藏</span></div>
-        </div>
+        <div class="question-info"><span class="question-answer-num">{{article.rescount}}回答</span><span class="question-
+follow-num">{{article.collection_count}}人收藏</span></div>
+        </div> <!---->
         <div class="question-answers">
+        <div class="answer-item-v3 has-pic">
+        <div class="answer-item-pic"><a href="javascript:"><img src=""></a></div> <!---->
+        <div class="answer-info">
+        <div class="answer-info-user"><a target="_blank" href="${pageContext.request.contextPath}/toUser.do?id=
+{{article.commentinfo.userid}}" data-log="Visit_Profile|From_ProfilePic" class="answer-info-user-avatar"><img alt=""
+src="${pageContext.request.contextPath}/upload/{{article.upicpath}}">
+        <span class="answer-info-user-name">{{article.commentinfo.username}}
+        <i class="iconfont icon-all_newv" style="font-size: 12px; color: rgb(255, 196, 28);"></i></span></a>
+        <span class="answer-info-user-title">法律行业从业者</span></div>
         </div>
+        <div class="answer-item-content"><a><a href="#" data-log="PopUp_AnswerContent|From_">
+{{#article.commentinfo.chtml}}<span class="answer-item-whole">全文</span></a></p></div>
+        <div class="answer-oper">
+        <input type="hidden" value="20">
+        <a href="javascript:" data-log="Like|From_" class="w-like" onclick="like(this)">
+        <i class="iconfont icon-digg_clicked"></i> <span class="like-num">
+{{article.commentinfo.likecount}}</span>
+        <span>赞</span></a>
+        <a href="javascript:" data-log="Downvote|From_" class="w-unlike" onclick="unlike(this)">
+        <i class="iconfont icon-ask_stamp"></i>
+        <span class="unlike-count">{{article.commentinfo.unlikecount}}</span>
+        <span>踩</span>
+        </a>
+        <a href="javascript:" class="w-answer-nointerest-btn">
+        <i class="iconfont icon-ask_close"></i></a> <a href="javascript:" data-log="Visit_Comment|From_"
+class="answer-oper-comments"><i class="iconfont icon-ask_comment"></i> <span class="comment-count">0</span>
+        <span>评论</span></a> <a href="javascript:" class="w-shareBtn"><i class="iconfont icon-share-home"></i> <span>
+分享</span></a></div>
 
+        {{/each}}
 </script>
 </body>
-
 </html>

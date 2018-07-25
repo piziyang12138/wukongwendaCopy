@@ -84,7 +84,7 @@ function editor() {
     var input = document.createElement("input");
     input.type = "text";
     input.className = "input";
-    input.value = document.getElementsByClassName('user-name')[1].innerText;
+    input.value = document.getElementsByClassName('user-name')[0].children[0].innerText;
 
     var btn_warrp = document.createElement("div");
     btn_warrp.className = 'btn-wrapper';

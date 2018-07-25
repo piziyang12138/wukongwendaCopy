@@ -1,13 +1,14 @@
 package com.neu.servlet;
 
+import com.alibaba.fastjson.JSON;
 import com.neu.bean.Article;
 import com.neu.bean.ArticleInfo;
-import com.neu.bean.CommentInformation;
 import com.neu.bean.UserInfo;
 import com.neu.dao.IArticleDao;
 import com.neu.dao.ILikeDao;
 import com.neu.daoImp.ArticleDao;
 import com.neu.daoImp.LikeDao;
+import com.neu.utils.ArticlesWarp;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,19 +21,21 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Created by ttc on 2018/7/19.
+ * Created by ttc on 2018/7/25.
  */
-@WebServlet(name = "HomeServlet",urlPatterns = "/home.do")
-public class HomeServlet extends HttpServlet {
+@WebServlet(name = "GetMoreArticleServlet",urlPatterns = "/getmore.do")
+public class GetMoreArticleServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        IArticleDao articleDao = new ArticleDao();
-        ILikeDao likeDao = new LikeDao();
-        List<ArticleInfo> articles = articleDao.queryArticleByPage(1,10);
+        String aid = request.getParameter("aid");
 
+        IArticleDao iArticleDao = new ArticleDao();
+
+        List<ArticleInfo> articles =  iArticleDao.getMoreArticle(Integer.parseInt(aid));
+        ILikeDao likeDao = new LikeDao();
         UserInfo user = (UserInfo) request.getSession().getAttribute("user");
         Set<Long> like_set = new HashSet<>();
         Set<Long> unlike_set = new HashSet<>();
@@ -48,7 +51,10 @@ public class HomeServlet extends HttpServlet {
                 article.getCommentinfo().setIsunlike(true);
             }
         }
-        request.setAttribute("articles",articles);
-        request.getRequestDispatcher("/index.jsp").forward(request,response);
+
+        ArticlesWarp articlesWarp = new ArticlesWarp();
+        articlesWarp.setList(articles);
+
+        response.getWriter().print(JSON.toJSONString(articlesWarp));
     }
 }

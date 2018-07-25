@@ -29,12 +29,13 @@ public class LoginServlet extends HttpServlet {
         int res = userDao.isUserExist(user);
 
         if (res == 1){
+            user = userDao.queryUserById(user.getId().intValue());
             request.getSession().setAttribute("user",user);
-            response.sendRedirect(request.getContextPath() + "/home.do");
+            response.sendRedirect("/home.do");
         }
         else{
             request.setAttribute("error","用户名或密码错误");
-            request.getRequestDispatcher("/jsp/register_login.jsp").forward(request,response);
+            response.sendRedirect("/jsp/register_login.jsp?model=login");
         }
     }
 

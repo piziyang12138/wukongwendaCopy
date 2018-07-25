@@ -42,7 +42,8 @@ public class UserDao implements IUserDao {
     public int isUserExist(UserInfo user) {
         int res = 0;
         try {
-            PreparedStatement ps = con.prepareStatement("select user.* ,count(*) as count,(select count(*) from follower where followid = `user`.id) as fcount,(select count(*) from follower where followedid = `user`.id) as fdcount FROM user join commentinfo on user.id = commentinfo.userid where username=? and pwd = ? GROUP BY id");
+//            PreparedStatement ps = con.prepareStatement("select `user`.* ,count(*) as count,(select count(*) from follower where followid = `user`.id) as fcount,(select count(*) from follower where followedid = `user`.id) as fdcount FROM `user` join commentinfo on `user`.id = commentinfo.userid where username=? and pwd = ? GROUP BY id");
+            PreparedStatement ps = con.prepareStatement("select * FROM `user` where username=? and pwd = ?");
             ps.setString(1,user.getUsername());
             ps.setString(2,user.getPwd());
             ResultSet rs = ps.executeQuery();
@@ -51,9 +52,9 @@ public class UserDao implements IUserDao {
                 user.setId(rs.getLong("id"));
                 user.setPicpath(rs.getString("picpath"));
                 user.setIntroduction(rs.getString("introduction"));
-                user.setRescount(rs.getInt("count"));
-                user.setFollowedcount(rs.getInt("fdcount"));
-                user.setFollowcount(rs.getInt("fcount"));
+//                user.setRescount(rs.getInt("count"));
+//                user.setFollowedcount(rs.getInt("fdcount"));
+//                user.setFollowcount(rs.getInt("fcount"));
                 res = 1;
             }
         } catch (SQLException e) {
@@ -83,7 +84,7 @@ public class UserDao implements IUserDao {
     public UserInfo queryUserById(int id) {
         UserInfo user = new UserInfo();
         try {
-            PreparedStatement ps = con.prepareStatement("select user.* ,count(*) as count,(select count(*) from follower where followid = `user`.id) as fcount,(select count(*) from follower where followedid = `user`.id) as fdcount FROM user join commentinfo on user.id = commentinfo.userid where id = ? GROUP BY id");
+            PreparedStatement ps = con.prepareStatement("select user.* ,(select count(*) from commentinfo where `user`.id=commentinfo.userid)  as count,(select count(*) from follower where followid = `user`.id) as fcount,(select count(*) from follower where followedid = `user`.id) as fdcount FROM user left join commentinfo on user.id = commentinfo.userid where id = ? GROUP BY id");
             ps.setInt(1,id);
             ResultSet rs = ps.executeQuery();
 

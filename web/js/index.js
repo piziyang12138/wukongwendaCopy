@@ -3,13 +3,7 @@
  */
 let index;
 if (document.location.search.substr(1) === 'refresh'){
-    layer.msg('发布成功',
-        {
-            offset: '100px',
-            shade: 0,
-            time: 2000,
-            icon: 1
-        });
+
 }
 
 function fabulous(e) {
@@ -83,18 +77,36 @@ function unlike(e) {
     }
 }
 window.onload = function () {
-    // //赞按钮
-    // const likes = document.getElementsByClassName("w-like");
-    // const unlikes = document.getElementsByClassName('w-unlike');
-    // for (let i = 0;i<likes.length;i++){
-    //     likes[i].onclick = function () {
-    //         like(this,this.nextElementSibling);
-    //     };
-    //     unlikes[i].onclick = function () {
-    //         unlike(this,this.previousElementSibling);
-    //     };
-    // }
-    
+    var current_id = 0;
+    window.onscroll = function () {
+        var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        var scrollHeight = document.documentElement.scrollHeight;
+        var clientHeight = document.documentElement.clientHeight;
+        if (scrollTop + clientHeight >= scrollHeight-230) {
+            var container = document.getElementById('container');
+            var aid = container.lastElementChild.firstElementChild.value;
+            var req = new XMLHttpRequest();
+            req.open('get',contextPath + '/getmore.do?aid='+aid,true);
+            if (current_id === parseInt(aid)){
+                return;
+            }
+            req.send();
+            current_id = parseInt(aid);
+            req.onload = function () {
+                var data = JSON.parse(req.responseText);
+                if (data.list.length !== 0){
+                    var html1 = template('content-warp',data);
+                    var div = document.createElement('div');
+                    div.setAttribute('data-log-from','Feed');
+                    div.className = 'question-v3';
+                    div.innerHTML = html1;
+                    container.appendChild(div);
+                    current_id = 0;
+                }
+            };
+
+        }
+    };
     
     $('#ask-question').on('click', function () {
         index = layer.open({
@@ -264,11 +276,16 @@ function submit(e) {
             question_div.className='question-v3';
 
             question_div.innerHTML = html;
-
             var container = document.getElementById('container');
             var first_child = container.firstElementChild;
             container.insertBefore(question_div,first_child);
-
+            layer.msg('发布成功',
+                {
+                    offset: '100px',
+                    shade: 0,
+                    time: 2000,
+                    icon: 1
+                });
         }
 
 
